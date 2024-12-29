@@ -13,7 +13,7 @@ const DefaultLayout = () => {
       <div className="flex flex-col h-full w-full bg-red-50 px-4">
         <Navbar />
 
-        <div className="h-full border-t-2 w-full overflow-auto">
+        <div className="h-[100vh] border-t-2 w-full overflow-auto my-5">
           <Outlet />
         </div>
       </div>
