@@ -131,7 +131,14 @@ const DailyTotalOutputChart = () => {
         const categories = filteredData.map((item) => item.date);
         const seriesData = filteredData.map((item) => item.RFT);
 
-        setChartData({ categories, data: seriesData });
+        //setChartData({ categories, data: seriesData });
+        setChartData({
+          categories: ["12/04", "12/05", "12/06"], // Ngày tháng
+          actual: [75235, 76405, 77250], // Dữ liệu Actual
+          unreach: [53645, 50220, 49160], // Dữ liệu Unreach
+          target: [128880, 126470, 126280], // Dữ liệu Target
+        });
+
         setError(null);
       } catch (err) {
         setError("Error loading data.");
@@ -154,40 +161,61 @@ const DailyTotalOutputChart = () => {
     xAxis: {
       categories: chartData.categories,
       title: { text: null },
-      gridLineWidth: 0, // Loại bỏ đường lưới ngang trên trục X
     },
     yAxis: {
+      min: 0,
       title: { text: null },
-      gridLineWidth: 0, // Loại bỏ đường lưới ngang trên trục Y
-      labels: {
-        enabled: false, // Ẩn nhãn trục Y
+      stackLabels: {
+        enabled: true,
+        style: {
+          fontWeight: "bold",
+          color: "gray",
+        },
+        formatter: function () {
+          return this.total; // Hiển thị tổng giá trị
+        },
       },
-      lineWidth: 0, // Ẩn đường trục Y
+    },
+    legend: {
+      align: "center",
+      verticalAlign: "top",
+      layout: "horizontal",
+    },
+    plotOptions: {
+      column: {
+        stacking: "normal", // Cột xếp chồng lên nhau
+        dataLabels: {
+          enabled: true,
+          formatter: function () {
+            return this.y; // Hiển thị giá trị của mỗi phần
+          },
+          style: {
+            fontWeight: "bold",
+            fontSize: "10px",
+          },
+        },
+      },
     },
     series: [
       {
-        name: "RFT",
-        data: chartData.data,
+        name: "Actual",
+        data: chartData.actual, // Dữ liệu cho "Actual"
+        color: "#4CAF50", // Màu xanh lá
+      },
+      {
+        name: "Unreach",
+        data: chartData.unreach, // Dữ liệu cho "Unreach"
+        color: "#FF5722", // Màu đỏ
+      },
+      {
+        name: "Target",
+        data: chartData.target, // Dữ liệu cho "Target"
+        color: "#000000", // Màu đen
         dataLabels: {
-          enabled: true, // Bật hiển thị nhãn dữ liệu
-          formatter: function () {
-            return this.y; // Hiển thị giá trị gốc của dữ liệu
-          },
-          style: {
-            fontSize: "12px",
-            fontWeight: "bold",
-            color: "#000000", // Màu sắc của số liệu
-          },
+          enabled: false, // Không hiển thị nhãn riêng cho Target
         },
       },
     ],
-    plotOptions: {
-      column: {
-        dataLabels: {
-          enabled: true, // Bật nhãn dữ liệu mặc định cho tất cả cột
-        },
-      },
-    },
     credits: {
       enabled: false,
     },
