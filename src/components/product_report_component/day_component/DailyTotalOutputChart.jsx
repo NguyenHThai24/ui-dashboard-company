@@ -42,10 +42,9 @@ const DailyTotalOutputChart = () => {
   const options = {
     chart: {
       type: "column",
-      marginTop: 50,
+      marginTop: 100,
       marginLeft: 50,
       marginRight: 50,
-      width: null,
     },
     title: {
       text: "DAILY TOTAL OUTPUT",

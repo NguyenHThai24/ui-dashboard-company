@@ -7,8 +7,8 @@ import DailyEfficiency from "@/components/product_report_component/day_component
 
 import DailyRFT from "@/components/product_report_component/day_component/DailyRFT";
 
-const Production_Report = () => {
-  const [selectedDate, setSelectedDate] = useState(dayjs());
+const Production_Report = ({ selectedDate }) => {
+  //const [selectedDate, setSelectedDate] = useState(dayjs());
 
   return (
     <>

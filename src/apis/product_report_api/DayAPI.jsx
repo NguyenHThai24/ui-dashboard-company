@@ -17,7 +17,9 @@ export const fetchDailyTotalOutput = (year, month) => async (dispatch) => {
     //   { headers: { "Content-Type": "application/json" } }
     // );
     // const rawData = response.data;
-    const response = await fetch("/data/daily_total_output.json");
+    const response = await fetch(`/data/daily_total_output.json`, {
+      params: { year, month }, // Send year and month as query params
+    });
     const rawData = await response.json();
 
     // Xử lý dữ liệu để tạo `categories`, `actual`, `unachieved`

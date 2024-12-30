@@ -13,11 +13,19 @@ const HeaderProductReport = () => {
     }
   };
 
+  const handleSearchClick = () => {
+    // Function to handle search logic based on selectedDate
+    console.log("Selected Date:", selectedDate.format("MM-YYYY")); // Use this date to filter data
+  };
+
   return (
     <>
       <Grid container spacing={2} alignItems="center">
         <Grid item>
-          <Calendar selectedDate={selectedDate} handleDateChange={handleDateChange} />
+          <Calendar
+            selectedDate={selectedDate}
+            handleDateChange={handleDateChange}
+          />
         </Grid>
 
         <Grid item>
@@ -28,7 +36,7 @@ const HeaderProductReport = () => {
               width: "100px",
               height: "40px",
               borderRadius: "5px",
-              fontWeight: "bold"
+              fontWeight: "bold",
             }}
           >
             FACTORY
@@ -42,7 +50,7 @@ const HeaderProductReport = () => {
               width: "100px",
               height: "40px",
               borderRadius: "5px",
-               fontWeight: "bold"
+              fontWeight: "bold",
             }}
           >
             BUILDING
@@ -51,13 +59,14 @@ const HeaderProductReport = () => {
         <Grid item>
           <Button
             sx={{
-              bgcolor: "#3399ff",
+              bgcolor: "#049962",
               color: "white",
               width: "100px",
               height: "40px",
               borderRadius: "5px",
-               fontWeight: "bold"
+              fontWeight: "bold",
             }}
+            onClick={handleSearchClick} // Add the click event handler
           >
             SEARCH
           </Button>
@@ -65,8 +74,6 @@ const HeaderProductReport = () => {
       </Grid>
 
       <Grid container spacing={2} alignItems="center">
-        
-
         <Grid item>
           <Button
             sx={{
@@ -75,7 +82,7 @@ const HeaderProductReport = () => {
               width: "100px",
               height: "40px",
               borderRadius: "5px",
-              fontWeight: "bold"
+              fontWeight: "bold",
             }}
           >
             MONTH
@@ -89,7 +96,7 @@ const HeaderProductReport = () => {
               width: "100px",
               height: "40px",
               borderRadius: "5px",
-               fontWeight: "bold"
+              fontWeight: "bold",
             }}
           >
             WEEK
@@ -103,7 +110,7 @@ const HeaderProductReport = () => {
               width: "100px",
               height: "40px",
               borderRadius: "5px",
-               fontWeight: "bold"
+              fontWeight: "bold",
             }}
           >
             DAY
