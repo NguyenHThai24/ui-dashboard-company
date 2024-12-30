@@ -79,7 +79,7 @@ const Sidebar = () => {
             },
             {
               key: "1.1.1",
-              label: <Link to="/production-report">Production Report</Link>,
+              label: <Link to="/production-report-day">Production Report</Link>,
             },
           ],
         },

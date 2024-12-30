@@ -6,15 +6,16 @@ import LoginPage from "@/pages/LoginPage";
 import RegisterPage from "@/pages/RegisterPage";
 import NotFoundPage from "@/pages/NotFoundPage";
 import ProductionPage from "@/pages/ProductionPage";
-import HomePage from "@/pages/HomePage";
-import Daily_Factory_KPI from "@/pages/factory_production/Daily_Factory_KPI";
-import Production_Report from "@/pages/factory_production/Production_Report"
+//import HomePage from "@/pages/HomePage";
+//import Daily_Factory_KPI from "@/pages/factory_production/Daily_Factory_KPI";
+import ProductionReportDay from "@/pages/factory_production/production_report/ProductionReportDay";
+import ProductReportLayout from "@/layouts/ProductReportLayout";
 const UserRoute = () => (
   <Routes>
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
-      <Route element={<DefaultLayout />}>
-        <Route
+    <Route path="/login" element={<LoginPage />} />
+    <Route path="/register" element={<RegisterPage />} />
+    <Route element={<DefaultLayout />}>
+      {/* <Route
           path="/"
           element={<HomePage/>}
         />
@@ -26,22 +27,30 @@ const UserRoute = () => (
               <Daily_Factory_KPI />
             </HomePage>
           }
-        />
+        /> */}
 
-        <Route
-          path="/production-report"
+      {/* <Route
+          path="/production-report-day"
           element={
             <HomePage>
-              <Production_Report />
+              <ProductReportLayout />
             </HomePage>
           }
-        />
+        /> */}
 
-         <Route
-          path="/production"
-          element={<ProductionPage/>}
-        />
-      </Route>
+      {/*Start Product Report Layout*/}
+      <Route
+        path="/production-report-day"
+        element={
+          <ProductReportLayout>
+            <ProductionReportDay />
+          </ProductReportLayout>
+        }
+      />
+
+      {/*End Product Report Layout*/}
+      <Route path="/production" element={<ProductionPage />} />
+    </Route>
     <Route path="*" element={<NotFoundPage />} />
   </Routes>
 );
