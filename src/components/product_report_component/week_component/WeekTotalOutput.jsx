@@ -9,16 +9,16 @@ import {
   CircularProgress,
   Typography,
 } from "@mui/material";
-import { fetchDailyTotalOutput } from "@/apis/product_report_api/DayAPI";
+import { fetchWeekTotalOutput } from "@/apis/product_report_api/WeekAPI";
 import dayjs from "dayjs";
-import { setLoading, setError } from "@/redux/loading/loadingSlice";
+import { setLoading, setError } from "@/redux/data_redux/WeekReportSlice";
 
-const DailyTotalOutputChart = () => {
+const WeekTotalOutputChart = () => {
   const dispatch = useDispatch();
   const { chartData, loading, error } = useSelector((state) => ({
-    chartData: state.loading.chartData, // Lấy chartData từ state của Redux
-    loading: state.loading.loading,
-    error: state.loading.error,
+    chartData: state.weekreport.chartData, // Lấy chartData từ state của Redux
+    loading: state.weekreport.loading,
+    error: state.weekreport.error,
   }));
 
   const [selectedDate, setSelectedDate] = useState(dayjs());
@@ -29,7 +29,7 @@ const DailyTotalOutputChart = () => {
       try {
         const year = selectedDate.year();
         const month = selectedDate.month() + 1; // month() returns 0-11
-        await dispatch(fetchDailyTotalOutput(year, month)); // Fetch data through dispatch
+        await dispatch(fetchWeekTotalOutput(year, month)); // Fetch data through dispatch
         dispatch(setLoading(false)); // End loading
       } catch (error) {
         dispatch(setError(error.toString())); // Log error to Redux
@@ -44,9 +44,10 @@ const DailyTotalOutputChart = () => {
       type: "column",
       marginTop: 100,
       marginLeft: 0,
+      marginRight: 0,
     },
     title: {
-      text: "DAILY TOTAL OUTPUT",
+      text: "WEEKLY TOTAL OUTPUT",
       align: "center",
       style: {
         fontSize: "16px",
@@ -55,27 +56,28 @@ const DailyTotalOutputChart = () => {
     },
     legend: {
       layout: "vertical",
-      align: "left", 
-      verticalAlign: "top",
-      borderColor: "#ccc", 
-      borderWidth: 2, 
-      backgroundColor: "white", 
+      align: "left", // Đặt legend về giữa
+      verticalAlign: "top", // Đặt lên trên biểu đồ
+
+      borderColor: "#ccc", // Màu viền
+      borderWidth: 2, // Độ dày viền
+      backgroundColor: "white", // Màu nền cho hộp chứa series
       itemStyle: {
-        fontSize: "14px", 
+        fontSize: "10px", // Cỡ chữ cho tên series
         fontWeight: "bold",
       },
       itemHoverStyle: {
-        color: "#f44336", 
+        color: "#f44336", // Màu chữ khi di chuột vào tên series
       },
-      itemDistance: 10, 
+      itemDistance: 10, // Khoảng cách giữa các mục trong legend
     },
     xAxis: {
-      categories: [...(chartData?.categories || [])], 
-      labels: {
+      categories: [...(chartData?.categories || [])], // Sử dụng categories từ dữ liệu đã xử lý
+      labels:{
         style: {
-          fontSize: "8px",
-        },
-      },
+          fontSize: "10px"
+        }
+      }
     },
     yAxis: {
       title: {
@@ -85,7 +87,7 @@ const DailyTotalOutputChart = () => {
         enabled: true,
         style: {
             color: "black",
-            fontSize: "7px", // Font chữ nhỏ hơn cho stack labels
+            fontSize: "10px", // Font chữ nhỏ hơn cho stack labels
         },
     },
     lineWidth: 0,
@@ -97,11 +99,11 @@ const DailyTotalOutputChart = () => {
     },
     plotOptions: {
       column: {
-        stacking: "normal",
+        stacking: "normal", // Hiển thị các cột xếp chồng
         dataLabels: {
           enabled: true,
           style: {
-            fontSize: "8px",
+            fontSize: "10px",
             fontWeight: "bold",
           },
         },
@@ -110,39 +112,38 @@ const DailyTotalOutputChart = () => {
     series: [
       {
         name: "Unreach",
-        data: [...(chartData.unachieved || [])], 
-        color: "#f44336",
+        data: [...(chartData.unachieved || [])], // Giá trị "Unachieved"
+        color: "#f44336", // Màu cho Unachieved
       },
       {
         name: "Actual",
-        data: [...(chartData.actual || [])], 
-        color: "#4caf50",
+        data: [...(chartData.actual || [])], // Giá trị "Actual"
+        color: "#4caf50", // Màu cho Actual
       },
-      // {
-      //   name: "Target",
-      //   type: "scatter",
-      //   data: [...(chartData.Target || [])], 
-      //   marker: {
-      //     enabled: false,
-      //   },
-      //   dataLabels: {
-      //     enabled: true,
-      //     formatter: function () {
-      //       return this.y.toLocaleString();
-      //     },
-      //     style: {
-      //       fontSize: "12px",
-      //       fontWeight: "bold",
-      //       color: "#000",
-      //     },
-      //   },
-      // },
+      {
+        name: "Target",
+        type: "scatter", // Sử dụng scatter để hiển thị giá trị target
+        data: [...(chartData.Target || [])],
+        marker: {
+          enabled: false, // Hiển thị điểm trên đồ thị
+        },
+        dataLabels: {
+          enabled: true,
+          formatter: function () {
+            return this.y.toLocaleString();
+          },
+          style: {
+            fontSize: "10px",
+            fontWeight: "bold",
+            color: "#000", // Màu chữ
+          },
+        },
+      },
     ],
     credits: {
       enabled: false,
     },
   };
-  
 
   return (
     <Card
@@ -175,4 +176,4 @@ const DailyTotalOutputChart = () => {
   );
 };
 
-export default DailyTotalOutputChart;
+export default WeekTotalOutputChart;

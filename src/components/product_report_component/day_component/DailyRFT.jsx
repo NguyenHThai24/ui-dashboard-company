@@ -43,8 +43,8 @@ const DailyRFT = () => {
     chart: {
       type: "area",
       marginTop: 100,
-      marginLeft: 50,
-      marginRight: 50,
+      marginLeft: 0,
+      marginRight: 0,
     },
     title: {
       text: "DAILY RFT",
@@ -63,7 +63,7 @@ const DailyRFT = () => {
       borderWidth: 2,
       backgroundColor: "white",
       itemStyle: {
-        fontSize: "14px",
+        fontSize: "8px",
         fontWeight: "bold",
       },
       itemHoverStyle: {
@@ -72,7 +72,12 @@ const DailyRFT = () => {
       itemDistance: 10,
     },
     xAxis: {
-      categories: chartDataDailyRFT?.date,
+      categories: [...(chartDataDailyRFT?.date || [])],
+      labels: {
+        style: {
+          fontSize: "8px"
+        }
+      }
     },
     yAxis: {
       visible: false,
@@ -81,7 +86,7 @@ const DailyRFT = () => {
     series: [
       {
         name: "Actual",
-        data: chartDataDailyRFT.RFT,
+        data: [...(chartDataDailyRFT.RFT || [])],
         marker: {
           enabled: true,
           radius: 4,
@@ -100,7 +105,7 @@ const DailyRFT = () => {
           style: {
             color: "#000", // Màu chữ
             fontWeight: "bold",
-            fontSize: "12px",
+            fontSize: "8px",
           },
           formatter: function () {
             return this.y.toFixed(2) + "%"; // Hiển thị giá trị với 2 chữ số thập phân

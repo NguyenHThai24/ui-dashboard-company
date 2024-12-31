@@ -45,14 +45,19 @@ const DailyStitchingAssemblyMP = () => {
     chart: {
       type: "column",
       marginTop: 100,
-      marginLeft: 50,
-      marginRight: 50,
+      marginLeft: 0,
+      marginRight: 0,
     },
     title: {
       text: "DAILY STITCHING & ASSEMBLY MP",
     },
     xAxis: {
-      categories: chartDataDailySAMP.outputdate,
+      categories: [...(chartDataDailySAMP?.outputdate || [])],
+      labels: {
+        style: {
+          fontSize: "8px",
+        },
+      },
     },
     yAxis: {
       visible: false, // Ẩn trục Y
@@ -65,7 +70,7 @@ const DailyStitchingAssemblyMP = () => {
         dataLabels: {
           enabled: true, // Hiển thị giá trị trên đầu cột
           style: {
-            fontSize: "12px",
+            fontSize: "8px",
             fontWeight: "bold",
             color: "#000000",
           },
@@ -75,7 +80,7 @@ const DailyStitchingAssemblyMP = () => {
     series: [
       {
         name: "Worker",
-        data: chartDataDailySAMP.worker, // Dữ liệu của cột Y
+        data: [...(chartDataDailySAMP.worker || [])], // Dữ liệu của cột Y
       },
     ],
 
@@ -86,10 +91,10 @@ const DailyStitchingAssemblyMP = () => {
   //
   return (
     <Card
-      sx={{
-        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.5)", // shadow: X-offset, Y-offset, blurRadius, màu sắc
-        borderRadius: 2, // border radius cho card
-      }}
+      // sx={{
+      //   boxShadow: "0 4px 20px rgba(0, 0, 0, 0.5)", // shadow: X-offset, Y-offset, blurRadius, màu sắc
+      //   borderRadius: 2, // border radius cho card
+      // }}
     >
       <CardContent>
         {loading ? (

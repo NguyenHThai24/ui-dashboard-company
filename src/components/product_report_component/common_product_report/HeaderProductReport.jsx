@@ -2,20 +2,41 @@ import { useState } from "react";
 import dayjs from "dayjs";
 import Calendar from "@/components/product_report_component/common_product_report/Calendar";
 import { Button, Grid } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const HeaderProductReport = () => {
   const [selectedDate, setSelectedDate] = useState(dayjs());
+  const [selectedButton, setSelectedButton] = useState(null); // Track selected button
+  const navigate = useNavigate();
 
   const handleDateChange = (date) => {
     if (date) {
       setSelectedDate(date);
-      //console.log("Selected Date:", date.format("MM-YYYY")); // Đăng nhật ký dữ liệu
     }
   };
 
   const handleSearchClick = () => {
     // Function to handle search logic based on selectedDate
-    console.log("Selected Date:", selectedDate.format("MM-YYYY")); // Use this date to filter data
+    //console.log("Selected Date:", selectedDate.format("MM-YYYY")); // Use this date to filter data
+  };
+
+  const handleButtonClick = (buttonType) => {
+    setSelectedButton(buttonType); // Update the selected button
+  };
+
+  const handleDayClick = () => {
+    handleButtonClick("day");
+    navigate("/production-report-day");
+  };
+
+  const handleWeekClick = () => {
+    handleButtonClick("week");
+    navigate("/production-report-week");
+  };
+
+  const handleMonthClick = () => {
+    handleButtonClick("month");
+    navigate("/production-report-month");
   };
 
   return (
@@ -31,13 +52,14 @@ const HeaderProductReport = () => {
         <Grid item>
           <Button
             sx={{
-              bgcolor: "#049962",
+              bgcolor:"#00b488", // Change color if selected
               color: "white",
               width: "100px",
               height: "40px",
               borderRadius: "5px",
               fontWeight: "bold",
             }}
+            onClick={() => handleButtonClick("factory")} // Handle button click
           >
             FACTORY
           </Button>
@@ -45,13 +67,14 @@ const HeaderProductReport = () => {
         <Grid item>
           <Button
             sx={{
-              bgcolor: "#838B8B",
+              bgcolor: "#555555", 
               color: "white",
               width: "100px",
               height: "40px",
               borderRadius: "5px",
               fontWeight: "bold",
             }}
+            onClick={() => handleButtonClick("building")} // Handle button click
           >
             BUILDING
           </Button>
@@ -59,14 +82,14 @@ const HeaderProductReport = () => {
         <Grid item>
           <Button
             sx={{
-              bgcolor: "#049962",
+              bgcolor: "#00aff0", 
               color: "white",
               width: "100px",
               height: "40px",
               borderRadius: "5px",
               fontWeight: "bold",
             }}
-            onClick={handleSearchClick} // Add the click event handler
+            onClick={handleSearchClick}
           >
             SEARCH
           </Button>
@@ -77,13 +100,14 @@ const HeaderProductReport = () => {
         <Grid item>
           <Button
             sx={{
-              bgcolor: "#A0A0A0",
+              bgcolor: selectedButton === "month" ? "#363636" : "#B7B7B7", // Change color if selected
               color: "white",
               width: "100px",
               height: "40px",
               borderRadius: "5px",
               fontWeight: "bold",
             }}
+            onClick={handleMonthClick}
           >
             MONTH
           </Button>
@@ -91,13 +115,14 @@ const HeaderProductReport = () => {
         <Grid item>
           <Button
             sx={{
-              bgcolor: "#A0A0A0",
+              bgcolor: selectedButton === "week" ? "#363636" : "#B7B7B7", // Change color if selected
               color: "white",
               width: "100px",
               height: "40px",
               borderRadius: "5px",
               fontWeight: "bold",
             }}
+            onClick={handleWeekClick}
           >
             WEEK
           </Button>
@@ -105,13 +130,14 @@ const HeaderProductReport = () => {
         <Grid item>
           <Button
             sx={{
-              bgcolor: "#363636",
+              bgcolor: selectedButton === "day" ? "#363636" : "#B7B7B7", // Change color if selected
               color: "white",
               width: "100px",
               height: "40px",
               borderRadius: "5px",
               fontWeight: "bold",
             }}
+            onClick={handleDayClick}
           >
             DAY
           </Button>

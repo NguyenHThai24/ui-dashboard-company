@@ -9,16 +9,16 @@ import {
   CircularProgress,
   Typography,
 } from "@mui/material";
-import { fetchDailyEfficiency } from "@/apis/product_report_api/DayAPI";
+import { fetchMonthEfficiency } from "@/apis/product_report_api/MonthAPI";
 import dayjs from "dayjs";
-import { setLoading, setError } from "@/redux/loading/loadingSlice";
+import { setLoading, setError } from "@/redux/data_redux/MonthReportSlice";
 
-const DailyEfficiency = () => {
+const MonthEfficiency = () => {
   const dispatch = useDispatch();
-  const { chartDataDailyEfficiency, loading, error } = useSelector((state) => ({
-    chartDataDailyEfficiency: state.loading.chartDataDailyEfficiency, // Lấy chartDataDailyEfficiency từ state của Redux
-    loading: state.loading.loading,
-    error: state.loading.error,
+  const { chartDataMonthEfficiency, loading, error } = useSelector((state) => ({
+    chartDataMonthEfficiency: state.monthreport.chartDataMonthEfficiency, // Lấy chartDataDailyEfficiency từ state của Redux
+    loading: state.monthreport.loading,
+    error: state.monthreport.error,
   }));
 
   const [selectedDate, setSelectedDate] = useState(dayjs());
@@ -29,7 +29,7 @@ const DailyEfficiency = () => {
       try {
         const year = selectedDate.year();
         const month = selectedDate.month() + 1; // month() trả về từ 0-11
-        await dispatch(fetchDailyEfficiency(year, month)); // Fetch dữ liệu qua dispatch
+        await dispatch(fetchMonthEfficiency(year, month)); // Fetch dữ liệu qua dispatch
         dispatch(setLoading(false)); // Kết thúc loading
       } catch (error) {
         dispatch(setError(error.toString())); // Lưu lỗi vào Redux
@@ -47,7 +47,7 @@ const DailyEfficiency = () => {
       marginRight: 0,
     },
     title: {
-      text: "DAILY EFFICIENCY",
+      text: "MONTHLY EFFICIENCY",
       align: "center",
       style: {
         fontSize: "16px",
@@ -62,7 +62,7 @@ const DailyEfficiency = () => {
       borderWidth: 2,
       backgroundColor: "white",
       itemStyle: {
-        fontSize: "8px",
+        fontSize: "14px",
         fontWeight: "bold",
       },
       itemHoverStyle: {
@@ -71,12 +71,7 @@ const DailyEfficiency = () => {
       itemDistance: 10,
     },
     xAxis: {
-      categories: [...(chartDataDailyEfficiency?.date || [])],
-      labels:{
-        style: {
-          fontSize: "8px"
-        }
-      }
+      categories: chartDataMonthEfficiency?.Month,
     },
     yAxis: {
       visible: false,
@@ -85,7 +80,7 @@ const DailyEfficiency = () => {
     series: [
       {
         name: "Actual",
-        data: [...(chartDataDailyEfficiency.Factory_EFF || [])],
+        data: chartDataMonthEfficiency.Factory_EFF,
         marker: {
           enabled: true,
           radius: 4,
@@ -104,7 +99,7 @@ const DailyEfficiency = () => {
           style: {
             color: "#000", // Màu chữ
             fontWeight: "bold",
-            fontSize: "8px",
+            fontSize: "12px",
           },
           formatter: function () {
             return this.y.toFixed(2) + "%"; // Hiển thị giá trị với 2 chữ số thập phân
@@ -113,7 +108,7 @@ const DailyEfficiency = () => {
       },
       {
         name: "Baseline", // Tên của đường trung bình
-        data: Array(chartDataDailyEfficiency?.date.length).fill(65), // Giá trị cố định 65% cho tất cả các điểm trên trục x
+        data: Array(chartDataMonthEfficiency?.Month.length).fill(62.5), // Giá trị cố định 65% cho tất cả các điểm trên trục x
         marker: {
           enabled: false, // Không hiển thị marker cho đường này
         },
@@ -167,4 +162,4 @@ const DailyEfficiency = () => {
   );
 };
 
-export default DailyEfficiency;
+export default MonthEfficiency;

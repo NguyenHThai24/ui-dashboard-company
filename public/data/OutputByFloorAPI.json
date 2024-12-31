@@ -1,0 +1,32 @@
+[
+  {
+    "floor": "A-F1",
+    "Target": 100,
+    "actual": 20
+  },
+  {
+    "floor": "C-F2",
+    "Target": 190,
+    "actual": 120
+  },
+  {
+    "floor": "D-F1",
+    "Target": 175,
+    "actual": 110
+  },
+  {
+    "floor": "D-F2",
+    "Target": 160,
+    "actual": 100
+  },
+  {
+    "floor": "E-F1",
+    "Target": 130,
+    "actual": 70
+  },
+  {
+    "floor": "E-F2",
+    "Target": 125,
+    "actual": 50
+  }
+]

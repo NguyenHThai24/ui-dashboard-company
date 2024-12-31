@@ -9,16 +9,16 @@ import {
   CircularProgress,
   Typography,
 } from "@mui/material";
-import { fetchDailyEfficiency } from "@/apis/product_report_api/DayAPI";
+import { fetchWeekRFT } from "@/apis/product_report_api/WeekAPI";
 import dayjs from "dayjs";
-import { setLoading, setError } from "@/redux/loading/loadingSlice";
+import { setLoading, setError } from "@/redux/data_redux/WeekReportSlice";
 
-const DailyEfficiency = () => {
+const WeekRFT = () => {
   const dispatch = useDispatch();
-  const { chartDataDailyEfficiency, loading, error } = useSelector((state) => ({
-    chartDataDailyEfficiency: state.loading.chartDataDailyEfficiency, // Lấy chartDataDailyEfficiency từ state của Redux
-    loading: state.loading.loading,
-    error: state.loading.error,
+  const { chartDataWeekRFT, loading, error } = useSelector((state) => ({
+    chartDataWeekRFT: state.weekreport.chartDataWeekRFT, // Lấy chartDataWeekRFT từ state của Redux
+    loading: state.weekreport.loading,
+    error: state.weekreport.error,
   }));
 
   const [selectedDate, setSelectedDate] = useState(dayjs());
@@ -29,7 +29,7 @@ const DailyEfficiency = () => {
       try {
         const year = selectedDate.year();
         const month = selectedDate.month() + 1; // month() trả về từ 0-11
-        await dispatch(fetchDailyEfficiency(year, month)); // Fetch dữ liệu qua dispatch
+        await dispatch(fetchWeekRFT(year, month)); // Fetch dữ liệu qua dispatch
         dispatch(setLoading(false)); // Kết thúc loading
       } catch (error) {
         dispatch(setError(error.toString())); // Lưu lỗi vào Redux
@@ -47,7 +47,7 @@ const DailyEfficiency = () => {
       marginRight: 0,
     },
     title: {
-      text: "DAILY EFFICIENCY",
+      text: "WEEK RFT",
       align: "center",
       style: {
         fontSize: "16px",
@@ -59,10 +59,11 @@ const DailyEfficiency = () => {
       align: "left",
       verticalAlign: "top",
       borderColor: "#ccc",
+      marginBottom: 50,
       borderWidth: 2,
       backgroundColor: "white",
       itemStyle: {
-        fontSize: "8px",
+        fontSize: "10px",
         fontWeight: "bold",
       },
       itemHoverStyle: {
@@ -71,10 +72,10 @@ const DailyEfficiency = () => {
       itemDistance: 10,
     },
     xAxis: {
-      categories: [...(chartDataDailyEfficiency?.date || [])],
-      labels:{
+      categories: [...(chartDataWeekRFT?.week || [])],
+      labels: {
         style: {
-          fontSize: "8px"
+          fontSize: "10px"
         }
       }
     },
@@ -85,7 +86,7 @@ const DailyEfficiency = () => {
     series: [
       {
         name: "Actual",
-        data: [...(chartDataDailyEfficiency.Factory_EFF || [])],
+        data: [...(chartDataWeekRFT.RFT || [])],
         marker: {
           enabled: true,
           radius: 4,
@@ -94,8 +95,8 @@ const DailyEfficiency = () => {
         fillColor: {
           linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
           stops: [
-            [0, "rgba(0, 178, 238, 0.8)"],
-            [1, "rgba(0, 178, 238, 0.2)"],
+            [0, "rgba(65, 0, 147, 0.6)"],
+            [1, "rgba(65, 0, 147,  0.2)"],
           ],
         },
         lineColor: "#00688B",
@@ -104,7 +105,7 @@ const DailyEfficiency = () => {
           style: {
             color: "#000", // Màu chữ
             fontWeight: "bold",
-            fontSize: "8px",
+            fontSize: "10px",
           },
           formatter: function () {
             return this.y.toFixed(2) + "%"; // Hiển thị giá trị với 2 chữ số thập phân
@@ -113,7 +114,7 @@ const DailyEfficiency = () => {
       },
       {
         name: "Baseline", // Tên của đường trung bình
-        data: Array(chartDataDailyEfficiency?.date.length).fill(65), // Giá trị cố định 65% cho tất cả các điểm trên trục x
+        data: Array(chartDataWeekRFT?.week.length).fill(90), // Giá trị cố định 65% cho tất cả các điểm trên trục x
         marker: {
           enabled: false, // Không hiển thị marker cho đường này
         },
@@ -121,11 +122,7 @@ const DailyEfficiency = () => {
         dashStyle: "ShortDash", // Kiểu nét đứt
         enableMouseTracking: false, // Tắt sự kiện di chuột trên đường này
         dataLabels: {
-          enabled: true, // Hiển thị dữ liệu trên đường trung bình
-          align: "center", // Căn chỉnh giá trị nằm ở giữa đường
-          formatter: function () {
-            return this.y.toFixed(2) + "%"; // Hiển thị giá trị với 2 chữ số thập phân
-          },
+          enabled: false, // Không hiển thị dữ liệu trên đường trung bình
         },
         fillColor: "none",
       },
@@ -138,10 +135,10 @@ const DailyEfficiency = () => {
 
   return (
     <Card
-      sx={{
-        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.5)", // shadow: X-offset, Y-offset, blurRadius, màu sắc
-        borderRadius: 2, // border radius cho card
-      }}
+      // sx={{
+      //   boxShadow: "0 4px 20px rgba(0, 0, 0, 0.5)", // shadow: X-offset, Y-offset, blurRadius, màu sắc
+      //   borderRadius: 2, // border radius cho card
+      // }}
     >
       <CardContent>
         {loading ? (
@@ -167,4 +164,4 @@ const DailyEfficiency = () => {
   );
 };
 
-export default DailyEfficiency;
+export default WeekRFT;

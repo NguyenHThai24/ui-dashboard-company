@@ -1,0 +1,52 @@
+[
+    {
+        "floor": "A-F1",
+        "stitching": "141.61",
+        "assembly": "20"
+    },
+    {
+        "floor": "A-F2",
+        "stitching": "135.22",
+        "assembly": "25"
+    },
+    {
+        "floor": "A-F3",
+        "stitching": "150.45",
+        "assembly": "30"
+    },
+    {
+        "floor": "B-F1",
+        "stitching": "125.10",
+        "assembly": "18"
+    },
+    {
+        "floor": "B-F2",
+        "stitching": "138.33",
+        "assembly": "22"
+    },
+    {
+        "floor": "B-F3",
+        "stitching": "142.67",
+        "assembly": "28"
+    },
+    {
+        "floor": "C-F1",
+        "stitching": "132.89",
+        "assembly": "21"
+    },
+    {
+        "floor": "C-F2",
+        "stitching": "148.56",
+        "assembly": "27"
+    },
+    {
+        "floor": "C-F3",
+        "stitching": "155.34",
+        "assembly": "32"
+    },
+    {
+        "floor": "D-F1",
+        "stitching": "140.78",
+        "assembly": "26"
+    }
+]
