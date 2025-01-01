@@ -64,6 +64,7 @@ const DailyStitchingAssemblyMP = () => {
       labels: {
         style: {
           fontSize: "10px",
+          fontWeight: 600,
         },
       },
     },
@@ -79,7 +80,7 @@ const DailyStitchingAssemblyMP = () => {
           enabled: true, // Hiển thị giá trị trên đầu cột
           style: {
             fontSize: "10px",
-            fontWeight: "bold",
+            fontWeight: 600,
             color: "#000000",
           },
         },

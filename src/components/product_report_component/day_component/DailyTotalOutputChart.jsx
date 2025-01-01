@@ -74,13 +74,13 @@ const DailyTotalOutputChart = ({ selectedDate }) => {
     },
     xAxis: {
       categories: (chartData?.categories || []).slice(0, 26), // Chỉ lấy 26 cột
-      labels: { style: { fontSize: "10px" } },
+      labels: { style: { fontSize: "10px", fontWeight: 600 } },
     },
     yAxis: {
       title: { text: "" },
       stackLabels: {
         enabled: true,
-        style: { color: "black", fontSize: "10px" },
+        style: { color: "black", fontSize: "10px", fontWeight: 600 },
       },
       labels: { enabled: false },
     },
@@ -97,7 +97,7 @@ const DailyTotalOutputChart = ({ selectedDate }) => {
       {
         name: "Unreach",
         data: (chartData?.unachieved || []).slice(0, 26),
-        color: "#f39c12",
+        color: "#EF5350 ",
       },
       {
         name: "Actual",

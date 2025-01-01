@@ -59,13 +59,13 @@ const DailyEfficiency = () => {
           const lineWidth = 6;
           const lineHeight = 30;
           const lineX = textX - 20;
-          const averageY = chart.plotTop - 100; // Đẩy "AVERAGE" xuống dưới
-          const currentY = chart.plotTop - 55; // Đẩy "CURRENT" xuống dưới
+          const averageY = chart.plotTop - 120; // Đẩy "AVERAGE" xuống dưới
+          const currentY = chart.plotTop - 95; // Đẩy "CURRENT" xuống dưới
 
           chart.renderer
             .rect(lineX, averageY, lineWidth, lineHeight)
             .attr({
-              fill: "#4CAF50",
+              fill: "#0000FF",
               radius: 2,
             })
             .add();
@@ -86,7 +86,7 @@ const DailyEfficiency = () => {
           chart.renderer
             .rect(lineX, currentY, lineWidth, lineHeight)
             .attr({
-              fill: "#2196F3",
+              fill: "#0000FF",
               radius: 2,
             })
             .add();
@@ -131,7 +131,7 @@ const DailyEfficiency = () => {
         fontWeight: "bold",
       },
       itemHoverStyle: {
-        color: "#f44336",
+        color: "#0000FF",
       },
       itemDistance: 10,
     },
@@ -140,6 +140,7 @@ const DailyEfficiency = () => {
       labels: {
         style: {
           fontSize: "10px",
+          fontWeight: 600,
         },
       },
     },
@@ -160,7 +161,7 @@ const DailyEfficiency = () => {
           linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
           stops: [
             [0, "rgba(0, 53, 102, 0.6)"],
-            [1, "rgba(0, 53, 102, 0.1)"],
+            [1, "rgba(0, 53, 102, 0.4)"],
           ],
         },
         lineColor: "#003566",
@@ -168,7 +169,7 @@ const DailyEfficiency = () => {
           enabled: true,
           style: {
             color: "#000",
-            fontWeight: "bold",
+            fontWeight: 600,
             fontSize: "10px",
           },
           formatter: function () {
@@ -179,7 +180,7 @@ const DailyEfficiency = () => {
       {
         name: "Baseline",
         data: Array(chartDataDailyEfficiency?.date.length).fill(65),
-        lineColor: "#003566",
+        lineColor: "#0000FF",
         dashStyle: "ShortDash",
         dataLabels: {
           enabled: true,

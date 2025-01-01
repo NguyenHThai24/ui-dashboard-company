@@ -25,10 +25,20 @@ import iconFG from "@public/images/Icon-FG.png";
 import iconKaizen from "@public/images/Icon-Kaizen.png";
 import iconTierMeeting from "@public/images/Icon-Tier-Meeting.png";
 import iconDownTime from "@public/images/Icon-Down-Time.png";
+import { useSelector } from "react-redux";
+import { useTranslations } from "@/config/useTranslations";
 
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [expanded, setExpanded] = useState({});
+
+  // sử dụng language
+  const language = useSelector((state) => state.language.language);
+  const translations = useTranslations(language);
+
+  console.log(translations); // Xem log để kiểm tra dữ liệu ngôn ngữ
+
+  console.log("Importing language file:", `@/languages/${language}.json`);
 
   const toggleCollapsed = () => {
     setCollapsed((prev) => {
@@ -49,9 +59,9 @@ const Sidebar = () => {
   const items = [
     {
       key: "1",
-      label: "Production",
+      label: <Link to=""> Productions</Link>,
       icon: iconProduction,
-      link: "",
+
       children: [
         {
           key: "1.1",

@@ -51,7 +51,7 @@ const HeaderProductReport = () => {
         <Grid item>
           <Button
             sx={{
-              bgcolor: "#00b488", // Change color if selected
+              bgcolor: "#003566", // Change color if selected
               color: "white",
               width: "100px",
               height: "40px",
@@ -66,7 +66,7 @@ const HeaderProductReport = () => {
         <Grid item>
           <Button
             sx={{
-              bgcolor: "#555555",
+              bgcolor: "#229954",
               color: "white",
               width: "100px",
               height: "40px",
