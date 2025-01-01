@@ -51,12 +51,12 @@ const Sidebar = () => {
       key: "1",
       label: "Production",
       icon: iconProduction,
-      link: "/",
+      link: "",
       children: [
         {
           key: "1.1",
           label: "FACTORY",
-          link: "/",
+          link: "",
           children: [
             {
               key: "1.1.1",
@@ -143,7 +143,7 @@ const Sidebar = () => {
             justifyContent: "flex-start",
             pl: 2 + level * 2,
             backgroundColor:
-              level > 0 ? "rgba(255, 255, 255, 0.1)" : "transparent",
+              level > 0 ? "rgba(230, 231, 242, 1)" : "transparent",
           }}
         >
           {level === 0 && (
@@ -152,6 +152,7 @@ const Sidebar = () => {
                 minWidth: collapsed ? "auto" : "36px",
                 justifyContent: "center",
                 display: "flex",
+                color: "#020414", // Màu giống màu chữ
               }}
             >
               <Box
@@ -162,6 +163,8 @@ const Sidebar = () => {
                   width: 30,
                   height: 30,
                   objectFit: "cover",
+                  filter:
+                    "invert(8%) sepia(15%) saturate(1000%) hue-rotate(180deg) brightness(50%) contrast(150%)",
                 }}
               />
             </ListItemIcon>
@@ -175,7 +178,11 @@ const Sidebar = () => {
           />
           {!collapsed &&
             item.children &&
-            (expanded[item.key] ? <ExpandLessIcon /> : <ExpandMoreIcon />)}
+            (expanded[item.key] ? (
+              <ExpandLessIcon sx={{ color: "#020414" }} /> // Màu chữ
+            ) : (
+              <ExpandMoreIcon sx={{ color: "#020414" }} /> // Màu chữ
+            ))}
         </ListItem>
         {item.children && (
           <Collapse
@@ -201,8 +208,8 @@ const Sidebar = () => {
         [`& .MuiDrawer-paper`]: {
           width: collapsed ? 72 : 250,
           boxSizing: "border-box",
-          backgroundColor: "#25364b",
-          color: "white",
+          backgroundColor: "#ffffff",
+          //color: "#141947",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
@@ -251,7 +258,7 @@ const Sidebar = () => {
         <IconButton
           onClick={toggleCollapsed}
           sx={{
-            color: "white",
+            color: "#020414",
           }}
         >
           {collapsed ? <ArrowForwardIcon /> : <ArrowBackIcon />}

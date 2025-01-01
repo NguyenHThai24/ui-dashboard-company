@@ -49,9 +49,14 @@ const DailyRFT = () => {
     title: {
       text: "DAILY RFT",
       align: "center",
+
       style: {
-        fontSize: "16px",
+        fontSize: "20px",
         fontWeight: "bold",
+        fontFamily: "'Roboto', sans-serif", // Font chữ đẹp và phổ biến
+        color: "#333", // Màu sắc chữ tinh tế
+        textShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)", // Bóng chữ nhẹ
+        letterSpacing: "1.5px", // Tăng khoảng cách giữa các chữ cái
       },
     },
     legend: {
@@ -75,9 +80,9 @@ const DailyRFT = () => {
       categories: [...(chartDataDailyRFT?.date || [])],
       labels: {
         style: {
-          fontSize: "8px"
-        }
-      }
+          fontSize: "8px",
+        },
+      },
     },
     yAxis: {
       visible: false,
@@ -135,10 +140,10 @@ const DailyRFT = () => {
 
   return (
     <Card
-      sx={{
-        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.5)", // shadow: X-offset, Y-offset, blurRadius, màu sắc
-        borderRadius: 2, // border radius cho card
-      }}
+    // sx={{
+    //   boxShadow: "5px 5px 5px 5px rgba(0, 0, 0, 0.5)", // shadow: X-offset, Y-offset, blurRadius, màu sắc
+    //   borderRadius: 2, // border radius cho card
+    // }}
     >
       <CardContent>
         {loading ? (

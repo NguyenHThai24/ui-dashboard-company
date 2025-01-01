@@ -50,12 +50,20 @@ const DailyStitchingAssemblyMP = () => {
     },
     title: {
       text: "DAILY STITCHING & ASSEMBLY MP",
+      style: {
+        fontSize: "20px",
+        fontWeight: "bold",
+        fontFamily: "'Roboto', sans-serif", // Font chữ đẹp và phổ biến
+        color: "#333", // Màu sắc chữ tinh tế
+        textShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)", // Bóng chữ nhẹ
+        letterSpacing: "1.5px", // Tăng khoảng cách giữa các chữ cái
+      },
     },
     xAxis: {
       categories: [...(chartDataDailySAMP?.outputdate || [])],
       labels: {
         style: {
-          fontSize: "8px",
+          fontSize: "10px",
         },
       },
     },
@@ -70,7 +78,7 @@ const DailyStitchingAssemblyMP = () => {
         dataLabels: {
           enabled: true, // Hiển thị giá trị trên đầu cột
           style: {
-            fontSize: "8px",
+            fontSize: "10px",
             fontWeight: "bold",
             color: "#000000",
           },
@@ -81,6 +89,7 @@ const DailyStitchingAssemblyMP = () => {
       {
         name: "Worker",
         data: [...(chartDataDailySAMP.worker || [])], // Dữ liệu của cột Y
+        color: "#003566",
       },
     ],
 
@@ -91,10 +100,10 @@ const DailyStitchingAssemblyMP = () => {
   //
   return (
     <Card
-      // sx={{
-      //   boxShadow: "0 4px 20px rgba(0, 0, 0, 0.5)", // shadow: X-offset, Y-offset, blurRadius, màu sắc
-      //   borderRadius: 2, // border radius cho card
-      // }}
+    // sx={{
+    //   boxShadow: "0 4px 20px rgba(0, 0, 0, 0.5)", // shadow: X-offset, Y-offset, blurRadius, màu sắc
+    //   borderRadius: 2, // border radius cho card
+    // }}
     >
       <CardContent>
         {loading ? (
@@ -109,7 +118,9 @@ const DailyStitchingAssemblyMP = () => {
             <CircularProgress />
           </Box>
         ) : error ? (
-          <Typography>Error: {error}</Typography>
+          <Typography color="error" align="center">
+            Error: {error}
+          </Typography>
         ) : (
           <HighchartsReact highcharts={Highcharts} options={options} />
         )}

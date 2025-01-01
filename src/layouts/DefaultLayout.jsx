@@ -9,9 +9,9 @@ const DefaultLayout = () => {
   return (
     <div className="flex h-screen">
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
-      <div className="flex flex-col h-full w-full bg-red-50 px-4">
+      <div className="flex flex-col h-full w-full">
         <Navbar />
-        <div className="h-[100vh] border-t-2 w-full overflow-auto">
+        <div className="h-[100vh] border-t-2 w-full overflow-auto bg-[#e5e7e9]  px-4">
           <Outlet />
         </div>
       </div>

@@ -4,7 +4,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const Navbar = () => {
   return (
-    <Grid container sx={{ py: 1 }}>
+    <Grid container sx={{ py: 1, px: 2 }}>
       <Grid item xs={10}>
         <h1 className="font-bold text-5xl text-green-700">LHG</h1>
       </Grid>

@@ -10,147 +10,112 @@ import {
   Typography,
 } from "@mui/material";
 import { fetchDailyTotalOutput } from "@/apis/product_report_api/DayAPI";
-import dayjs from "dayjs";
 import { setLoading, setError } from "@/redux/loading/loadingSlice";
 
-const DailyTotalOutputChart = () => {
+const DailyTotalOutputChart = ({ selectedDate }) => {
   const dispatch = useDispatch();
   const { chartData, loading, error } = useSelector((state) => ({
-    chartData: state.loading.chartData, // Lấy chartData từ state của Redux
+    chartData: state.loading.chartData,
     loading: state.loading.loading,
     error: state.loading.error,
   }));
 
-  const [selectedDate, setSelectedDate] = useState(dayjs());
-
   useEffect(() => {
     const fetchData = async () => {
-      dispatch(setLoading(true)); // Start loading
+      dispatch(setLoading(true));
       try {
         const year = selectedDate.year();
-        const month = selectedDate.month() + 1; // month() returns 0-11
-        await dispatch(fetchDailyTotalOutput(year, month)); // Fetch data through dispatch
-        dispatch(setLoading(false)); // End loading
-      } catch (error) {
-        dispatch(setError(error.toString())); // Log error to Redux
+        const month = selectedDate.month() + 1;
+        await dispatch(fetchDailyTotalOutput(year, month));
+        dispatch(setLoading(false));
+      } catch (err) {
+        dispatch(setError(err.toString()));
+        dispatch(setLoading(false));
       }
     };
 
     fetchData();
-  }, [selectedDate, dispatch]); // Watch for changes in selectedDate
+  }, [selectedDate, dispatch]);
 
   const options = {
     chart: {
       type: "column",
       marginTop: 100,
       marginLeft: 0,
+      marginRight: 0,
     },
     title: {
       text: "DAILY TOTAL OUTPUT",
       align: "center",
       style: {
-        fontSize: "16px",
+        fontSize: "20px",
         fontWeight: "bold",
+        fontFamily: "'Roboto', sans-serif", // Font chữ đẹp và phổ biến
+        color: "#333", // Màu sắc chữ tinh tế
+        textShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)", // Bóng chữ nhẹ
+        letterSpacing: "1.5px", // Tăng khoảng cách giữa các chữ cái
       },
     },
     legend: {
       layout: "vertical",
-      align: "left", 
+      align: "left",
       verticalAlign: "top",
-      borderColor: "#ccc", 
-      borderWidth: 2, 
-      backgroundColor: "white", 
+      borderColor: "#ccc",
+      borderWidth: 2,
+      backgroundColor: "white",
       itemStyle: {
-        fontSize: "14px", 
+        fontSize: "10px",
         fontWeight: "bold",
       },
       itemHoverStyle: {
-        color: "#f44336", 
+        color: "#f44336",
       },
-      itemDistance: 10, 
+      itemDistance: 10,
     },
     xAxis: {
-      categories: [...(chartData?.categories || [])], 
-      labels: {
-        style: {
-          fontSize: "8px",
-        },
-      },
+      categories: (chartData?.categories || []).slice(0, 26), // Chỉ lấy 26 cột
+      labels: { style: { fontSize: "10px" } },
     },
     yAxis: {
-      title: {
-        text: "",
-    },
-    stackLabels: {
+      title: { text: "" },
+      stackLabels: {
         enabled: true,
-        style: {
-            color: "black",
-            fontSize: "7px", // Font chữ nhỏ hơn cho stack labels
-        },
-    },
-    lineWidth: 0,
-    gridLineWidth: 0,
-    labels: {
-        enabled: false,
-        step: 1, 
-    },
+        style: { color: "black", fontSize: "10px" },
+      },
+      labels: { enabled: false },
     },
     plotOptions: {
       column: {
         stacking: "normal",
         dataLabels: {
           enabled: true,
-          style: {
-            fontSize: "8px",
-            fontWeight: "bold",
-          },
+          style: { fontSize: "10px", fontWeight: "semibold" },
         },
       },
     },
     series: [
       {
         name: "Unreach",
-        data: [...(chartData.unachieved || [])], 
-        color: "#f44336",
+        data: (chartData?.unachieved || []).slice(0, 26),
+        color: "#f39c12",
       },
       {
         name: "Actual",
-        data: [...(chartData.actual || [])], 
-        color: "#4caf50",
+        data: (chartData?.actual || []).slice(0, 26),
+        color: "#003566",
       },
-      // {
-      //   name: "Target",
-      //   type: "scatter",
-      //   data: [...(chartData.Target || [])], 
-      //   marker: {
-      //     enabled: false,
-      //   },
-      //   dataLabels: {
-      //     enabled: true,
-      //     formatter: function () {
-      //       return this.y.toLocaleString();
-      //     },
-      //     style: {
-      //       fontSize: "12px",
-      //       fontWeight: "bold",
-      //       color: "#000",
-      //     },
-      //   },
-      // },
+      {
+        name: "Target",
+        data: (chartData?.target || []).slice(0, 26), // Thêm dữ liệu Target
+        color: "#000", // Màu sắc cho Target
+        // visible: false, // Ẩn khỏi biểu đồ nhưng hiển thị trong legend
+      },
     ],
-    credits: {
-      enabled: false,
-    },
+    credits: { enabled: false },
   };
-  
 
   return (
-    <Card
-      // sx={{
-      //   boxShadow: "0 4px 20px rgba(0, 0, 0, 0.5)", // shadow: X-offset, Y-offset, blurRadius, màu sắc
-      //   borderRadius: 2, // border radius cho card
-      // }}
-    >
+    <Card>
       <CardContent>
         {loading ? (
           <Box

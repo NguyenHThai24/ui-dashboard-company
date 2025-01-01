@@ -2,13 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import {
-  Box,
-  Card,
-  CardContent,
-  CircularProgress,
-  Typography,
-} from "@mui/material";
+import { Card, CardContent, CircularProgress, Typography } from "@mui/material";
 import { fetchDailyEfficiency } from "@/apis/product_report_api/DayAPI";
 import dayjs from "dayjs";
 import { setLoading, setError } from "@/redux/loading/loadingSlice";
@@ -16,7 +10,7 @@ import { setLoading, setError } from "@/redux/loading/loadingSlice";
 const DailyEfficiency = () => {
   const dispatch = useDispatch();
   const { chartDataDailyEfficiency, loading, error } = useSelector((state) => ({
-    chartDataDailyEfficiency: state.loading.chartDataDailyEfficiency, // Lấy chartDataDailyEfficiency từ state của Redux
+    chartDataDailyEfficiency: state.loading.chartDataDailyEfficiency,
     loading: state.loading.loading,
     error: state.loading.error,
   }));
@@ -25,14 +19,14 @@ const DailyEfficiency = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      dispatch(setLoading(true)); // Bắt đầu loading
+      dispatch(setLoading(true));
       try {
         const year = selectedDate.year();
-        const month = selectedDate.month() + 1; // month() trả về từ 0-11
-        await dispatch(fetchDailyEfficiency(year, month)); // Fetch dữ liệu qua dispatch
-        dispatch(setLoading(false)); // Kết thúc loading
+        const month = selectedDate.month() + 1; // month() returns 0-11
+        await dispatch(fetchDailyEfficiency(year, month));
+        dispatch(setLoading(false));
       } catch (error) {
-        dispatch(setError(error.toString())); // Lưu lỗi vào Redux
+        dispatch(setError(error.toString()));
       }
     };
 
@@ -42,16 +36,87 @@ const DailyEfficiency = () => {
   const options = {
     chart: {
       type: "area",
-      marginTop: 100,
+      marginTop: 150, // Tăng khoảng cách từ đỉnh biểu đồ đến vùng vẽ
       marginLeft: 0,
       marginRight: 0,
+      events: {
+        load: function () {
+          const chart = this;
+
+          const actualData =
+            chart.series[0]?.data.map((point) => point.y) || [];
+          if (actualData.length === 0) {
+            console.warn("No data available for calculations.");
+            return;
+          }
+
+          const average =
+            actualData.reduce((sum, value) => sum + value, 0) /
+            actualData.length;
+          const current = actualData[actualData.length - 1] || 0;
+
+          const textX = chart.plotLeft + chart.plotWidth - 150;
+          const lineWidth = 6;
+          const lineHeight = 30;
+          const lineX = textX - 20;
+          const averageY = chart.plotTop - 100; // Đẩy "AVERAGE" xuống dưới
+          const currentY = chart.plotTop - 55; // Đẩy "CURRENT" xuống dưới
+
+          chart.renderer
+            .rect(lineX, averageY, lineWidth, lineHeight)
+            .attr({
+              fill: "#4CAF50",
+              radius: 2,
+            })
+            .add();
+
+          chart.renderer
+            .text(
+              `AVERAGE: ${average.toFixed(2)}%`,
+              textX,
+              averageY + lineHeight / 2
+            )
+            .css({
+              color: "#333",
+              fontSize: "12px",
+              fontWeight: "bold",
+            })
+            .add();
+
+          chart.renderer
+            .rect(lineX, currentY, lineWidth, lineHeight)
+            .attr({
+              fill: "#2196F3",
+              radius: 2,
+            })
+            .add();
+
+          chart.renderer
+            .text(
+              `CURRENT: ${current.toFixed(2)}%`,
+              textX,
+              currentY + lineHeight / 2
+            )
+            .css({
+              color: "#333",
+              fontSize: "12px",
+              fontWeight: "bold",
+            })
+            .add();
+        },
+      },
     },
     title: {
       text: "DAILY EFFICIENCY",
       align: "center",
+      verticalAlign: "top", // Đặt title ở trên cùng
       style: {
-        fontSize: "16px",
+        fontSize: "20px",
         fontWeight: "bold",
+        fontFamily: "'Roboto', sans-serif",
+        color: "#333",
+        textShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
+        letterSpacing: "1.5px",
       },
     },
     legend: {
@@ -62,7 +127,7 @@ const DailyEfficiency = () => {
       borderWidth: 2,
       backgroundColor: "white",
       itemStyle: {
-        fontSize: "8px",
+        fontSize: "10px",
         fontWeight: "bold",
       },
       itemHoverStyle: {
@@ -72,15 +137,15 @@ const DailyEfficiency = () => {
     },
     xAxis: {
       categories: [...(chartDataDailyEfficiency?.date || [])],
-      labels:{
+      labels: {
         style: {
-          fontSize: "8px"
-        }
-      }
+          fontSize: "10px",
+        },
+      },
     },
     yAxis: {
       visible: false,
-      offset: 0, // Đặt biểu đồ sát trục X
+      offset: 0,
     },
     series: [
       {
@@ -94,37 +159,46 @@ const DailyEfficiency = () => {
         fillColor: {
           linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
           stops: [
-            [0, "rgba(0, 178, 238, 0.8)"],
-            [1, "rgba(0, 178, 238, 0.2)"],
+            [0, "rgba(0, 53, 102, 0.6)"],
+            [1, "rgba(0, 53, 102, 0.1)"],
           ],
         },
-        lineColor: "#00688B",
+        lineColor: "#003566",
         dataLabels: {
-          enabled: true, // Bật hiển thị dữ liệu trực tiếp
+          enabled: true,
           style: {
-            color: "#000", // Màu chữ
+            color: "#000",
             fontWeight: "bold",
-            fontSize: "8px",
+            fontSize: "10px",
           },
           formatter: function () {
-            return this.y.toFixed(2) + "%"; // Hiển thị giá trị với 2 chữ số thập phân
+            return this.y.toFixed(2) + "%";
           },
         },
       },
       {
-        name: "Baseline", // Tên của đường trung bình
-        data: Array(chartDataDailyEfficiency?.date.length).fill(65), // Giá trị cố định 65% cho tất cả các điểm trên trục x
-        marker: {
-          enabled: false, // Không hiển thị marker cho đường này
-        },
-        lineColor: "#0000CD", // Màu đường trung bình
-        dashStyle: "ShortDash", // Kiểu nét đứt
-        enableMouseTracking: false, // Tắt sự kiện di chuột trên đường này
+        name: "Baseline",
+        data: Array(chartDataDailyEfficiency?.date.length).fill(65),
+        lineColor: "#003566",
+        dashStyle: "ShortDash",
         dataLabels: {
-          enabled: true, // Hiển thị dữ liệu trên đường trung bình
-          align: "center", // Căn chỉnh giá trị nằm ở giữa đường
+          enabled: true,
+          style: {
+            color: "#333",
+            fontSize: "10px",
+          },
           formatter: function () {
-            return this.y.toFixed(2) + "%"; // Hiển thị giá trị với 2 chữ số thập phân
+            return "65%";
+          },
+        },
+        label: {
+          align: "right",
+          style: {
+            color: "#333",
+            fontSize: "10px",
+          },
+          formatter: function () {
+            return "65%";
           },
         },
         fillColor: "none",
@@ -137,24 +211,10 @@ const DailyEfficiency = () => {
   };
 
   return (
-    <Card
-      sx={{
-        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.5)", // shadow: X-offset, Y-offset, blurRadius, màu sắc
-        borderRadius: 2, // border radius cho card
-      }}
-    >
+    <Card>
       <CardContent>
         {loading ? (
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              minHeight: "100px",
-            }}
-          >
-            <CircularProgress />
-          </Box>
+          <CircularProgress />
         ) : error ? (
           <Typography color="error" align="center">
             Error: {error}

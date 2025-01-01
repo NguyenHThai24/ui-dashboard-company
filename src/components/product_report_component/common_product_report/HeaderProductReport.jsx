@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const HeaderProductReport = () => {
   const [selectedDate, setSelectedDate] = useState(dayjs());
-  const [selectedButton, setSelectedButton] = useState(null); // Track selected button
+  const [selectedButton, setSelectedButton] = useState("day"); // Mặc định là "day"
   const navigate = useNavigate();
 
   const handleDateChange = (date) => {
@@ -16,8 +16,7 @@ const HeaderProductReport = () => {
   };
 
   const handleSearchClick = () => {
-    // Function to handle search logic based on selectedDate
-    //console.log("Selected Date:", selectedDate.format("MM-YYYY")); // Use this date to filter data
+    // console.log("Selected Date:", selectedDate.format("MM-YYYY"));
   };
 
   const handleButtonClick = (buttonType) => {
@@ -52,7 +51,7 @@ const HeaderProductReport = () => {
         <Grid item>
           <Button
             sx={{
-              bgcolor:"#00b488", // Change color if selected
+              bgcolor: "#00b488", // Change color if selected
               color: "white",
               width: "100px",
               height: "40px",
@@ -67,7 +66,7 @@ const HeaderProductReport = () => {
         <Grid item>
           <Button
             sx={{
-              bgcolor: "#555555", 
+              bgcolor: "#555555",
               color: "white",
               width: "100px",
               height: "40px",
@@ -82,7 +81,7 @@ const HeaderProductReport = () => {
         <Grid item>
           <Button
             sx={{
-              bgcolor: "#00aff0", 
+              bgcolor: "#00aff0",
               color: "white",
               width: "100px",
               height: "40px",
