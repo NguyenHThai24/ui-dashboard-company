@@ -1,4 +1,3 @@
-import React from "react";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { TextField } from "@mui/material";
@@ -24,24 +23,24 @@ const useStyles = makeStyles({
   },
 });
 
-const Calendar = ({ selectedDate, handleDateChange }) => {
+const Calendar = ({ tempDate, setTempDate }) => {
   const classes = useStyles();
 
   // Custom handleDateChange để không cho chọn sau năm hiện tại
   const customHandleDateChange = (date) => {
     if (date && date.isAfter(dayjs().endOf("year"))) {
-      date = dayjs().endOf("year"); // Đặt ngày chọn đến cuối năm hiện tại
+      date = dayjs().endOf("year");
     }
-    handleDateChange(date);
+    setTempDate(date);
   };
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker
-        views={["month", "year"]} // Thêm năm vào views
-        value={selectedDate || dayjs().startOf("month")} // Set default value to the first month of the current year
+        views={["month", "year"]}
+        value={tempDate || dayjs().startOf("month")}
         onChange={customHandleDateChange}
-        format="MM-YYYY"
+        format="MM-YYYY" // Định dạng tháng và năm là số
         maxDate={dayjs().endOf("year")}
         renderInput={(params) => (
           <TextField

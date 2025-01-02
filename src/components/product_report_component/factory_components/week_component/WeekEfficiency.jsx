@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
@@ -9,19 +9,17 @@ import {
   CircularProgress,
   Typography,
 } from "@mui/material";
-import { fetchDailyRFT } from "@/apis/product_report_api/DayAPI";
-import dayjs from "dayjs";
-import { setLoading, setError } from "@/redux/loading/loadingSlice";
+import { fetchWeekEfficiency } from "@/apis/product_report_api/factoryAPI/WeekAPI";
+import { setLoading, setError } from "@/redux/data_redux/WeekReportSlice";
 
-const DailyRFT = () => {
+const WeekEfficiency = ({selectedDate}) => {
   const dispatch = useDispatch();
-  const { chartDataDailyRFT, loading, error } = useSelector((state) => ({
-    chartDataDailyRFT: state.loading.chartDataDailyRFT, // Lấy chartDataDailyRFT từ state của Redux
-    loading: state.loading.loading,
-    error: state.loading.error,
+  const { chartDataWeekEfficiency, loading, error } = useSelector((state) => ({
+    chartDataWeekEfficiency: state.weekreport.chartDataWeekEfficiency, // Lấy chartDataDailyEfficiency từ state của Redux
+    loading: state.weekreport.loading,
+    error: state.weekreport.error,
   }));
 
-  const [selectedDate, setSelectedDate] = useState(dayjs());
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,7 +27,7 @@ const DailyRFT = () => {
       try {
         const year = selectedDate.year();
         const month = selectedDate.month() + 1; // month() trả về từ 0-11
-        await dispatch(fetchDailyRFT(year, month)); // Fetch dữ liệu qua dispatch
+        await dispatch(fetchWeekEfficiency(year, month)); // Fetch dữ liệu qua dispatch
         dispatch(setLoading(false)); // Kết thúc loading
       } catch (error) {
         dispatch(setError(error.toString())); // Lưu lỗi vào Redux
@@ -42,7 +40,7 @@ const DailyRFT = () => {
   const options = {
     chart: {
       type: "area",
-      marginTop: 100,
+      marginTop: 150,
       marginLeft: 0,
       marginRight: 0,
       events: {
@@ -50,7 +48,7 @@ const DailyRFT = () => {
           const chart = this;
 
           const actualData =
-            chart.series[0]?.data?.map((point) => point.y) || [];
+            chart.series[0]?.data.map((point) => point.y) || [];
           if (actualData.length === 0) {
             console.warn("No data available for calculations.");
             return;
@@ -65,13 +63,13 @@ const DailyRFT = () => {
           const lineWidth = 6;
           const lineHeight = 30;
           const lineX = textX - 20;
-          const averageY = chart.plotTop - 70; // Đẩy "AVERAGE" xuống dưới
-          const currentY = chart.plotTop - 45; // Đẩy "CURRENT" xuống dưới
+          const averageY = chart.plotTop - 100; // Đẩy "AVERAGE" xuống dưới
+          const currentY = chart.plotTop - 75; // Đẩy "CURRENT" xuống dưới
 
           chart.renderer
             .rect(lineX, averageY, lineWidth, lineHeight)
             .attr({
-              fill: "#117864",
+              fill: "#0000FF",
               radius: 2,
             })
             .add();
@@ -92,7 +90,7 @@ const DailyRFT = () => {
           chart.renderer
             .rect(lineX, currentY, lineWidth, lineHeight)
             .attr({
-              fill: "#117864",
+              fill: "#0000FF",
               radius: 2,
             })
             .add();
@@ -113,16 +111,16 @@ const DailyRFT = () => {
       },
     },
     title: {
-      text: "DAILY RFT",
+      text: "WEEK EFFICIENCY",
       align: "center",
-
+      verticalAlign: "top", 
       style: {
         fontSize: "20px",
         fontWeight: "bold",
-        fontFamily: "'Roboto', sans-serif", // Font chữ đẹp và phổ biến
-        color: "#333", // Màu sắc chữ tinh tế
-        textShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)", // Bóng chữ nhẹ
-        letterSpacing: "1.5px", // Tăng khoảng cách giữa các chữ cái
+        fontFamily: "'Roboto', sans-serif",
+        color: "#333",
+        textShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
+        letterSpacing: "1.5px",
       },
     },
     legend: {
@@ -130,7 +128,6 @@ const DailyRFT = () => {
       align: "left",
       verticalAlign: "top",
       borderColor: "#ccc",
-      marginBottom: 50,
       borderWidth: 2,
       backgroundColor: "white",
       itemStyle: {
@@ -138,18 +135,18 @@ const DailyRFT = () => {
         fontWeight: "bold",
       },
       itemHoverStyle: {
-        color: "#0e6251",
+        color: "#0000FF",
       },
       itemDistance: 10,
     },
     xAxis: {
-      categories: [...(chartDataDailyRFT?.date || [])],
-      labels: {
-        style: {
+      categories: [...(chartDataWeekEfficiency?.Week || [])],
+      labels:{
+        style:{
           fontSize: "10px",
           fontWeight: 600,
-        },
-      },
+        }
+      }
     },
     yAxis: {
       visible: false,
@@ -158,20 +155,20 @@ const DailyRFT = () => {
     series: [
       {
         name: "Actual",
-        data: [...(chartDataDailyRFT.RFT || [])],
+        data: [...(chartDataWeekEfficiency.Factory_EFF || [])],
         marker: {
           enabled: true,
           radius: 4,
-          fillColor: "#117864",
+          fillColor: "#00B2EE",
         },
         fillColor: {
           linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
           stops: [
-            [0, "rgba(17, 120, 100, 0.6)"],
-            [1, "rgba(17, 120, 100,  0.4)"],
+            [0, "rgba(0, 53, 102, 0.6)"],
+            [1, "rgba(0, 53, 102, 0.4)"],
           ],
         },
-        lineColor: "#117864",
+        lineColor: "#003566",
         dataLabels: {
           enabled: true, // Bật hiển thị dữ liệu trực tiếp
           style: {
@@ -186,15 +183,32 @@ const DailyRFT = () => {
       },
       {
         name: "Baseline", // Tên của đường trung bình
-        data: Array(chartDataDailyRFT?.date.length).fill(100), // Giá trị cố định 65% cho tất cả các điểm trên trục x
-        marker: {
-          enabled: true, // Không hiển thị marker cho đường này
-        },
-        lineColor: "#0e6251", // Màu đường trung bình
+        data: Array(chartDataWeekEfficiency?.Week.length).fill(62.5), // Giá trị cố định 65% cho tất cả các điểm trên trục x
+        // marker: {
+        //   enabled: false, // Không hiển thị marker cho đường này
+        // },
+        lineColor: "#0000FF", // Màu đường trung bình
         dashStyle: "ShortDash", // Kiểu nét đứt
-        enableMouseTracking: true, // Tắt sự kiện di chuột trên đường này
+        enableMouseTracking: false, // Tắt sự kiện di chuột trên đường này
         dataLabels: {
-          enabled: false, // Không hiển thị dữ liệu trên đường trung bình
+          enabled: true,
+          style: {
+            color: "#333",
+            fontSize: "10px",
+          },
+          formatter: function () {
+            return "65%";
+          },
+        },
+        label: {
+          align: "right",
+          style: {
+            color: "#333",
+            fontSize: "10px",
+          },
+          formatter: function () {
+            return "65%";
+          },
         },
         fillColor: "none",
       },
@@ -207,10 +221,10 @@ const DailyRFT = () => {
 
   return (
     <Card
-    // sx={{
-    //   boxShadow: "5px 5px 5px 5px rgba(0, 0, 0, 0.5)", // shadow: X-offset, Y-offset, blurRadius, màu sắc
-    //   borderRadius: 2, // border radius cho card
-    // }}
+      // sx={{
+      //   boxShadow: "0 4px 20px rgba(0, 0, 0, 0.5)", // shadow: X-offset, Y-offset, blurRadius, màu sắc
+      //   borderRadius: 2, // border radius cho card
+      // }}
     >
       <CardContent>
         {loading ? (
@@ -236,4 +250,4 @@ const DailyRFT = () => {
   );
 };
 
-export default DailyRFT;
+export default WeekEfficiency;

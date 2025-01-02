@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
@@ -9,16 +9,18 @@ import {
   CircularProgress,
   Typography,
 } from "@mui/material";
-import { fetchDailyTotalOutput } from "@/apis/product_report_api/DayAPI";
+import { fetchDailyTotalOutput } from "@/apis/product_report_api/factoryAPI/DayAPI";
 import { setLoading, setError } from "@/redux/loading/loadingSlice";
 
-const DailyTotalOutputChart = ({ selectedDate }) => {
+
+const DailyTotalOutputChart = ({selectedDate}) => {
   const dispatch = useDispatch();
   const { chartData, loading, error } = useSelector((state) => ({
     chartData: state.loading.chartData,
     loading: state.loading.loading,
     error: state.loading.error,
   }));
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,9 +35,10 @@ const DailyTotalOutputChart = ({ selectedDate }) => {
         dispatch(setLoading(false));
       }
     };
-
+  
     fetchData();
   }, [selectedDate, dispatch]);
+  
 
   const options = {
     chart: {
@@ -73,7 +76,7 @@ const DailyTotalOutputChart = ({ selectedDate }) => {
       itemDistance: 10,
     },
     xAxis: {
-      categories: (chartData?.categories || []).slice(0, 26), // Chỉ lấy 26 cột
+      categories: [...(chartData?.categories || [])].slice(0, 26), // Chỉ lấy 26 cột
       labels: { style: { fontSize: "10px", fontWeight: 600 } },
     },
     yAxis: {
@@ -96,17 +99,17 @@ const DailyTotalOutputChart = ({ selectedDate }) => {
     series: [
       {
         name: "Unreach",
-        data: (chartData?.unachieved || []).slice(0, 26),
+        data: [...(chartData?.unachieved || [])].slice(0, 26),
         color: "#EF5350 ",
       },
       {
         name: "Actual",
-        data: (chartData?.actual || []).slice(0, 26),
+        data: [...(chartData?.actual || [])].slice(0, 26),
         color: "#003566",
       },
       {
         name: "Target",
-        data: (chartData?.target || []).slice(0, 26), // Thêm dữ liệu Target
+        data: [...(chartData?.target || [])].slice(0, 26), // Thêm dữ liệu Target
         color: "#000", // Màu sắc cho Target
         // visible: false, // Ẩn khỏi biểu đồ nhưng hiển thị trong legend
       },

@@ -1,64 +1,50 @@
 import { useState } from "react";
-import dayjs from "dayjs";
 import Calendar from "@/components/product_report_component/common_product_report/Calendar";
 import { Button, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
 
-const HeaderProductReport = () => {
-  const [selectedDate, setSelectedDate] = useState(dayjs());
+const HeaderProductReport = ({ selectedDate, setSelectedDate }) => {
   const [selectedButton, setSelectedButton] = useState("day"); // Mặc định là "day"
+  const [tempDate, setTempDate] = useState(selectedDate || dayjs()); // Trạng thái tạm cho Calendar
   const navigate = useNavigate();
 
-  const handleDateChange = (date) => {
-    if (date) {
-      setSelectedDate(date);
-    }
-  };
-
   const handleSearchClick = () => {
-    // console.log("Selected Date:", selectedDate.format("MM-YYYY"));
+    setSelectedDate(tempDate);
   };
 
   const handleButtonClick = (buttonType) => {
-    setSelectedButton(buttonType); // Update the selected button
+    setSelectedButton(buttonType); // Cập nhật nút được chọn
   };
 
-  const handleDayClick = () => {
-    handleButtonClick("day");
+  const handleBuildingClick = () => {
+    handleButtonClick("building");
+    navigate("/production-report/building");
+  };
+
+  const handleFactoryClick = () => {
+    handleButtonClick("factory");
     navigate("/production-report-day");
-  };
-
-  const handleWeekClick = () => {
-    handleButtonClick("week");
-    navigate("/production-report-week");
-  };
-
-  const handleMonthClick = () => {
-    handleButtonClick("month");
-    navigate("/production-report-month");
   };
 
   return (
     <>
       <Grid container spacing={2} alignItems="center">
         <Grid item>
-          <Calendar
-            selectedDate={selectedDate}
-            handleDateChange={handleDateChange}
-          />
+          <Calendar tempDate={tempDate} setTempDate={setTempDate} />
         </Grid>
 
         <Grid item>
           <Button
             sx={{
-              bgcolor: "#003566", // Change color if selected
+              bgcolor: selectedButton === "factory" ? "#001d3d" : "#003566", // Thay đổi màu nếu được chọn
               color: "white",
               width: "100px",
               height: "40px",
               borderRadius: "5px",
               fontWeight: "bold",
             }}
-            onClick={() => handleButtonClick("factory")} // Handle button click
+            onClick={handleFactoryClick}
           >
             FACTORY
           </Button>
@@ -66,14 +52,14 @@ const HeaderProductReport = () => {
         <Grid item>
           <Button
             sx={{
-              bgcolor: "#229954",
+              bgcolor: selectedButton === "building" ? "#1e8449" : "#229954", // Thay đổi màu nếu được chọn
               color: "white",
               width: "100px",
               height: "40px",
               borderRadius: "5px",
               fontWeight: "bold",
             }}
-            onClick={() => handleButtonClick("building")} // Handle button click
+            onClick={handleBuildingClick}
           >
             BUILDING
           </Button>
@@ -91,54 +77,6 @@ const HeaderProductReport = () => {
             onClick={handleSearchClick}
           >
             SEARCH
-          </Button>
-        </Grid>
-      </Grid>
-
-      <Grid container spacing={2} alignItems="center">
-        <Grid item>
-          <Button
-            sx={{
-              bgcolor: selectedButton === "month" ? "#363636" : "#B7B7B7", // Change color if selected
-              color: "white",
-              width: "100px",
-              height: "40px",
-              borderRadius: "5px",
-              fontWeight: "bold",
-            }}
-            onClick={handleMonthClick}
-          >
-            MONTH
-          </Button>
-        </Grid>
-        <Grid item>
-          <Button
-            sx={{
-              bgcolor: selectedButton === "week" ? "#363636" : "#B7B7B7", // Change color if selected
-              color: "white",
-              width: "100px",
-              height: "40px",
-              borderRadius: "5px",
-              fontWeight: "bold",
-            }}
-            onClick={handleWeekClick}
-          >
-            WEEK
-          </Button>
-        </Grid>
-        <Grid item>
-          <Button
-            sx={{
-              bgcolor: selectedButton === "day" ? "#363636" : "#B7B7B7", // Change color if selected
-              color: "white",
-              width: "100px",
-              height: "40px",
-              borderRadius: "5px",
-              fontWeight: "bold",
-            }}
-            onClick={handleDayClick}
-          >
-            DAY
           </Button>
         </Grid>
       </Grid>

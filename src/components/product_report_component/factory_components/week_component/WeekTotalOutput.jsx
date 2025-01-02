@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
@@ -9,19 +9,17 @@ import {
   CircularProgress,
   Typography,
 } from "@mui/material";
-import { fetchMonthTotalOutput } from "@/apis/product_report_api/MonthAPI";
-import dayjs from "dayjs";
-import { setLoading, setError } from "@/redux/data_redux/MonthReportSlice";
+import { fetchWeekTotalOutput } from "@/apis/product_report_api/factoryAPI/WeekAPI";
+import { setLoading, setError } from "@/redux/data_redux/WeekReportSlice";
 
-const MonthTotalOutputChart = () => {
+const WeekTotalOutputChart = ({selectedDate}) => {
   const dispatch = useDispatch();
   const { chartData, loading, error } = useSelector((state) => ({
-    chartData: state.monthreport.chartData, // Lấy chartData từ state của Redux
-    loading: state.monthreport.loading,
-    error: state.monthreport.error,
+    chartData: state.weekreport.chartData, // Lấy chartData từ state của Redux
+    loading: state.weekreport.loading,
+    error: state.weekreport.error,
   }));
 
-  const [selectedDate, setSelectedDate] = useState(dayjs());
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,7 +27,7 @@ const MonthTotalOutputChart = () => {
       try {
         const year = selectedDate.year();
         const month = selectedDate.month() + 1; // month() returns 0-11
-        await dispatch(fetchMonthTotalOutput(year, month)); // Fetch data through dispatch
+        await dispatch(fetchWeekTotalOutput(year, month)); // Fetch data through dispatch
         dispatch(setLoading(false)); // End loading
       } catch (error) {
         dispatch(setError(error.toString())); // Log error to Redux
@@ -47,22 +45,27 @@ const MonthTotalOutputChart = () => {
       marginRight: 0,
     },
     title: {
-      text: "TOTAL OUTPUT BY MONTH",
+      text: "WEEKLY TOTAL OUTPUT",
       align: "center",
       style: {
-        fontSize: "16px",
+        fontSize: "20px",
         fontWeight: "bold",
+        fontFamily: "'Roboto', sans-serif", // Font chữ đẹp và phổ biến
+        color: "#333", // Màu sắc chữ tinh tế
+        textShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)", // Bóng chữ nhẹ
+        letterSpacing: "1.5px", // Tăng khoảng cách giữa các chữ cái
       },
     },
     legend: {
       layout: "vertical",
       align: "left", // Đặt legend về giữa
       verticalAlign: "top", // Đặt lên trên biểu đồ
+
       borderColor: "#ccc", // Màu viền
       borderWidth: 2, // Độ dày viền
       backgroundColor: "white", // Màu nền cho hộp chứa series
       itemStyle: {
-        fontSize: "14px", // Cỡ chữ cho tên series
+        fontSize: "10px", // Cỡ chữ cho tên series
         fontWeight: "bold",
       },
       itemHoverStyle: {
@@ -71,10 +74,27 @@ const MonthTotalOutputChart = () => {
       itemDistance: 10, // Khoảng cách giữa các mục trong legend
     },
     xAxis: {
-      categories: chartData?.categories
+      categories: [...(chartData?.categories || [])], // Sử dụng categories từ dữ liệu đã xử lý
+      labels:{
+        style: {
+          fontSize: "10px",
+          fontWeight: 600
+        }
+      }
     },
     yAxis: {
-      visible: false,
+      title: {
+        text: "",
+    },
+    stackLabels: {
+        enabled: true,
+        style: {
+            color: "black",
+            fontWeight: 600,
+            fontSize: "10px", // Font chữ nhỏ hơn cho stack labels
+        },
+    },
+    labels: { enabled: false },
     },
     plotOptions: {
       column: {
@@ -82,8 +102,8 @@ const MonthTotalOutputChart = () => {
         dataLabels: {
           enabled: true,
           style: {
-            fontSize: "12px",
-            fontWeight: "bold",
+            fontSize: "10px",
+            fontWeight: "semibold",
           },
         },
       },
@@ -91,32 +111,19 @@ const MonthTotalOutputChart = () => {
     series: [
       {
         name: "Unreach",
-        data: chartData.unachieved, // Giá trị "Unachieved"
-        color: "#f44336", // Màu cho Unachieved
+        data: [...(chartData.unachieved || [])], // Giá trị "Unachieved"
+        color: "#EF5350", // Màu cho Unachieved
       },
       {
         name: "Actual",
-        data: chartData.actual, // Giá trị "Actual"
-        color: "#4caf50", // Màu cho Actual
+        data: [...(chartData.actual || [])], // Giá trị "Actual"
+        color: "#003566", // Màu cho Actual
       },
       {
         name: "Target",
-        type: "scatter", // Sử dụng scatter để hiển thị giá trị target
-        data: chartData.Target,
-        marker: {
-          enabled: false, // Hiển thị điểm trên đồ thị
-        },
-        dataLabels: {
-          enabled: true,
-          formatter: function () {
-            return this.y.toLocaleString();
-          },
-          style: {
-            fontSize: "12px",
-            fontWeight: "bold",
-            color: "#000", // Màu chữ
-          },
-        },
+        data: [...(chartData?.target || [])].slice(0, 26), // Thêm dữ liệu Target
+        color: "#000", // Màu sắc cho Target
+        // visible: false, // Ẩn khỏi biểu đồ nhưng hiển thị trong legend
       },
     ],
     credits: {
@@ -126,10 +133,10 @@ const MonthTotalOutputChart = () => {
 
   return (
     <Card
-      sx={{
-        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.5)", // shadow: X-offset, Y-offset, blurRadius, màu sắc
-        borderRadius: 2, // border radius cho card
-      }}
+      // sx={{
+      //   boxShadow: "0 4px 20px rgba(0, 0, 0, 0.5)", // shadow: X-offset, Y-offset, blurRadius, màu sắc
+      //   borderRadius: 2, // border radius cho card
+      // }}
     >
       <CardContent>
         {loading ? (
@@ -155,4 +162,4 @@ const MonthTotalOutputChart = () => {
   );
 };
 
-export default MonthTotalOutputChart;
+export default WeekTotalOutputChart;

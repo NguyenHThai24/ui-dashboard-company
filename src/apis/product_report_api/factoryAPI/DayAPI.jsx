@@ -1,4 +1,4 @@
-import axios from "axios";
+import { request } from "@/utils/request";
 import {
   setLoading,
   setError,
@@ -11,20 +11,13 @@ import {
 export const fetchDailyTotalOutput = (year, month) => async (dispatch) => {
   dispatch(setLoading(true)); // Bắt đầu loading
   try {
-    // const response = await axios.post(
-    //   `http://192.168.30.232:4567/api/Daily_Total_Output`,
-    //   { YEAR: year, MONTH: month },
-    //   { headers: { "Content-Type": "application/json" } }
-    // );
-    // const rawData = response.data;
-    const response = await fetch(
-      `/data/daily_total_output.json?month=${month}&year=${year}`,
-      {
-        params: { month, year },
-      }
+    const response = await request.post(
+      `/Daily_Total_Output`,
+      { YEAR: year, MONTH: month },
+      { headers: { "Content-Type": "application/json" } }
     );
-    const rawData = await response.json();
-    // console.log("Raw API Data:", rawData);
+    const rawData = response.data;
+ 
     // Xử lý dữ liệu để tạo `categories`, `actual`, `unachieved`
     const categories = [];
     const actual = [];
@@ -62,16 +55,16 @@ export const fetchDailyStitchingAssemblyMP =
   (year, month) => async (dispatch) => {
     dispatch(setLoading(true));
     try {
-      // const res = await axios.post(
-      //   `http://192.168.30.232:4567/api/Daily_Stitching_Assembly_MP`,
-      //   { YEAR: year, MONTH: month },
-      //   { headers: { "Content-Type": "application/json" } }
-      // );
+      const res = await request.post(
+        `/Daily_Stitching_Assembly_MP`,
+        { YEAR: year, MONTH: month },
+        { headers: { "Content-Type": "application/json" } }
+      );
 
-      // const rawData = res.data;
+      const rawData = res.data;
 
-      const response = await fetch("/data/daily_stitching_asysembl_mp.json");
-      const rawData = await response.json();
+      // const response = await fetch("/data/daily_stitching_asysembl_mp.json");
+      // const rawData = await response.json();
 
       const outputdate = [];
       const worker = [];
@@ -99,16 +92,16 @@ export const fetchDailyStitchingAssemblyMP =
 export const fetchDailyEfficiency = (year, month) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    // const res = await axios.post(
-    //   `http://192.168.30.232:4567/api/Daily_EFFICIENCY_Day`,
-    //   { YEAR: year, MONTH: month },
-    //   { headers: { "Content-Type": "application/json" } }
-    // );
+    const res = await request.post(
+      `/Daily_EFFICIENCY_Day`,
+      { YEAR: year, MONTH: month },
+      { headers: { "Content-Type": "application/json" } }
+    );
 
-    // const rawData = res.data;
+    const rawData = res.data;
 
-    const response = await fetch("/data/daily_efficiency_day.json");
-    const rawData = await response.json();
+    // const response = await fetch("/data/daily_efficiency_day.json");
+    // const rawData = await response.json();
 
     const date = [];
     const Factory_EFF = [];
@@ -136,16 +129,16 @@ export const fetchDailyEfficiency = (year, month) => async (dispatch) => {
 export const fetchDailyRFT = (year, month) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    // const res = await axios.post(
-    //   `http://192.168.30.232:4567/api/Daily_RFT_Day`,
-    //   { YEAR: year, MONTH: month },
-    //   { headers: { "Content-Type": "application/json" } }
-    // );
+    const res = await request.post(
+      `/Daily_RFT_Day`,
+      { YEAR: year, MONTH: month },
+      { headers: { "Content-Type": "application/json" } }
+    );
 
-    // const rawData = res.data;
+    const rawData = res.data;
 
-    const response = await fetch("/data/daily_rft_day.json");
-    const rawData = await response.json();
+    // const response = await fetch("/data/daily_rft_day.json");
+    // const rawData = await response.json();
 
     const date = [];
     const RFT = [];

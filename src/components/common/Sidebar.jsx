@@ -25,20 +25,20 @@ import iconFG from "@public/images/Icon-FG.png";
 import iconKaizen from "@public/images/Icon-Kaizen.png";
 import iconTierMeeting from "@public/images/Icon-Tier-Meeting.png";
 import iconDownTime from "@public/images/Icon-Down-Time.png";
-import { useSelector } from "react-redux";
-import { useTranslations } from "@/config/useTranslations";
+// import { useSelector } from "react-redux";
+// import { useTranslations } from "@/config/useTranslations";
 
-const Sidebar = () => {
+const Sidebar = ({ setSelectedItem }) => {
   const [collapsed, setCollapsed] = useState(false);
   const [expanded, setExpanded] = useState({});
 
   // sử dụng language
-  const language = useSelector((state) => state.language.language);
-  const translations = useTranslations(language);
+  // const language = useSelector((state) => state.language.language);
+  // const translations = useTranslations(language);
 
-  console.log(translations); // Xem log để kiểm tra dữ liệu ngôn ngữ
+  // console.log(translations); // Xem log để kiểm tra dữ liệu ngôn ngữ
 
-  console.log("Importing language file:", `@/languages/${language}.json`);
+  // console.log("Importing language file:", `@/languages/${language}.json`);
 
   const toggleCollapsed = () => {
     setCollapsed((prev) => {
@@ -56,10 +56,11 @@ const Sidebar = () => {
     }));
   };
 
+  
   const items = [
     {
       key: "1",
-      label: <Link to=""> Productions</Link>,
+      label: "Productions",
       icon: iconProduction,
 
       children: [
@@ -75,7 +76,8 @@ const Sidebar = () => {
             },
             {
               key: "1.1.1",
-              label: <Link to="/factory-kpi">Daily Factory KPI</Link>,
+              label: "Daily Factory KPI",
+              link: "/factory-kpi",
             },
             {
               key: "1.1.1",
@@ -89,7 +91,8 @@ const Sidebar = () => {
             },
             {
               key: "1.1.1",
-              label: <Link to="/production-report-day">Production Report</Link>,
+              label: "Production Report",
+              link: "/production-report-day"
             },
           ],
         },
@@ -153,7 +156,9 @@ const Sidebar = () => {
             justifyContent: "flex-start",
             pl: 2 + level * 2,
             backgroundColor:
-              level > 0 ? "rgba(230, 231, 242, 1)" : "transparent",
+              level > 0 ? "rgba(52, 113, 197 , 1)" : "transparent",
+            color: "#ffffff",
+            fontWeight: 900,
           }}
         >
           {level === 0 && (
@@ -162,7 +167,7 @@ const Sidebar = () => {
                 minWidth: collapsed ? "auto" : "36px",
                 justifyContent: "center",
                 display: "flex",
-                color: "#020414", // Màu giống màu chữ
+                color: "#ffffff", // Màu giống màu chữ
               }}
             >
               <Box
@@ -174,7 +179,7 @@ const Sidebar = () => {
                   height: 30,
                   objectFit: "cover",
                   filter:
-                    "invert(8%) sepia(15%) saturate(1000%) hue-rotate(180deg) brightness(50%) contrast(150%)",
+                    "invert(8%) sepia(15%) saturate(0%) hue-rotate(180deg) brightness(1000%) contrast(150%)",
                 }}
               />
             </ListItemIcon>
@@ -184,14 +189,16 @@ const Sidebar = () => {
             sx={{
               display: collapsed ? "none" : "block",
               paddingLeft: "10px",
+              color: "#ffffff",
+              fontWeight: 900
             }}
           />
           {!collapsed &&
             item.children &&
             (expanded[item.key] ? (
-              <ExpandLessIcon sx={{ color: "#020414" }} /> // Màu chữ
+              <ExpandLessIcon sx={{ color: "#ffffff" }} /> // Màu chữ
             ) : (
-              <ExpandMoreIcon sx={{ color: "#020414" }} /> // Màu chữ
+              <ExpandMoreIcon sx={{ color: "#ffffff" }} /> // Màu chữ
             ))}
         </ListItem>
         {item.children && (
@@ -218,7 +225,7 @@ const Sidebar = () => {
         [`& .MuiDrawer-paper`]: {
           width: collapsed ? 72 : 250,
           boxSizing: "border-box",
-          backgroundColor: "#ffffff",
+          backgroundColor: "#001e3a",
           //color: "#141947",
           display: "flex",
           flexDirection: "column",
@@ -245,6 +252,10 @@ const Sidebar = () => {
             sx={{
               fontWeight: "bold",
               fontSize: "22px",
+              color: "#ffffff",
+              fontFamily: "'Roboto', sans-serif", // Font chữ đẹp và phổ biến
+              textShadow: "2px 2px 4px rgba(245, 245, 245, 0.6)", // Bóng chữ nhẹ
+              letterSpacing: "1.5px", // Tăng khoảng cách giữa các chữ cái
             }}
           >
             {collapsed ? "LHG" : "LHG DASHBOARD"}
@@ -259,7 +270,7 @@ const Sidebar = () => {
       <Box
         py={1}
         sx={{
-          borderTop: "1px solid rgba(255, 255, 255, 0.2)",
+          borderTop: "2px solid rgba(230, 231, 242, 1)",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -268,7 +279,7 @@ const Sidebar = () => {
         <IconButton
           onClick={toggleCollapsed}
           sx={{
-            color: "#020414",
+            color: "#ffffff",
           }}
         >
           {collapsed ? <ArrowForwardIcon /> : <ArrowBackIcon />}

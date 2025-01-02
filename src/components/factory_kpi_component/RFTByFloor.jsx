@@ -27,7 +27,7 @@ const RFTByFloor = () => {
 
   const options = {
     chart: {
-      type: "column",
+      type: "line",
       marginTop: 80,
       marginLeft: 5,
       marginRight: 5,
@@ -39,7 +39,11 @@ const RFTByFloor = () => {
       style: {
         fontSize: "16px",
         fontWeight: "bold",
-        color: "green"
+        fontFamily: "'Roboto', sans-serif",
+        color: "#195b12",
+        textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
+        letterSpacing: "0px",
+  
       },
     },
     legend: {
@@ -62,39 +66,30 @@ const RFTByFloor = () => {
       categories: floor,
     },
     yAxis: {
-    visible: false, 
+    visible: true, 
       title:"",
       labels: {
         style: {
-          fontSize: "12px",
+          fontSize: "10px",
           color: "#000",
         },
       },
+      // opposite: true, 
     },
     series: [
       {
         name: "Actual",
         data: RFT,
-        color: "#ff4500",
-        marker: {
-          enabled: true,
-          radius: 4,
-          fillColor: "#ff4500",
-        },
-        // fillColor: {
-        //   linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-        //   stops: [
-        //     [0, "rgba(65, 0, 147, 0.6)"],
-        //     [1, "rgba(65, 0, 147,  0.2)"],
-        //   ],
-        // },
+        color: "#003566",
+        
+        
         lineColor: "#00688B",
         dataLabels: {
           enabled: true,
           style: {
             color: "#000", // Màu chữ
             fontWeight: "bold",
-            fontSize: "12px",
+            fontSize: "10px",
           },
           formatter: function () {
             return this.y.toFixed(2) + "%"; // Hiển thị giá trị với 2 chữ số thập phân
@@ -104,7 +99,7 @@ const RFTByFloor = () => {
       {
         name: "Base Line", // Tên của đường trung bình
         type: "line",
-        data: Array(floor.length).fill(20), // Giá trị cố định 90% cho tất cả các điểm trên trục x
+        data: Array(floor.length).fill(50), // Giá trị cố định 90% cho tất cả các điểm trên trục x
         marker: {
           enabled: true, // Không hiển thị marker cho đường này
         },

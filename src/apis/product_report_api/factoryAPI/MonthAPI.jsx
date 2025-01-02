@@ -1,18 +1,18 @@
-import axios from "axios";
+import { request } from "@/utils/request";
 import {
   setLoading,
   setError,
   setChartData,
-  setChartDataWeekSAMP,
-  setChartDataWeekEfficiency,
-  setChartDataWeekRFT
-} from "@/redux/data_redux/WeekReportSlice";
+  setChartDataMonthSAMP,
+  setChartDataMonthEfficiency,
+  setChartDataMonthRFT
+} from "@/redux/data_redux/MonthReportSlice";
 
-export const fetchWeekTotalOutput = (year, month) => async (dispatch) => {
+export const fetchMonthTotalOutput = (year, month) => async (dispatch) => {
   dispatch(setLoading(true)); // Bắt đầu loading
   try {
-    const response = await axios.post(
-      `http://192.168.30.232:4567/api/Daily_Total_Output_Week`,
+    const response = await request.post(
+      `/Daily_Total_Output_Month`,
       { YEAR: year, MONTH: month },
       { headers: { "Content-Type": "application/json" } }
     );
@@ -53,12 +53,12 @@ export const fetchWeekTotalOutput = (year, month) => async (dispatch) => {
 };
 
 
-export const fetchWeekStitchingAssemblyMP =
+export const fetchMonthStitchingAssemblyMP =
   (year, month) => async (dispatch) => {
     dispatch(setLoading(true));
     try {
-      const res = await axios.post(
-        `http://192.168.30.232:4567/api/Daily_Stitching_Assembly_MP_Week`,
+      const res = await request.post(
+        `/Daily_Stitching_Assembly_MP_Month`,
         { YEAR: year, MONTH: month },
         { headers: { "Content-Type": "application/json" } }
       );
@@ -82,7 +82,7 @@ export const fetchWeekStitchingAssemblyMP =
       const formatedData = { worker, Week };
       //console.log(formatedData);
 
-      dispatch(setChartDataWeekSAMP(formatedData));
+      dispatch(setChartDataMonthSAMP(formatedData));
       dispatch(setLoading(false));
     } catch (error) {
       dispatch(setLoading(false)); // Kết thúc loading khi lỗi xảy ra
@@ -93,11 +93,11 @@ export const fetchWeekStitchingAssemblyMP =
 
 
 
-  export const fetchWeekEfficiency = (year, month) => async (dispatch) => {
+  export const fetchMonthEfficiency = (year, month) => async (dispatch) => {
     dispatch(setLoading(true));
     try {
-      const res = await axios.post(
-        `http://192.168.30.232:4567/api/Daily_EFFICIENCY_WEEK`,
+      const res = await request.post(
+        `/Daily_EFFICIENCY_Month`,
         { YEAR: year, MONTH: month },
         { headers: { "Content-Type": "application/json" } }
       );
@@ -107,21 +107,21 @@ export const fetchWeekStitchingAssemblyMP =
       // const response = await fetch("/data/daily_efficiency_day.json");
       // const rawData = await response.json();
   
-      const Week = [];
+      const Month = [];
       const Factory_EFF = [];
   
       rawData.forEach((item) => {
         const efficiencyValue = parseFloat(item.Factory_EFF);
   
         if (!isNaN(efficiencyValue)) {
-          Week.push(item.Week);
+          Month.push(item.Month);
           Factory_EFF.push(efficiencyValue);
         }
       });
-      const formatedData = { Factory_EFF, Week };
-      //console.log(formatedData);
+      const formatedData = { Factory_EFF, Month };
+      console.log(formatedData);
   
-      dispatch(setChartDataWeekEfficiency(formatedData));
+      dispatch(setChartDataMonthEfficiency(formatedData));
       dispatch(setLoading(false));
     } catch (error) {
       dispatch(setLoading(false)); // Kết thúc loading khi lỗi xảy ra
@@ -130,11 +130,11 @@ export const fetchWeekStitchingAssemblyMP =
     }
   };
 
-  export const fetchWeekRFT = (year, month) => async (dispatch) => {
+  export const fetchMonthRFT = (year, month) => async (dispatch) => {
     dispatch(setLoading(true));
     try {
-      const res = await axios.post(
-        `http://192.168.30.232:4567/api/Daily_RFT_WEEK`,
+      const res = await request.post(
+        `/Daily_RFT_Month`,
         { YEAR: year, MONTH: month },
         { headers: { "Content-Type": "application/json" } }
       );
@@ -144,21 +144,21 @@ export const fetchWeekStitchingAssemblyMP =
       // const response = await fetch("/data/daily_rft_day.json");
       // const rawData = await response.json();
   
-      const week = [];
+      const Month = [];
       const RFT = [];
   
       rawData.forEach((item) => {
         const rftValue = parseFloat(item.RFT);
   
         if (!isNaN(rftValue)) {
-          week.push(item.week);
+          Month.push(item.Month);
           RFT.push(rftValue);
         }
       });
-      const formatedData = { RFT, week };
+      const formatedData = { RFT, Month };
       //console.log(formatedData);
   
-      dispatch(setChartDataWeekRFT(formatedData));
+      dispatch(setChartDataMonthRFT(formatedData));
       dispatch(setLoading(false));
     } catch (error) {
       dispatch(setLoading(false)); // Kết thúc loading khi lỗi xảy ra

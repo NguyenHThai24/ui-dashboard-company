@@ -5,23 +5,21 @@ import {
   CircularProgress,
   Typography,
 } from "@mui/material";
-import dayjs from "dayjs";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-import { fetchDailyStitchingAssemblyMP } from "@/apis/product_report_api/DayAPI";
+import { fetchDailyStitchingAssemblyMP } from "@/apis/product_report_api/factoryAPI/DayAPI";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading, setError } from "@/redux/loading/loadingSlice";
 
-const DailyStitchingAssemblyMP = () => {
+const DailyStitchingAssemblyMP = ({selectedDate}) => {
   const dispatch = useDispatch();
   const { chartDataDailySAMP, loading, error } = useSelector((state) => ({
     chartDataDailySAMP: state.loading.chartDataDailySAMP, // Lấy chartData từ state của Redux
     loading: state.loading.loading,
     error: state.loading.error,
   }));
-  const [selectedDate, setSelectedDate] = useState(dayjs());
 
   useEffect(() => {
     const fetchData = async () => {

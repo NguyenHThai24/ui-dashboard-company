@@ -44,8 +44,6 @@ const OutputByFloor = () => {
     chart: {
       type: "column",
       marginTop: 80,
-    //   marginLeft: 5,
-    //   marginRight: 5,
       height: "300px",
     },
     title: {
@@ -54,7 +52,10 @@ const OutputByFloor = () => {
       style: {
         fontSize: "16px",
         fontWeight: "bold",
-        color: "green",
+        fontFamily: "'Roboto', sans-serif",
+        color: "#195b12",
+        textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
+        letterSpacing: "0px",
       },
     },
     legend: {
@@ -64,26 +65,39 @@ const OutputByFloor = () => {
       y: -40,
       itemStyle: {
         fontSize: "10px",
+        fontWeight: 900,
       },
       itemHoverStyle: {
         color: "#f44336",
       },
-      itemDistance: 5,
+      itemDistance: 2,
+      symbolWidth: 10, // Điều chỉnh kích thước hình vuông
+      symbolHeight: 10, // Điều chỉnh kích thước hình vuông
+      symbolRadius: 0, // Không làm tròn góc của hình vuông
     },
     xAxis: {
       categories: chartData.categories,
+      labels: {
+        style: {
+          fontSize: "10px",
+        },
+      },
     },
     yAxis: {
-      title: {
-        text: "",
-      },    },
+      title: { text: "" },
+      stackLabels: {
+        enabled: true,
+        style: { color: "black", fontSize: "10px", fontWeight: 600 },
+      },
+      labels: { enabled: false },
+    },
     plotOptions: {
       column: {
         stacking: "normal",
         dataLabels: {
           enabled: true,
           style: {
-            fontSize: "12px",
+            fontSize: "10px",
             fontWeight: "bold",
           },
         },
@@ -102,33 +116,16 @@ const OutputByFloor = () => {
       },
       {
         name: "Target",
-        type: "scatter",
-        data: chartData.Target,
-        marker: {
-            symbol: "square", 
-            fillColor: "#000", 
-            width: 15, 
-            height: 5, 
-          },
-        dataLabels: {
-          enabled: true,
-          formatter: function () {
-            return this.y.toLocaleString();
-          },
-          style: {
-            fontSize: "12px",
-            fontWeight: "bold",
-            color: "#000",
-          },
-        },
-        color: "transparent", // Màu trong biểu đồ không hiển thị
-        showInLegend: true, // Đảm bảo hiển thị trong legend
+        data: [...(chartData?.target || [])].slice(0, 26), // Thêm dữ liệu Target
+        color: "#000", // Màu sắc cho Target
+        // visible: false, // Ẩn khỏi biểu đồ nhưng hiển thị trong legend
       },
     ],
     credits: {
       enabled: false,
     },
   };
+  
   
 
   return (

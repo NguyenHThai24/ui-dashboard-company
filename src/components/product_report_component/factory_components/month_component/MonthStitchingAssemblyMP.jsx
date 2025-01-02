@@ -5,23 +5,21 @@ import {
     CircularProgress,
     Typography,
   } from "@mui/material";
-  import dayjs from "dayjs";
   import HighchartsReact from "highcharts-react-official";
   import Highcharts from "highcharts";
-  import { useEffect, useState } from "react";
+  import { useEffect } from "react";
   
-  import { fetchWeekStitchingAssemblyMP } from "@/apis/product_report_api/WeekAPI";
+  import { fetchMonthStitchingAssemblyMP } from "@/apis/product_report_api/factoryAPI/MonthAPI";
   import { useDispatch, useSelector } from "react-redux";
-  import { setLoading, setError } from "@/redux/data_redux/WeekReportSlice";
+  import { setLoading, setError } from "@/redux/data_redux/MonthReportSlice";
   
-  const DailyStitchingAssemblyMP = () => {
+  const MonthStitchingAssemblyMP = ({selectedDate}) => {
     const dispatch = useDispatch();
-    const { chartDataWeekSAMP, loading, error } = useSelector((state) => ({
-      chartDataWeekSAMP: state.weekreport.chartDataWeekSAMP, // Lấy chartData từ state của Redux
-      loading: state.weekreport.loading,
-      error: state.weekreport.error,
+    const { chartDataMonthSAMP, loading, error } = useSelector((state) => ({
+      chartDataMonthSAMP: state.monthreport.chartDataMonthSAMP, // Lấy chartData từ state của Redux
+      loading: state.monthreport.loading,
+      error: state.monthreport.error,
     }));
-    const [selectedDate, setSelectedDate] = useState(dayjs());
   
     useEffect(() => {
       const fetchData = async () => {
@@ -29,7 +27,7 @@ import {
         try {
           const year = selectedDate.year();
           const month = selectedDate.month() + 1;
-          await dispatch(fetchWeekStitchingAssemblyMP(year, month));
+          await dispatch(fetchMonthStitchingAssemblyMP(year, month));
   
           dispatch(setLoading(false));
         } catch (error) {
@@ -49,15 +47,24 @@ import {
         marginRight: 0,
       },
       title: {
-        text: "WEEKLY STITCHING & ASSEMBLY MP",
+        text: "MONTHLY STITCHING & ASSEMBLY MP",
+        style: {
+        fontSize: "20px",
+        fontWeight: "bold",
+        fontFamily: "'Roboto', sans-serif", // Font chữ đẹp và phổ biến
+        color: "#333", // Màu sắc chữ tinh tế
+        textShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)", // Bóng chữ nhẹ
+        letterSpacing: "1.5px", // Tăng khoảng cách giữa các chữ cái
+      },
       },
       xAxis: {
-        categories: [...(chartDataWeekSAMP.Week || [])],
-        labels:{
-          style: {
-            fontSize: "10px"
-          }
-        }
+        categories: [...(chartDataMonthSAMP.Week || [])],
+        labels: {
+        style: {
+          fontSize: "10px",
+          fontWeight: 600,
+        },
+      },
       },
       yAxis: {
         visible: false, // Ẩn trục Y
@@ -71,7 +78,7 @@ import {
             enabled: true, // Hiển thị giá trị trên đầu cột
             style: {
               fontSize: "10px",
-              fontWeight: "bold",
+              fontWeight: 600,
               color: "#000000",
             },
           },
@@ -80,7 +87,8 @@ import {
       series: [
         {
           name: "Worker",
-          data: chartDataWeekSAMP.worker, // Dữ liệu của cột Y
+          data: [...(chartDataMonthSAMP.worker || [])], // Dữ liệu của cột Y
+          color: "#003566",
         },
       ],
   
@@ -118,5 +126,5 @@ import {
     );
   };
   
-  export default DailyStitchingAssemblyMP;
+  export default MonthStitchingAssemblyMP;
   

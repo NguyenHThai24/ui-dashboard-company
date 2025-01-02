@@ -29,17 +29,21 @@ const EfficiencyByFloor = () => {
     chart: {
       type: "column",
       marginTop: 80,
-      marginLeft: 10,
-      marginRight: 10,
+      marginLeft: 0,
+      marginRight: 0,
       height: "300px"
     },
     title: {
       text: "Efficiency By Floor",
       align: "left",
-      style: {
+     style: {
         fontSize: "16px",
         fontWeight: "bold",
-        color: "green"
+        fontFamily: "'Roboto', sans-serif",
+        color: "#195b12",
+        textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
+        letterSpacing: "0px",
+  
       },
     },
     legend: {
@@ -49,21 +53,18 @@ const EfficiencyByFloor = () => {
       y: -10, // Dịch chuyển xuống dưới một chút để không bị chồng lên tiêu đề
       floating: true, // Giữ vị trí cố định
       backgroundColor: "white",
-          itemStyle: {
+      itemStyle: {
         fontSize: "10px",
-        fontWeight: "bold",
+        fontWeight: 900,
       },
-      itemHoverStyle: {
-        color: "#f44336",
-      },
-      itemDistance: 10,
+      itemDistance: 2,
     },
     xAxis: {
       categories: floor,
     },
     yAxis: {
-    visible: false, 
-      title:"",
+      visible: false, 
+      title: "",
       labels: {
         style: {
           fontSize: "12px",
@@ -75,29 +76,26 @@ const EfficiencyByFloor = () => {
       {
         name: "Actual",
         data: RFT,
-        marker: {
-          enabled: true,
-          radius: 4,
-          fillColor: "#00B2EE",
-        },
-        fillColor: {
-          linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-          stops: [
-            [0, "rgba(65, 0, 147, 0.6)"],
-            [1, "rgba(65, 0, 147,  0.2)"],
-          ],
-        },
+        color: "#003566",
         lineColor: "#00688B",
         dataLabels: {
           enabled: true,
           style: {
             color: "#000", // Màu chữ
             fontWeight: "bold",
-            fontSize: "12px",
+            fontSize: "10px",
           },
           formatter: function () {
             return this.y.toFixed(2) + "%"; // Hiển thị giá trị với 2 chữ số thập phân
           },
+        },
+        marker: {
+          enabled: true, // Hiển thị các chấm điểm
+          symbol: "circle", // Hình dạng của marker (ví dụ: "circle", "square", "diamond", ...)
+          radius: 5, // Đường kính của marker
+          fillColor: "#FF5733", // Màu nền của marker (chấm điểm)
+          lineColor: "#C70039", // Màu viền của marker
+          lineWidth: 2, // Độ dày viền
         },
       },
       {
@@ -105,9 +103,14 @@ const EfficiencyByFloor = () => {
         type: "line",
         data: Array(floor.length).fill(20), // Giá trị cố định 90% cho tất cả các điểm trên trục x
         marker: {
-          enabled: true, // Không hiển thị marker cho đường này
+          enabled: true, // Hiển thị marker cho đường này
+          symbol: "circle", // Chọn hình dạng chấm điểm là "circle"
+          radius: 3, // Đường kính của marker
+          fillColor: "#EF5350", // Màu nền của marker cho đường trung bình
+          lineColor: "#C70039", // Màu viền của marker
+          lineWidth: 1, // Độ dày viền của marker
         },
-        lineColor: "#0000CD", // Màu đường trung bình
+        lineColor: "#EF5350", // Màu đường trung bình
         dashStyle: "ShortDash", // Kiểu nét đứt
         enableMouseTracking: false, // Tắt sự kiện di chuột trên đường này
         dataLabels: {
@@ -120,6 +123,7 @@ const EfficiencyByFloor = () => {
       enabled: false,
     },
   };
+  
 
   return (
     <div>
