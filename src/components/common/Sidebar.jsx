@@ -56,7 +56,6 @@ const Sidebar = ({ setSelectedItem }) => {
     }));
   };
 
-  
   const items = [
     {
       key: "1",
@@ -92,7 +91,7 @@ const Sidebar = ({ setSelectedItem }) => {
             {
               key: "1.1.1",
               label: "Production Report",
-              link: "/production-report-day"
+              link: "/production-report-day",
             },
           ],
         },
@@ -156,9 +155,9 @@ const Sidebar = ({ setSelectedItem }) => {
             justifyContent: "flex-start",
             pl: 2 + level * 2,
             backgroundColor:
-              level > 0 ? "rgba(52, 113, 197 , 1)" : "transparent",
-            color: "#ffffff",
-            fontWeight: 900,
+              level > 0 ? "rgba(218, 218, 218 , 0.7)" : "transparent",
+            color: "#000",
+            fontWeight: "bold",
           }}
         >
           {level === 0 && (
@@ -167,7 +166,7 @@ const Sidebar = ({ setSelectedItem }) => {
                 minWidth: collapsed ? "auto" : "36px",
                 justifyContent: "center",
                 display: "flex",
-                color: "#ffffff", // Màu giống màu chữ
+                color: "#000", // Màu giống màu chữ
               }}
             >
               <Box
@@ -179,7 +178,7 @@ const Sidebar = ({ setSelectedItem }) => {
                   height: 30,
                   objectFit: "cover",
                   filter:
-                    "invert(8%) sepia(15%) saturate(0%) hue-rotate(180deg) brightness(1000%) contrast(150%)",
+                    "invert(8%) sepia(15%) saturate(1000%) hue-rotate(180deg) brightness(0%) contrast(150%)",
                 }}
               />
             </ListItemIcon>
@@ -189,16 +188,16 @@ const Sidebar = ({ setSelectedItem }) => {
             sx={{
               display: collapsed ? "none" : "block",
               paddingLeft: "10px",
-              color: "#ffffff",
-              fontWeight: 900
+              color: "#000",
+              fontWeight: "bold",
             }}
           />
           {!collapsed &&
             item.children &&
             (expanded[item.key] ? (
-              <ExpandLessIcon sx={{ color: "#ffffff" }} /> // Màu chữ
+              <ExpandLessIcon sx={{ color: "#000" }} /> // Màu chữ
             ) : (
-              <ExpandMoreIcon sx={{ color: "#ffffff" }} /> // Màu chữ
+              <ExpandMoreIcon sx={{ color: "#000" }} /> // Màu chữ
             ))}
         </ListItem>
         {item.children && (
@@ -225,7 +224,8 @@ const Sidebar = ({ setSelectedItem }) => {
         [`& .MuiDrawer-paper`]: {
           width: collapsed ? 72 : 250,
           boxSizing: "border-box",
-          backgroundColor: "#001e3a",
+          backgroundColor: "#fff",
+          fontWeight: "bold",
           //color: "#141947",
           display: "flex",
           flexDirection: "column",
@@ -252,9 +252,9 @@ const Sidebar = ({ setSelectedItem }) => {
             sx={{
               fontWeight: "bold",
               fontSize: "22px",
-              color: "#ffffff",
+              color: "#000",
               fontFamily: "'Roboto', sans-serif", // Font chữ đẹp và phổ biến
-              textShadow: "2px 2px 4px rgba(245, 245, 245, 0.6)", // Bóng chữ nhẹ
+              textShadow: "2px 2px 4px rgba(218, 218, 218, 1)", // Bóng chữ nhẹ
               letterSpacing: "1.5px", // Tăng khoảng cách giữa các chữ cái
             }}
           >
@@ -279,7 +279,7 @@ const Sidebar = ({ setSelectedItem }) => {
         <IconButton
           onClick={toggleCollapsed}
           sx={{
-            color: "#ffffff",
+            color: "#000",
           }}
         >
           {collapsed ? <ArrowForwardIcon /> : <ArrowBackIcon />}

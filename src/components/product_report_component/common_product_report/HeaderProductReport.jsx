@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 
 const HeaderProductReport = ({ selectedDate, setSelectedDate }) => {
-  const [selectedButton, setSelectedButton] = useState("day"); // Mặc định là "day"
+  const [selectedButton, setSelectedButton] = useState("factory"); // Mặc định là "factory"
   const [tempDate, setTempDate] = useState(selectedDate || dayjs()); // Trạng thái tạm cho Calendar
   const navigate = useNavigate();
 
@@ -37,7 +37,7 @@ const HeaderProductReport = ({ selectedDate, setSelectedDate }) => {
         <Grid item>
           <Button
             sx={{
-              bgcolor: selectedButton === "factory" ? "#001d3d" : "#003566", // Thay đổi màu nếu được chọn
+              bgcolor: selectedButton === "factory" ? "#007bff" : "#d3d3d3", // Xanh biển nếu được chọn, xám nhạt nếu không
               color: "white",
               width: "100px",
               height: "40px",
@@ -52,7 +52,7 @@ const HeaderProductReport = ({ selectedDate, setSelectedDate }) => {
         <Grid item>
           <Button
             sx={{
-              bgcolor: selectedButton === "building" ? "#1e8449" : "#229954", // Thay đổi màu nếu được chọn
+              bgcolor: selectedButton === "building" ? "#007bff" : "#d3d3d3", // Xanh biển nếu được chọn, xám nhạt nếu không
               color: "white",
               width: "100px",
               height: "40px",
