@@ -2,35 +2,46 @@ import  { useState, useEffect } from 'react';
 import { Card, CardContent, Box, CircularProgress, Typography } from '@mui/material';
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts';
+import axios from 'axios';
 
 const RFTByFloor = () => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [chartData, setChartData] = useState([]);
+  const [baseline, setBaseline] = useState(0);
+  const [loading, setLoading] = useState(true); // Define loading state
+  const [error, setError] = useState(null); // Define error state
 
   useEffect(() => {
-    fetch('/data/testData.json')
-      .then(response => response.json())
-      .then(data => {
-        setData(data);
-        setLoading(false);
+    axios
+      .get('http://192.168.30.245:8989/factory/getFloorDataS?date=2025/01/03&factory=LHG')
+      .then((response) => {
+        if (response.data.status === 0) {
+          const floorData = response.data.data.floorData;
+          const baselineValue = response.data.data.baseline;
+          setBaseline(baselineValue);
+
+          // Cập nhật chartData với thông tin từ API
+          const data = floorData?.map((item) => ({
+            name: item.lineAlias,
+            y: item.quality
+          }));
+          setChartData(data);
+        }
+        setLoading(false); 
       })
-      .catch(err => {
-        setError('Failed to load data');
-        setLoading(false);
+      .catch((error) => {
+        setError('Error fetching data'); 
+        setLoading(false); 
       });
   }, []);
 
-  if (!data) return null;
 
-  const { floor, RFT } = data;
-
+ 
   const options = {
     chart: {
       type: "line",
       marginTop: 80,
-      marginLeft: 5,
-      marginRight: 5,
+      marginLeft: 45,
+      marginRight: 0,
       height: "300px"
     },
     title: {
@@ -43,67 +54,67 @@ const RFTByFloor = () => {
         color: "#195b12",
         textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
         letterSpacing: "0px",
-  
       },
     },
     legend: {
       layout: "horizontal",
       align: "right",
       verticalAlign: "top", // Căn ngang bằng tiêu đề
-      y: -10, // Dịch chuyển xuống dưới một chút để không bị chồng lên tiêu đề
+      y: 20,
       floating: true, // Giữ vị trí cố định
       backgroundColor: "white",
-          itemStyle: {
-        fontSize: "10px",
-        fontWeight: "bold",
+        itemStyle: {
+          fontSize: "10px",
+          fontWeight: 900,
       },
       itemHoverStyle: {
         color: "#f44336",
       },
-      itemDistance: 10,
+      itemDistance: 2,
     },
     xAxis: {
-      categories: floor,
+      categories: chartData?.map((item) => item.name),
+      labels:{
+        style:{
+          fontSize: "10px"
+        }
+      }
     },
     yAxis: {
-    visible: true, 
-      title:"",
-      labels: {
-        style: {
-          fontSize: "10px",
-          color: "#000",
-        },
-      },
-      // opposite: true, 
+      visible: true, 
+      title: "",
+      labels:{
+        style:{
+          fontSize:"10px",
+        }
+      } 
     },
     series: [
       {
         name: "Actual",
-        data: RFT,
+        data: chartData.map((item) => item.y),
         color: "#003566",
-        
-        
         lineColor: "#00688B",
         dataLabels: {
           enabled: true,
           style: {
-            color: "#000", // Màu chữ
+            color: "#000", 
             fontWeight: "bold",
             fontSize: "10px",
           },
           formatter: function () {
-            return this.y.toFixed(2) + "%"; // Hiển thị giá trị với 2 chữ số thập phân
+            return this.y + "%"; 
           },
         },
       },
       {
         name: "Base Line", // Tên của đường trung bình
         type: "line",
-        data: Array(floor.length).fill(50), // Giá trị cố định 90% cho tất cả các điểm trên trục x
+        data: chartData?.map(() => baseline), 
         marker: {
-          enabled: true, // Không hiển thị marker cho đường này
+          enabled: false, // Không hiển thị marker cho đường này
         },
-        lineColor: "#0000CD", // Màu đường trung bình
+        lineColor: "#fc0905", // Màu đường trung bình
         dashStyle: "ShortDash", // Kiểu nét đứt
         enableMouseTracking: false, // Tắt sự kiện di chuột trên đường này
         dataLabels: {

@@ -6,7 +6,7 @@ import {
   setChartDataWeekSAMP,
   setChartDataWeekEfficiency,
   setChartDataWeekRFT
-} from "@/redux/data_redux/WeekReportSlice";
+} from "@/redux/data_factory_redux/WeekReportSlice";
 
 export const fetchWeekTotalOutput = (year, month) => async (dispatch) => {
   dispatch(setLoading(true)); // Bắt đầu loading

@@ -40,19 +40,19 @@ const UserRoute = () => (
 
       {/*Start Product Report Layout*/}
       <Route
-        path="/production-report-day"
+        path="/production-report/factory-day"
         element={
             <ProductionReportDay />
         }
       />
       <Route
-        path="/production-report-week"
+        path="/production-report/factory-week"
         element={
             <ProductionReportWeek />
         }
       />
       <Route
-        path="/production-report-month"
+        path="/production-report/factory-month"
         element={
             <Production_Report_Month />
         }

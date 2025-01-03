@@ -11,7 +11,7 @@ import {
   
   import { fetchWeekStitchingAssemblyMP } from "@/apis/product_report_api/factoryAPI/WeekAPI";
   import { useDispatch, useSelector } from "react-redux";
-  import { setLoading, setError } from "@/redux/data_redux/WeekReportSlice";
+  import { setLoading, setError } from "@/redux/data_factory_redux/WeekReportSlice";
   
   const DailyStitchingAssemblyMP = ({selectedDate}) => {
     const dispatch = useDispatch();

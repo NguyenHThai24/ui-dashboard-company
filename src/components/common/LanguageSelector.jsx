@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setLanguage } from "@/redux/languageSlice";
 import { Menu, MenuItem, IconButton, Typography } from "@mui/material";

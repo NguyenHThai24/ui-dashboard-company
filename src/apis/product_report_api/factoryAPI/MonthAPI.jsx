@@ -6,7 +6,7 @@ import {
   setChartDataMonthSAMP,
   setChartDataMonthEfficiency,
   setChartDataMonthRFT
-} from "@/redux/data_redux/MonthReportSlice";
+} from "@/redux/data_factory_redux/MonthReportSlice";
 
 export const fetchMonthTotalOutput = (year, month) => async (dispatch) => {
   dispatch(setLoading(true)); // Bắt đầu loading

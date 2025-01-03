@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { Card, CardContent, CircularProgress, Typography } from "@mui/material";
-import { fetchEfficiencyByLine } from "@/apis/product_report_api/buildingAPI/BuildingAAPI";
+import { fetchRFTByLine } from "@/apis/product_report_api/buildingAPI/BuildingGAPI";
 import { setLoading, setError } from "@/redux/loading/loadingSlice";
 
-const EfficiencyByLineA = ({ selectedDate }) => {
+const RFTByLineG = ({ selectedDate }) => {
   const dispatch = useDispatch();
-  const { chartDataEfficiency, loading, error } = useSelector((state) => ({
-    chartDataEfficiency: state.buildinga.chartDataEfficiency,
-    loading: state.buildinga.loading,
-    error: state.buildinga.error,
+  const { chartDataRFT, loading, error } = useSelector((state) => ({
+    chartDataRFT: state.buildingg.chartDataRFT,
+    loading: state.buildingg.loading,
+    error: state.buildingg.error,
   }));
 
   //console.log(chartDataEfficiency);
@@ -22,7 +22,7 @@ const EfficiencyByLineA = ({ selectedDate }) => {
       try {
         const year = selectedDate.year();
         const month = selectedDate.month() + 1; // month() returns 0-11
-        await dispatch(fetchEfficiencyByLine(year, month));
+        await dispatch(fetchRFTByLine(year, month));
         dispatch(setLoading(false));
       } catch (error) {
         dispatch(setError(error.toString()));
@@ -39,7 +39,7 @@ const EfficiencyByLineA = ({ selectedDate }) => {
       marginRight: 0,
     },
     title: {
-      text: "BUILDING A: EFFICIENCY BY LINE",
+      text: "BUILDING G: RFT BY LINE",
       align: "center",
       verticalAlign: "top", // Đặt title ở trên cùng
       style: {
@@ -70,7 +70,7 @@ const EfficiencyByLineA = ({ selectedDate }) => {
       itemDistance: 10,
     },
     xAxis: {
-      categories: [...(chartDataEfficiency?.line || [])],
+      categories: [...(chartDataRFT?.line || [])],
       labels: {
         style: {
           fontSize: "10px",
@@ -82,42 +82,63 @@ const EfficiencyByLineA = ({ selectedDate }) => {
       visible: false,
       offset: 0,
     },
- series: [
-  {
-    name: "EFF",
-    data: [
-      ...(chartDataEfficiency?.EFF?.map((val) => parseFloat(val)) || []),
+    series: [
+      {
+        name: "EFF",
+        data: [...(chartDataRFT?.rft?.map((val) => parseFloat(val)) || [])],
+        marker: {
+          enabled: true,
+          radius: 4,
+          fillColor: "#3498db",
+        },
+        fillColor: {
+          linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+          stops: [
+            [0, "rgba(52, 152, 219, 0.6)"],
+            [1, "rgba(52, 152, 219, 0.2)"],
+          ],
+        },
+        lineColor: "#3498db",
+        dataLabels: {
+          enabled: true,
+          style: {
+            color: "#000",
+            fontWeight: 600,
+            fontSize: "10px",
+          },
+          formatter: function () {
+            return this.y;
+          },
+        },
+      },
+      // {
+      //   name: "Baseline",
+      //   data: Array(chartDataRFT?.line.length).fill(65),
+      //   lineColor: "#0000FF",
+      //   dashStyle: "ShortDash",
+      //   dataLabels: {
+      //     enabled: true,
+      //     style: {
+      //       color: "#333",
+      //       fontSize: "10px",
+      //     },
+      //     formatter: function () {
+      //       return "65%";
+      //     },
+      //   },
+      //   label: {
+      //     align: "right",
+      //     style: {
+      //       color: "#333",
+      //       fontSize: "10px",
+      //     },
+      //     formatter: function () {
+      //       return "65%";
+      //     },
+      //   },
+      //   fillColor: "none",
+      // },
     ],
-    marker: {
-        enabled: true,
-        radius: 3,
-        fillColor: "#fff", // Màu nền là trắng
-        lineColor: "#17a589", // Màu viền
-        lineWidth: 2,
-        symbol: "circle",
-    },
-    fillColor: {
-      linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-      stops: [
-        [0, "rgba(46, 204, 113, 0.6)"],
-        [1, "rgba(46, 204, 113, 0.2)"],
-      ],
-    },
-    lineColor: "#17a589",
-    dataLabels: {
-      enabled: true,
-      style: {
-        color: "#000",
-        fontWeight: 600,
-        fontSize: "10px",
-      },
-      formatter: function () {
-        return this.y;
-      },
-    },
-  },
-],
-
 
     credits: {
       enabled: false,
@@ -141,4 +162,4 @@ const EfficiencyByLineA = ({ selectedDate }) => {
   );
 };
 
-export default EfficiencyByLineA;
+export default RFTByLineG;

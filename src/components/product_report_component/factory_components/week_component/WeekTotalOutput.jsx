@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { fetchWeekTotalOutput } from "@/apis/product_report_api/factoryAPI/WeekAPI";
-import { setLoading, setError } from "@/redux/data_redux/WeekReportSlice";
+import { setLoading, setError } from "@/redux/data_factory_redux/WeekReportSlice";
 
 const WeekTotalOutputChart = ({selectedDate}) => {
   const dispatch = useDispatch();

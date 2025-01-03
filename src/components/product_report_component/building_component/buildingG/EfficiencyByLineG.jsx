@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { Card, CardContent, CircularProgress, Typography } from "@mui/material";
-import { fetchEfficiencyByLine } from "@/apis/product_report_api/buildingAPI/BuildingAAPI";
+import { fetchEfficiencyByLine } from "@/apis/product_report_api/buildingAPI/BuildingGAPI";
 import { setLoading, setError } from "@/redux/loading/loadingSlice";
 
-const EfficiencyByLineA = ({ selectedDate }) => {
+const EfficiencyByLineG = ({ selectedDate }) => {
   const dispatch = useDispatch();
   const { chartDataEfficiency, loading, error } = useSelector((state) => ({
-    chartDataEfficiency: state.buildinga.chartDataEfficiency,
-    loading: state.buildinga.loading,
-    error: state.buildinga.error,
+    chartDataEfficiency: state.buildingg.chartDataEfficiency,
+    loading: state.buildingg.loading,
+    error: state.buildingg.error,
   }));
 
   //console.log(chartDataEfficiency);
@@ -39,7 +39,7 @@ const EfficiencyByLineA = ({ selectedDate }) => {
       marginRight: 0,
     },
     title: {
-      text: "BUILDING A: EFFICIENCY BY LINE",
+      text: "BUILDING G: EFFICIENCY BY LINE",
       align: "center",
       verticalAlign: "top", // Đặt title ở trên cùng
       style: {
@@ -141,4 +141,4 @@ const EfficiencyByLineA = ({ selectedDate }) => {
   );
 };
 
-export default EfficiencyByLineA;
+export default EfficiencyByLineG;

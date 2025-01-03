@@ -1,5 +1,5 @@
 import  { useState, useEffect } from 'react';
-import { Card, CardContent, Box, CircularProgress, Typography } from '@mui/material';
+import { Card, CardContent, Box, CircularProgress, Typography, styled } from '@mui/material';
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts';
 
@@ -9,7 +9,7 @@ const EfficiencyByFloor = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('/data/testData.json')
+    fetch('/data/testData1.json')
       .then(response => response.json())
       .then(data => {
         setData(data);
@@ -23,7 +23,7 @@ const EfficiencyByFloor = () => {
 
   if (!data) return null;
 
-  const { floor, RFT } = data;
+  const { floor, RFT, EFF } = data;
 
   const options = {
     chart: {
@@ -31,27 +31,26 @@ const EfficiencyByFloor = () => {
       marginTop: 80,
       marginLeft: 0,
       marginRight: 0,
-      height: "300px"
+      height: "300px",
     },
     title: {
       text: "Efficiency By Floor",
       align: "left",
-     style: {
+      style: {
         fontSize: "16px",
         fontWeight: "bold",
         fontFamily: "'Roboto', sans-serif",
         color: "#195b12",
         textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
         letterSpacing: "0px",
-  
       },
     },
     legend: {
       layout: "horizontal",
       align: "right",
-      verticalAlign: "top", // Căn ngang bằng tiêu đề
-      y: -10, // Dịch chuyển xuống dưới một chút để không bị chồng lên tiêu đề
-      floating: true, // Giữ vị trí cố định
+      verticalAlign: "top",
+      y: 20,
+      floating: true,
       backgroundColor: "white",
       itemStyle: {
         fontSize: "10px",
@@ -61,13 +60,18 @@ const EfficiencyByFloor = () => {
     },
     xAxis: {
       categories: floor,
+      labels:{
+        style:{
+          fontSize: "10px"
+        }
+      }
     },
     yAxis: {
-      visible: false, 
+      visible: false,
       title: "",
       labels: {
         style: {
-          fontSize: "12px",
+          fontSize: "10px",
           color: "#000",
         },
       },
@@ -81,43 +85,56 @@ const EfficiencyByFloor = () => {
         dataLabels: {
           enabled: true,
           style: {
-            color: "#000", // Màu chữ
+            color: "#000",
             fontWeight: "bold",
             fontSize: "10px",
           },
           formatter: function () {
-            return this.y.toFixed(2) + "%"; // Hiển thị giá trị với 2 chữ số thập phân
+            return this.y + "%";
           },
         },
         marker: {
-          enabled: true, // Hiển thị các chấm điểm
-          symbol: "circle", // Hình dạng của marker (ví dụ: "circle", "square", "diamond", ...)
-          radius: 5, // Đường kính của marker
-          fillColor: "#FF5733", // Màu nền của marker (chấm điểm)
-          lineColor: "#C70039", // Màu viền của marker
-          lineWidth: 2, // Độ dày viền
+          enabled: true,
+          symbol: "circle",
+          radius: 5,
+          fillColor: "#FF5733",
+          lineColor: "#C70039",
+          lineWidth: 2,
         },
       },
       {
-        name: "Base Line", // Tên của đường trung bình
-        type: "line",
-        data: Array(floor.length).fill(20), // Giá trị cố định 90% cho tất cả các điểm trên trục x
-        marker: {
-          enabled: true, // Hiển thị marker cho đường này
-          symbol: "circle", // Chọn hình dạng chấm điểm là "circle"
-          radius: 3, // Đường kính của marker
-          fillColor: "#EF5350", // Màu nền của marker cho đường trung bình
-          lineColor: "#C70039", // Màu viền của marker
-          lineWidth: 1, // Độ dày viền của marker
-        },
-        lineColor: "#EF5350", // Màu đường trung bình
-        dashStyle: "ShortDash", // Kiểu nét đứt
-        enableMouseTracking: false, // Tắt sự kiện di chuột trên đường này
+        name: "EFF", // Thêm series mới cho EFF
+        type: "column", // Loại biểu đồ
+        data: EFF, // Dữ liệu từ EFF
+        color: "#FF9800", // Màu cột cho EFF
         dataLabels: {
-          enabled: false, // Không hiển thị dữ liệu trên đường trung bình
+          enabled: true,
+          style: {
+            color: "#000",
+            fontWeight: "bold",
+            fontSize: "10px",
+          },
+          formatter: function () {
+            return this.y + "%";
+          },
+        },
+      },
+      {
+        name: "Base Line",
+        type: "line",
+        data: Array(floor.length).fill(80),
+        marker: {
+          enabled: false,
+        },
+        lineColor: "#fc0905",
+        dashStyle: "ShortDash",
+        enableMouseTracking: false,
+        dataLabels: {
+          enabled: false,
         },
         fillColor: "none",
       },
+      
     ],
     credits: {
       enabled: false,

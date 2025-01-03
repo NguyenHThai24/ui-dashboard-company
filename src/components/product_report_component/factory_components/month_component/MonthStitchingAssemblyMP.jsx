@@ -11,7 +11,7 @@ import {
   
   import { fetchMonthStitchingAssemblyMP } from "@/apis/product_report_api/factoryAPI/MonthAPI";
   import { useDispatch, useSelector } from "react-redux";
-  import { setLoading, setError } from "@/redux/data_redux/MonthReportSlice";
+  import { setLoading, setError } from "@/redux/data_factory_redux/MonthReportSlice";
   
   const MonthStitchingAssemblyMP = ({selectedDate}) => {
     const dispatch = useDispatch();

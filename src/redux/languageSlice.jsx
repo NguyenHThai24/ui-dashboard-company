@@ -8,8 +8,8 @@ const languageSlice = createSlice({
   initialState: { language: initialLanguage },
   reducers: {
     setLanguage: (state, action) => {
-      state.language = action.payload; // Update language
-      Cookies.set("language", action.payload, { expires: 365 }); // Store language in cookies with 1-year expiry
+      state.language = action.payload; 
+      Cookies.set("language", action.payload, { expires: 1 }); 
     },
   },
 });

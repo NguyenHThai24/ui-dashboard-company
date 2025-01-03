@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { fetchMonthEfficiency } from "@/apis/product_report_api/factoryAPI/MonthAPI";
-import { setLoading, setError } from "@/redux/data_redux/MonthReportSlice";
+import { setLoading, setError } from "@/redux/data_factory_redux/MonthReportSlice";
 
 const MonthEfficiency = ({selectedDate}) => {
   const dispatch = useDispatch();

@@ -55,14 +55,14 @@ const FloorLineList = () => {
 
   return (
     <>
-      <Grid2 container spacing={2} sx={{ pt: "15px" }}>
+      <Grid2 container spacing={1} sx={{ pt: "15px" }}>
         <Grid2
           item
           sx={{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            gap: "15px",
+            gap: "10px",
           }}
         >
           <Grid2
@@ -108,7 +108,7 @@ const FloorLineList = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            gap: "15px",
+            gap: "10px",
           }}
         >
           <Grid2
@@ -134,7 +134,7 @@ const FloorLineList = () => {
               sx={{
                 display: "flex",
                 flexDirection: "row", // Ensures items are in a row
-                gap: "15px",
+                gap: "10px",
                 padding: 0,
               }}
             >
@@ -187,7 +187,7 @@ const FloorLineList = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            gap: "15px",
+            gap: "10px",
           }}
         >
           <Grid2
@@ -212,8 +212,8 @@ const FloorLineList = () => {
             <List
               sx={{
                 display: "flex",
-                flexDirection: "row", // Ensures items are in a row
-                gap: "15px",
+                flexDirection: "row",
+                gap: "10px",
                 padding: 0,
               }}
             >

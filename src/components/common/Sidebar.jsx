@@ -91,7 +91,7 @@ const Sidebar = ({ setSelectedItem }) => {
             {
               key: "1.1.1",
               label: "Production Report",
-              link: "/production-report-day",
+              link: "/production-report/factory-day",
             },
           ],
         },

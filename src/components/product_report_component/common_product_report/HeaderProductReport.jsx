@@ -1,30 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Calendar from "@/components/product_report_component/common_product_report/Calendar";
 import { Button, Grid } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import dayjs from "dayjs";
 
 const HeaderProductReport = ({ selectedDate, setSelectedDate }) => {
-  const [selectedButton, setSelectedButton] = useState("factory"); // Mặc định là "factory"
-  const [tempDate, setTempDate] = useState(selectedDate || dayjs()); // Trạng thái tạm cho Calendar
+  const location = useLocation();
   const navigate = useNavigate();
+  const [tempDate, setTempDate] = useState(selectedDate || dayjs()); // Trạng thái tạm cho Calendar
+  const [selectedButton, setSelectedButton] = useState("factory"); // Mặc định là "factory"
+
+  // Đồng bộ trạng thái từ URL khi component được render
+  useEffect(() => {
+    const path = location.pathname;
+    if (path.includes("/building")) {
+      setSelectedButton("building");
+    } else if (path.includes("/factory-day")) {
+      setSelectedButton("factory");
+    }
+  }, [location.pathname]);
 
   const handleSearchClick = () => {
     setSelectedDate(tempDate);
   };
 
-  const handleButtonClick = (buttonType) => {
-    setSelectedButton(buttonType); // Cập nhật nút được chọn
-  };
-
   const handleBuildingClick = () => {
-    handleButtonClick("building");
+    setSelectedButton("building");
     navigate("/production-report/building");
   };
 
   const handleFactoryClick = () => {
-    handleButtonClick("factory");
-    navigate("/production-report-day");
+    setSelectedButton("factory");
+    navigate("/production-report/factory-day");
   };
 
   return (
@@ -37,7 +44,7 @@ const HeaderProductReport = ({ selectedDate, setSelectedDate }) => {
         <Grid item>
           <Button
             sx={{
-              bgcolor: selectedButton === "factory" ? "#007bff" : "#d3d3d3", // Xanh biển nếu được chọn, xám nhạt nếu không
+              bgcolor: selectedButton === "factory" ? "#196f3d" : "#979a9a",
               color: "white",
               width: "100px",
               height: "40px",
@@ -52,7 +59,7 @@ const HeaderProductReport = ({ selectedDate, setSelectedDate }) => {
         <Grid item>
           <Button
             sx={{
-              bgcolor: selectedButton === "building" ? "#007bff" : "#d3d3d3", // Xanh biển nếu được chọn, xám nhạt nếu không
+              bgcolor: selectedButton === "building" ? "#196f3d" : "#979a9a",
               color: "white",
               width: "100px",
               height: "40px",
@@ -67,12 +74,18 @@ const HeaderProductReport = ({ selectedDate, setSelectedDate }) => {
         <Grid item>
           <Button
             sx={{
-              bgcolor: "#00aff0",
-              color: "white",
+              bgcolor: "white",
+              color: "#196f3d",
+              border: "2px solid",
+              borderColor: "#196f3d",
               width: "100px",
               height: "40px",
               borderRadius: "5px",
               fontWeight: "bold",
+              "&:hover": {
+                bgcolor: "#196f3d",
+                color: "white",
+              },
             }}
             onClick={handleSearchClick}
           >

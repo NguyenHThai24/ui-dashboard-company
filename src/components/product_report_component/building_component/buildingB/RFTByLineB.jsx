@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { Card, CardContent, CircularProgress, Typography } from "@mui/material";
-import { fetchRFTByLine } from "@/apis/product_report_api/buildingAPI/BuildingAAPI";
+import { fetchRFTByLine } from "@/apis/product_report_api/buildingAPI/BuildingBAPI";
 import { setLoading, setError } from "@/redux/loading/loadingSlice";
 
-const RFTByLine = ({ selectedDate }) => {
+const RFTByLineB = ({ selectedDate }) => {
   const dispatch = useDispatch();
   const { chartDataRFT, loading, error } = useSelector((state) => ({
-    chartDataRFT: state.buildinga.chartDataRFT,
-    loading: state.buildinga.loading,
-    error: state.buildinga.error,
+    chartDataRFT: state.buildingb.chartDataRFT,
+    loading: state.buildingb.loading,
+    error: state.buildingb.error,
   }));
 
   //console.log(chartDataEfficiency);
@@ -39,7 +39,7 @@ const RFTByLine = ({ selectedDate }) => {
       marginRight: 0,
     },
     title: {
-      text: "BUILDING A: RFT BY LINE",
+      text: "BUILDING B: RFT BY LINE",
       align: "center",
       verticalAlign: "top", // Đặt title ở trên cùng
       style: {
@@ -89,16 +89,16 @@ const RFTByLine = ({ selectedDate }) => {
         marker: {
           enabled: true,
           radius: 4,
-          fillColor: "#00B2EE",
+          fillColor: "#3498db",
         },
         fillColor: {
           linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
           stops: [
-            [0, "rgba(0, 53, 102, 0.6)"],
-            [1, "rgba(0, 53, 102, 0.4)"],
+            [0, "rgba(52, 152, 219, 0.6)"],
+            [1, "rgba(52, 152, 219, 0.2)"],
           ],
         },
-        lineColor: "#003566",
+        lineColor: "#3498db",
         dataLabels: {
           enabled: true,
           style: {
@@ -107,7 +107,7 @@ const RFTByLine = ({ selectedDate }) => {
             fontSize: "10px",
           },
           formatter: function () {
-            return this.y.toFixed(2) + "%";
+            return this.y;
           },
         },
       },
@@ -162,4 +162,4 @@ const RFTByLine = ({ selectedDate }) => {
   );
 };
 
-export default RFTByLine;
+export default RFTByLineB;

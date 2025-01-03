@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { fetchMonthRFT } from "@/apis/product_report_api/factoryAPI/MonthAPI";
-import { setLoading, setError } from "@/redux/data_redux/MonthReportSlice";
+import { setLoading, setError } from "@/redux/data_factory_redux/MonthReportSlice";
 
 const MonthRFT = ({selectedDate}) => {
   const dispatch = useDispatch();
