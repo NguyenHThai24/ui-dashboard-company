@@ -12,17 +12,17 @@ const ButtonTime = () => {
 
       const handleDayClick = () => {
         handleButtonClick("day");
-        navigate("/production-report-day");
+        navigate("/production-report/factory-day");
       };
     
       const handleWeekClick = () => {
         handleButtonClick("week");
-        navigate("/production-report-week");
+        navigate("/production-report/factory-week");
       };
     
       const handleMonthClick = () => {
         handleButtonClick("month");
-        navigate("/production-report-month");
+        navigate("/production-report/factory-month");
       };
 
       

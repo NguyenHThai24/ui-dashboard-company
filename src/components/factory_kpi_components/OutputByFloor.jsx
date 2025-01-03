@@ -1,43 +1,40 @@
 import { useEffect, useState } from "react";
-import Highcharts, { color } from "highcharts";
+import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import {
-  Box,
-  Card,
-  CardContent,
-  CircularProgress,
-} from "@mui/material";
+import { Box, Card, CardContent, CircularProgress } from "@mui/material";
+import axios from "axios";
 
 const OutputByFloor = () => {
-  const [chartData, setChartData] = useState({
-    categories: [],
-    Target: [],
-    actual: [],
-    unachieved: [],
-  });
+  const [chartData, setChartData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Tải dữ liệu từ file JSON
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/data/OutputByFloorAPI.json'); 
-        const fakeData = await response.json();
+    axios
+      .get(
+        "http://192.168.30.245:8989/factory/getFloorDataS?date=2025/01/03&factory=LHG"
+      )
+      .then((response) => {
+        if (response.data.status === 0) {
+          const floorData = response.data.data.floorData;
 
-        // Xử lý dữ liệu để phù hợp với Highcharts
-        const processedData = {
-          categories: fakeData.map((item) => item.floor),
-          Target: fakeData.map((item) => item.Target),
-          actual: fakeData.map((item) => item.actual),
-          unachieved: fakeData.map((item) => item.Target - item.actual),
-        };
-
-        setChartData(processedData);
-      } catch (error) {
-        console.error("Failed to fetch data.json:", error);
-      }
-    };
-
-    fetchData();
+          // Cập nhật chartData với thông tin từ API
+          const data = floorData?.map((item) => ({
+            totalActualAssembly: item.totalActualAssembly,
+            lineAlias: item.lineAlias,
+            targetAssembly: item.targetAssembly,
+            unachieved: item.targetAssembly - item.totalActualAssembly, // Tính toán Unreach
+          }));
+          setChartData(data);
+        } else {
+          setError("Failed to fetch data");
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError("Error fetching data");
+        setLoading(false);
+      });
   }, []);
 
   const options = {
@@ -64,7 +61,6 @@ const OutputByFloor = () => {
       layout: "horizontal",
       align: "right",
       verticalAlign: "top",
-      // y: 20,
       itemStyle: {
         fontSize: "10px",
         fontWeight: 900,
@@ -73,12 +69,12 @@ const OutputByFloor = () => {
         color: "#f44336",
       },
       itemDistance: 2,
-      symbolWidth: 10, // Điều chỉnh kích thước hình vuông
-      symbolHeight: 10, // Điều chỉnh kích thước hình vuông
-      symbolRadius: 0, // Không làm tròn góc của hình vuông
+      symbolWidth: 10,
+      symbolHeight: 10,
+      symbolRadius: 0,
     },
     xAxis: {
-      categories: chartData.categories,
+      categories: chartData.map((item) => item.lineAlias),
       labels: {
         style: {
           fontSize: "10px",
@@ -108,34 +104,33 @@ const OutputByFloor = () => {
     series: [
       {
         name: "Unreach",
-        data: chartData.unachieved,
+        data: chartData.map((item) => item.unachieved),
         color: "#D5B5FF",
       },
       {
         name: "Actual",
-        data: chartData.actual,
+        data: chartData.map((item) => item.totalActualAssembly),
         color: "#092698",
       },
       {
         name: "Target",
-        data: [...(chartData?.target || [])].slice(0, 26), // Thêm dữ liệu Target
-        color: "#000", // Màu sắc cho Target
-        // visible: false, // Ẩn khỏi biểu đồ nhưng hiển thị trong legend
+        data: chartData.map((item) => item.targetAssembly),
+        color: "#000",
       },
     ],
     credits: {
       enabled: false,
     },
   };
-  
-  
 
   return (
-    <Card sx={{
-      borderRadius: 2, 
-    }}>
+    <Card
+      sx={{
+        borderRadius: 2,
+      }}
+    >
       <CardContent>
-        {chartData.categories.length === 0 ? (
+        {loading ? (
           <Box
             sx={{
               display: "flex",
@@ -144,6 +139,17 @@ const OutputByFloor = () => {
             }}
           >
             <CircularProgress />
+          </Box>
+        ) : error ? (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              color: "red",
+            }}
+          >
+            {error}
           </Box>
         ) : (
           <HighchartsReact highcharts={Highcharts} options={options} />

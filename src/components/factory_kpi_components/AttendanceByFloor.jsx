@@ -4,33 +4,31 @@ import HighchartsReact from "highcharts-react-official";
 import { Box, Card, CardContent, CircularProgress } from "@mui/material";
 
 const AttendanceByFloor = () => {
-  const [chartData, setChartData] = useState({
-    categories: [],
-    stitching: [],
-    assembly: [],
-  });
+  const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
-    // Tải dữ liệu từ file JSON
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/data/AttendanceByFloor.json"); // Đường dẫn file JSON
-        const fakeData = await response.json();
+    axios
+      .get(
+        "http://192.168.30.245:8989/factory/getFloorDataS?date=2025/01/03&factory=LHG"
+      )
+      .then((response) => {
+        if (response.data.status === 0) {
+          const floorData = response.data.data.floorData;
 
-        // Xử lý dữ liệu để phù hợp với Highcharts
-        const processedData = {
-          categories: fakeData.map((item) => item.floor),
-          stitching: fakeData.map((item) => parseFloat(item.stitching)),
-          assembly: fakeData.map((item) => parseFloat(item.assembly)),
-        };
-
-        setChartData(processedData);
-      } catch (error) {
-        console.error("Failed to fetch data.json:", error);
-      }
-    };
-
-    fetchData();
+          // Cập nhật chartData với thông tin từ API
+          const data = floorData?.map((item) => ({
+            lineAlias: item.lineAlias,
+            assembly: item.worker.assembly,
+            stitching: item.worker.stitching,
+          }));
+          setChartData(data);
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError("Error fetching data");
+        setLoading(false);
+      });
   }, []);
 
   const options = {
@@ -54,12 +52,12 @@ const AttendanceByFloor = () => {
       },
     },
     xAxis: {
-      categories: chartData.categories,
-      labels:{
-        style:{
-          fontSize: "10px"
-        }
-      }
+      categories: chartData?.map((item) => item.lineAlias),
+      labels: {
+        style: {
+          fontSize: "10px",
+        },
+      },
     },
     yAxis: {
       visible: false,
@@ -102,12 +100,12 @@ const AttendanceByFloor = () => {
     series: [
       {
         name: "Stitching",
-        data: chartData.stitching,
+        data: chartData.map((item) => item.stitching),
         color: "#0245C8",
       },
       {
         name: "Assembly",
-        data: chartData.assembly,
+        data: chartData.map((item) => item.assembly),
         color: "#6324CF",
       },
     ],
@@ -117,9 +115,11 @@ const AttendanceByFloor = () => {
   };
 
   return (
-    <Card sx={{
-      borderRadius: 2, 
-    }}>
+    <Card
+      sx={{
+        borderRadius: 2,
+      }}
+    >
       <CardContent>
         {chartData.categories.length === 0 ? (
           <Box
