@@ -10,15 +10,15 @@ import {
   Typography,
 } from "@mui/material";
 import { fetchDailyTotalOutput } from "@/apis/product_report_api/factoryAPI/DayAPI";
-import { setLoading, setError } from "@/redux/loading/loadingSlice";
+import { setLoading, setError } from "@/redux/data_factory_redux/DayReportSlice";
 
-
-const DailyTotalOutputChart = ({selectedDate}) => {
+const DailyTotalOutputChart = ({ selectedDate }) => {
   const dispatch = useDispatch();
+
   const { chartData, loading, error } = useSelector((state) => ({
-    chartData: state.loading.chartData,
-    loading: state.loading.loading,
-    error: state.loading.error,
+    chartData: state.dayreport.chartData, // Lấy chartData từ state của Redux
+    loading: state.dayreport.loading,
+    error: state.dayreport.error,
   }));
 
 
@@ -27,18 +27,17 @@ const DailyTotalOutputChart = ({selectedDate}) => {
       dispatch(setLoading(true));
       try {
         const year = selectedDate.year();
-        const month = selectedDate.month() + 1;
-        await dispatch(fetchDailyTotalOutput(year, month));
-        dispatch(setLoading(false));
+        const month = selectedDate.month() + 1; // month() returns 0-11
+        await dispatch(fetchDailyTotalOutput(year, month)); // Fetch data through dispatch
+        dispatch(setLoading(false)); // End loading
       } catch (err) {
         dispatch(setError(err.toString()));
         dispatch(setLoading(false));
       }
     };
-  
+
     fetchData();
   }, [selectedDate, dispatch]);
-  
 
   const options = {
     chart: {
@@ -53,10 +52,10 @@ const DailyTotalOutputChart = ({selectedDate}) => {
       style: {
         fontSize: "20px",
         fontWeight: "bold",
-        fontFamily: "'Roboto', sans-serif", // Font chữ đẹp và phổ biến
-        color: "#333", // Màu sắc chữ tinh tế
-        textShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)", // Bóng chữ nhẹ
-        letterSpacing: "1.5px", // Tăng khoảng cách giữa các chữ cái
+        fontFamily: "'Roboto', sans-serif",
+        color: "#333",
+        textShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
+        letterSpacing: "1.5px",
       },
     },
     legend: {
@@ -76,7 +75,7 @@ const DailyTotalOutputChart = ({selectedDate}) => {
       itemDistance: 10,
     },
     xAxis: {
-      categories: [...(chartData?.categories || [])].slice(0, 26), // Chỉ lấy 26 cột
+      categories: chartData?.categories || [],
       labels: { style: { fontSize: "10px", fontWeight: 600 } },
     },
     yAxis: {
@@ -99,13 +98,13 @@ const DailyTotalOutputChart = ({selectedDate}) => {
     series: [
       {
         name: "Unreach",
-        data: [...(chartData?.unachieved || [])].slice(0, 26),
-        color: "#EF5350 ",
+        data: [...(chartData.unachieved || [])], // Giá trị "Unachieved"
+        color: "#EF5350", // Màu cho Unachieved
       },
       {
         name: "Actual",
-        data: [...(chartData?.actual || [])].slice(0, 26),
-        color: "#003566",
+        data: [...(chartData.actual || [])], // Giá trị "Actual"
+        color: "#003566", // Màu cho Actual
       },
       {
         name: "Target",

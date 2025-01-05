@@ -1,9 +1,9 @@
 const CardTotalOutput = () => {
     return (
       <div className="bg-white p-4 rounded-xl shadow-md w-full">
-      <h1 
+      <p 
           style={{
-            fontSize: "16px",
+            fontSize: "14px",
             fontWeight: "bold",
             fontFamily: "'Roboto', sans-serif",
             color: "#195b12",
@@ -12,7 +12,7 @@ const CardTotalOutput = () => {
           }}
       >
         TOTAL OUTPUT
-      </h1>
+      </p>
       <div className="grid grid-cols-2 text-center font-bold">
             <div className="py-4">
             <p>ACTUAL</p>

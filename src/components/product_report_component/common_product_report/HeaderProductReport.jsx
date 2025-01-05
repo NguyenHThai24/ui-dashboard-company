@@ -36,7 +36,7 @@ const HeaderProductReport = ({ selectedDate, setSelectedDate }) => {
 
   return (
     <>
-      <Grid container spacing={2} alignItems="center">
+      <Grid container spacing={1} alignItems="center">
         <Grid item>
           <Calendar tempDate={tempDate} setTempDate={setTempDate} />
         </Grid>

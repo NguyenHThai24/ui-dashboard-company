@@ -11,15 +11,18 @@ import { useEffect } from "react";
 
 import { fetchDailyStitchingAssemblyMP } from "@/apis/product_report_api/factoryAPI/DayAPI";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading, setError } from "@/redux/loading/loadingSlice";
+import { setLoading, setError } from "@/redux/data_factory_redux/DayReportSlice";
 
 const DailyStitchingAssemblyMP = ({selectedDate}) => {
   const dispatch = useDispatch();
+
+
   const { chartDataDailySAMP, loading, error } = useSelector((state) => ({
-    chartDataDailySAMP: state.loading.chartDataDailySAMP, // Lấy chartData từ state của Redux
-    loading: state.loading.loading,
-    error: state.loading.error,
+    chartDataDailySAMP: state.dayreport.chartDataDailySAMP, // Lấy chartData từ state của Redux
+    loading: state.dayreport.loading,
+    error: state.dayreport.error,
   }));
+
 
   useEffect(() => {
     const fetchData = async () => {

@@ -1,4 +1,3 @@
-import React from 'react'
 
 const Prod_Hourly_Output = () => {
   return (

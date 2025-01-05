@@ -1,4 +1,5 @@
 import { request } from "@/utils/request";
+
 import {
   setLoading,
   setError,
@@ -6,7 +7,7 @@ import {
   setChartDataDailySAMP,
   setChartDataDailyEfficiency,
   setChartDataDailyRFT,
-} from "@/redux/loading/loadingSlice";
+} from "../../../redux/data_factory_redux/DayReportSlice";
 
 export const fetchDailyTotalOutput = (year, month) => async (dispatch) => {
   dispatch(setLoading(true)); // Bắt đầu loading

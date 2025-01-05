@@ -47,7 +47,7 @@ const Building = () => {
 
     const { Efficiency, RFT } = components;
     return (
-      <div className="grid grid-cols-2 gap-4 my-4">
+      <div className="grid grid-cols-2 gap-4 mb-4 mt-2">
         <Efficiency selectedDate={selectedDate} />
         <RFT selectedDate={selectedDate} />
       </div>
@@ -57,11 +57,11 @@ const Building = () => {
   return (
     <div>
       <HeaderProductReport selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
-      <div className="flex justify-start gap-3 my-4">
-        {Object.keys(buildingComponents).map((building) => (
+      <div className="flex justify-start gap-3 mb-4 mt-1">
+        {Object.keys(buildingComponents)?.map((building) => (
           <button
             key={building}
-            className={`relative flex flex-col items-center font-semibold justify-center px-2.5 py-2 border-2 rounded-lg shadow-lg ${
+            className={`relative flex flex-col items-center font-semibold justify-center px-2 py-1 border-2 rounded-lg shadow-lg ${
               selectedBuilding === building
                 ? "bg-green-700 text-white border-green-700"
                 : "bg-white text-green-700 border-green-700"
@@ -72,12 +72,12 @@ const Building = () => {
             {/* Biểu tượng */}
             <HomeWorkIcon
               sx={{
-                fontSize: "1.5rem", // Kích thước biểu tượng
-                marginBottom: "0.2rem", // Khoảng cách giữa biểu tượng và text
+                fontSize: "1.2rem", // Kích thước biểu tượng
+                marginBottom: "0.1rem", // Khoảng cách giữa biểu tượng và text
                 color: selectedBuilding === building ? "white" : "#1a5c1d", // Màu biểu tượng
               }}
             />
-            Building {building}
+            <span className="text-xs">Building {building}</span>
           </button>
         ))}
       </div>

@@ -1,3 +1,4 @@
+//http://192.168.30.245:8989/factory/getFloorData?date=2025/01/04&floor=A-F2
 import axios from 'axios';
 
 // Gọi API factory
@@ -21,10 +22,10 @@ export const fetchDistinctFloor = async () => {
 
 // goi API cho component Attendance By Floor
 
-export const fetchFloorDataS = async (date, factory) => {
+export const fetchFloorData = async (date, floor) => {
   try {
     const response = await axios.get(
-      `http://192.168.30.245:8989/factory/getFloorDataS?date=${date}&factory=${factory}`
+      `http://192.168.30.245:8989/factory/getFloorData?date=${date}&floor=${floor}`
     );
     if (response.data.status === 0) {
       return response.data.data.floorData.map((item) => ({
@@ -42,10 +43,10 @@ export const fetchFloorDataS = async (date, factory) => {
 
 // Gọi API cho Card Top Line data
 
-export const fetchStopLineDataS = async (date, factory) => {
+export const fetchStopLineData = async (date, floor) => {
   try {
     const response = await axios.get(
-      `http://192.168.30.245:8989/factory/getFloorDataS?date=${date}&factory=${factory}`
+      `http://192.168.30.245:8989/factory/getFloorData?date=${date}&floor=${floor}`
     );
     if (response.data.status === 0) {
       const stopLineData = response.data.data.stopLineData || [];
@@ -62,20 +63,23 @@ export const fetchStopLineDataS = async (date, factory) => {
 
 // gọi api cho HourlyOutputByFloor 
 
-export const fetchHourlyFloorDataS = async (date, factory) => {
+export const fetchHourlyFloorData = async (date, floor) => {
   try {
     const response = await axios.get(
-      `http://192.168.30.245:8989/factory/getFloorDataS?date=${date}&factory=${factory}`
+      `http://192.168.30.245:8989/factory/getFloorData?date=${date}&floor=${floor}`
     );
     if (response.data.status === 0) {
       const floorData = response.data.data.floorData;
       const timePeriods = Array.from(
         new Set(floorData.flatMap((item) => Object.keys(item.actualAssembly)))
       );
+      //console.log(timePeriods);
       return {
         data: floorData,
         times: timePeriods,
       };
+    
+      
     }
     throw new Error("Failed to fetch data");
   } catch (error) {
@@ -86,10 +90,10 @@ export const fetchHourlyFloorDataS = async (date, factory) => {
 
 // Gọi API Output By Floor
 
-export const fetchFloorOutputDataS = async (date, factory) => {
+export const fetchFloorOutputData = async (date, floor) => {
   try {
     const response = await axios.get(
-      `http://192.168.30.245:8989/factory/getFloorDataS?date=${date}&factory=${factory}`
+      `http://192.168.30.245:8989/factory/getFloorData?date=${date}&floor=${floor}`
     );
     if (response.data.status === 0) {
       const floorData = response.data.data.floorData;
@@ -113,10 +117,10 @@ export const fetchFloorOutputDataS = async (date, factory) => {
 
 // Gọi API RFT By Floor 
 
-export const fetchRFTFloorDataS = async (date, factory) => {
+export const fetchRFTFloorData = async (date, floor) => {
   try {
     const response = await axios.get(
-      `http://192.168.30.245:8989/factory/getFloorDataS?date=${date}&factory=${factory}`
+      `http://192.168.30.245:8989/factory/getFloorData?date=${date}&floor=${floor}`
     );
     if (response.data.status === 0) {
       return {

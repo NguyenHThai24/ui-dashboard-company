@@ -28,7 +28,7 @@ import iconDownTime from "@public/images/Icon-Down-Time.png";
 // import { useSelector } from "react-redux";
 // import { useTranslations } from "@/config/useTranslations";
 
-const Sidebar = ({ setSelectedItem }) => {
+const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [expanded, setExpanded] = useState({});
 
@@ -178,7 +178,7 @@ const Sidebar = ({ setSelectedItem }) => {
                   height: 30,
                   objectFit: "cover",
                   filter:
-                    "invert(8%) sepia(15%) saturate(1000%) hue-rotate(180deg) brightness(0%) contrast(150%)",
+                    "invert(8%) sepia(15%) saturate(100%) hue-rotate(180deg) brightness(30%) contrast(150%)",
                 }}
               />
             </ListItemIcon>
@@ -219,10 +219,10 @@ const Sidebar = ({ setSelectedItem }) => {
       variant="permanent"
       open={!collapsed}
       sx={{
-        width: collapsed ? 72 : 250,
+        width: collapsed ? 72 : 240,
         flexShrink: 0,
         [`& .MuiDrawer-paper`]: {
-          width: collapsed ? 72 : 250,
+          width: collapsed ? 72 : 240,
           boxSizing: "border-box",
           backgroundColor: "#fff",
           fontWeight: "bold",

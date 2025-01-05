@@ -1,38 +1,18 @@
-import {
-  Button,
-  Grid2,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-} from "@mui/material";
-import axios from "axios";
+import { Button, Grid2, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { useEffect, useState } from "react";
-
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { fetchDistinctFloor } from "@/apis/factory_kpi_api/FactoryAPI"
 
-const FloorLineList = () => {
+const FloorLineList = ({onFloorChange}) => {
   const [data, setData] = useState([]);
   const [selectedFloor, setSelectedFloor] = useState(null);
   const [selectedLine, setSelectedLine] = useState(null);
   const [lines, setLines] = useState([]);
 
   useEffect(() => {
-    // Fetch data from API
     const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "http://192.168.30.245:8989/factory/getDistinctFloor"
-        );
-        const result = response.data;
-        if (result.status === 0) {
-          setData(result.data);
-        } else {
-          console.error("Error fetching data:", result);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
+      const floors = await fetchDistinctFloor();
+      setData(floors);
     };
 
     fetchData();
@@ -47,7 +27,11 @@ const FloorLineList = () => {
   const handleSelect = (floorAlias) => {
     setSelectedFloor(floorAlias);
     handleFloorClick(floorAlias);
+    if (onFloorChange) {
+      onFloorChange(floorAlias);
+    }
   };
+  
 
   const handleSelectLine = (lineAlias) => {
     setSelectedLine(lineAlias);
@@ -55,7 +39,7 @@ const FloorLineList = () => {
 
   return (
     <>
-      <Grid2 container spacing={1} sx={{ pt: "15px" }}>
+      <Grid2 container spacing={1} sx={{ pt: "10px" }}>
         <Grid2
           item
           sx={{
@@ -101,7 +85,7 @@ const FloorLineList = () => {
       </Grid2>
 
       {/*floor*/}
-      <Grid2 container spacing={2} sx={{ py: "15px" }}>
+      <Grid2 container spacing={2} sx={{ py: "10px" }}>
         <Grid2
           item
           sx={{

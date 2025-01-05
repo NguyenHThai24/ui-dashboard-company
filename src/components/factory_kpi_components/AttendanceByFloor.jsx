@@ -1,35 +1,34 @@
 import { useEffect, useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { Box, Card, CardContent, CircularProgress } from "@mui/material";
+import { Box, Card, CardContent, CircularProgress, Typography } from "@mui/material";
+import { fetchFloorDataS } from "@/apis/factory_kpi_api/FactoryAPI";
+import { fetchFloorData } from "@/apis/factory_kpi_api/FactoryFloorAPI";
 
-const AttendanceByFloor = () => {
+const AttendanceByFloor = ({date, floor}) => {
   const [chartData, setChartData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios
-      .get(
-        "http://192.168.30.245:8989/factory/getFloorDataS?date=2025/01/03&factory=LHG"
-      )
-      .then((response) => {
-        if (response.data.status === 0) {
-          const floorData = response.data.data.floorData;
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = floor
+          ? await fetchFloorData(date.format("YYYY/MM/DD"), floor)
+          : await fetchFloorDataS(date.format("YYYY/MM/DD"), "LHG");
 
-          // Cập nhật chartData với thông tin từ API
-          const data = floorData?.map((item) => ({
-            lineAlias: item.lineAlias,
-            assembly: item.worker.assembly,
-            stitching: item.worker.stitching,
-          }));
-          setChartData(data);
-        }
+        setChartData(response); // Directly use the returned array
+      } catch (err) {
+        setError(`Error fetching data: ${err.message}`);
+      } finally {
         setLoading(false);
-      })
-      .catch((error) => {
-        setError("Error fetching data");
-        setLoading(false);
-      });
-  }, []);
+      }
+    };
+
+    fetchData();
+  }, [date, floor]);
 
   const options = {
     chart: {
@@ -100,12 +99,12 @@ const AttendanceByFloor = () => {
     series: [
       {
         name: "Stitching",
-        data: chartData.map((item) => item.stitching),
+        data: chartData?.map((item) => item.stitching),
         color: "#0245C8",
       },
       {
         name: "Assembly",
-        data: chartData.map((item) => item.assembly),
+        data: chartData?.map((item) => item.assembly),
         color: "#6324CF",
       },
     ],
@@ -121,7 +120,7 @@ const AttendanceByFloor = () => {
       }}
     >
       <CardContent>
-        {chartData.categories.length === 0 ? (
+        {loading ? (
           <Box
             sx={{
               display: "flex",
@@ -132,6 +131,23 @@ const AttendanceByFloor = () => {
           >
             <CircularProgress />
           </Box>
+        ) : error ? (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              minHeight: "100px",
+            }}
+          >
+            <Typography color="error" variant="body1">
+              {error}
+            </Typography>
+          </Box>
+        ) : chartData.length === 0 ? (
+          <Typography variant="body1" align="center">
+            No data available.
+          </Typography>
         ) : (
           <HighchartsReact highcharts={Highcharts} options={options} />
         )}

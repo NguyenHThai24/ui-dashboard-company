@@ -4,25 +4,25 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { Card, CardContent, CircularProgress, Typography } from "@mui/material";
 import { fetchDailyEfficiency } from "@/apis/product_report_api/factoryAPI/DayAPI";
-import { setLoading, setError } from "@/redux/loading/loadingSlice";
+import { setLoading, setError } from "@/redux/data_factory_redux/DayReportSlice";
 
 const DailyEfficiency = ({selectedDate}) => {
   const dispatch = useDispatch();
+  
   const { chartDataDailyEfficiency, loading, error } = useSelector((state) => ({
-    chartDataDailyEfficiency: state.loading.chartDataDailyEfficiency,
-    loading: state.loading.loading,
-    error: state.loading.error,
+    chartDataDailyEfficiency: state.dayreport.chartDataDailyEfficiency, // Lấy chartDataDailyEfficiency từ state của Redux
+    loading: state.dayreport.loading,
+    error: state.dayreport.error,
   }));
-
 
   useEffect(() => {
     const fetchData = async () => {
       dispatch(setLoading(true));
       try {
         const year = selectedDate.year();
-        const month = selectedDate.month() + 1; // month() returns 0-11
-        await dispatch(fetchDailyEfficiency(year, month));
-        dispatch(setLoading(false));
+        const month = selectedDate.month() + 1; // month() trả về từ 0-11
+        await dispatch(fetchDailyEfficiency(year, month)); // Fetch dữ liệu qua dispatch
+        dispatch(setLoading(false)); // Kết thúc loading
       } catch (error) {
         dispatch(setError(error.toString()));
       }

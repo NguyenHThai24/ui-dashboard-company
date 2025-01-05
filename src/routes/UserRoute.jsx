@@ -14,7 +14,7 @@ import Production_Report_Month from "@/pages/factory_production/production_repor
 
 import Building from "@/pages/factory_production/production_report/building/Building"
 
-import Daily_Factory_KPI from "@/pages/factory_production/Daily_Factory_KPI"
+import Daily_Factory_KPI from "@/pages/factory_production/daily_factory_kpi/Daily_Factory_KPI"
 
 const UserRoute = () => (
   <Routes>

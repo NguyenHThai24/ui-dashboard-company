@@ -2,40 +2,33 @@ import { useEffect, useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { Box, Card, CardContent, CircularProgress } from "@mui/material";
-import axios from "axios";
+import { fetchFloorOutputDataS } from "@/apis/factory_kpi_api/FactoryAPI";
+import { fetchFloorOutputData } from "@/apis/factory_kpi_api/FactoryFloorAPI";
 
-const OutputByFloor = () => {
+const OutputByFloor = ({ date, floor }) => {
   const [chartData, setChartData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios
-      .get(
-        "http://192.168.30.245:8989/factory/getFloorDataS?date=2025/01/03&factory=LHG"
-      )
-      .then((response) => {
-        if (response.data.status === 0) {
-          const floorData = response.data.data.floorData;
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = floor
+          ? await fetchFloorOutputData(date.format("YYYY/MM/DD"), floor)
+          : await fetchFloorOutputDataS(date.format("YYYY/MM/DD"), "LHG");
 
-          // Cập nhật chartData với thông tin từ API
-          const data = floorData?.map((item) => ({
-            totalActualAssembly: item.totalActualAssembly,
-            lineAlias: item.lineAlias,
-            targetAssembly: item.targetAssembly,
-            unachieved: item.targetAssembly - item.totalActualAssembly, // Tính toán Unreach
-          }));
-          setChartData(data);
-        } else {
-          setError("Failed to fetch data");
-        }
+        setChartData(response); // Directly use the returned array
+      } catch (err) {
+        setError(`Error fetching data: ${err.message}`);
+      } finally {
         setLoading(false);
-      })
-      .catch((error) => {
-        setError("Error fetching data");
-        setLoading(false);
-      });
-  }, []);
+      }
+    };
+
+    fetchData();
+  }, [date, floor]);
 
   const options = {
     chart: {
@@ -103,7 +96,7 @@ const OutputByFloor = () => {
     },
     series: [
       {
-        name: "Unreach",
+        name: "Unachieved",
         data: chartData.map((item) => item.unachieved),
         color: "#D5B5FF",
       },
@@ -112,10 +105,17 @@ const OutputByFloor = () => {
         data: chartData.map((item) => item.totalActualAssembly),
         color: "#092698",
       },
+      // {
+      //   name: "Target",
+      //   data: chartData.map((item) => item.targetAssembly),
+      //   color: "#000",
+      //   visible: false
+      // },
       {
         name: "Target",
-        data: chartData.map((item) => item.targetAssembly),
+        data: [...(chartData?.target || [])],
         color: "#000",
+       // visible: false
       },
     ],
     credits: {
@@ -124,31 +124,14 @@ const OutputByFloor = () => {
   };
 
   return (
-    <Card
-      sx={{
-        borderRadius: 2,
-      }}
-    >
+    <Card sx={{ borderRadius: 2 }}>
       <CardContent>
         {loading ? (
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
+          <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <CircularProgress />
           </Box>
         ) : error ? (
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              color: "red",
-            }}
-          >
+          <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", color: "red" }}>
             {error}
           </Box>
         ) : (

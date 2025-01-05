@@ -1,39 +1,41 @@
 import { CircularProgress } from "@mui/material";
-import axios from "axios";
 import { useState, useEffect } from "react";
 
-const CardTopLineData = () => {
-  const [stopTimeLine, setTopTimeLine] = useState([]);
-  const [loading, setLoading] = useState(true); // Define loading state
-  const [error, setError] = useState(null); // Define error state
+import { fetchStopLineDataS } from "@/apis/factory_kpi_api/FactoryAPI";
+import { fetchStopLineData } from "@/apis/factory_kpi_api/FactoryFloorAPI";
+
+const CardTopLineData = ({ date, floor }) => {
+  const [stopTimeLine, setStopTimeLine] = useState([]);
+  const [nameTimeLine, setNameTimeLine] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios
-      .get("http://192.168.30.245:8989/factory/getFloorDataS?date=2025/01/03&factory=LHG")
-      .then((response) => {
-        if (response.data.status === 0) {
-          const stopLineData = response.data.data.stopLineData;
-
-          // Cập nhật stopTimeLine với thông tin từ API
-          const data = stopLineData.map((item) => ({
-            name: item.line,
-            time: item.SL_NgungChuyen,
-          }));
-          setTopTimeLine(data);
+    const fetchData = async () => {
+      try {
+        let res;
+        if (floor) {
+          res = await fetchStopLineData(date.format("YYYY/MM/DD"), floor);
+        } else {
+          res = await fetchStopLineDataS(date.format("YYYY/MM/DD"), "LHG");
         }
+        setStopTimeLine(res.time);
+        setNameTimeLine(res.name);
         setLoading(false);
-      })
-      .catch(() => {
-        setError("Error fetching data");
+      } catch (error) {
+        setError("Error fetching data: " + error.message);
         setLoading(false);
-      });
-  }, []);
+      }
+    };
+
+    fetchData();
+  }, [date, floor]);
 
   return (
     <div className="bg-white p-1 rounded-xl shadow-md w-full border-4 border-red-600 h-[162px]">
-      <h1
+      <p
         style={{
-          fontSize: "16px",
+          fontSize: "14px",
           fontWeight: "bold",
           fontFamily: "'Roboto', sans-serif",
           color: "#f10606",
@@ -44,7 +46,7 @@ const CardTopLineData = () => {
         }}
       >
         Digital Andon Cases
-      </h1>
+      </p>
 
       {loading ? (
         <CircularProgress />
@@ -54,14 +56,14 @@ const CardTopLineData = () => {
         <ul
           className="grid grid-cols-2 gap-1 mt-2"
           style={{
-            maxHeight: "100px", // Giới hạn chiều cao
-            overflowY: "auto", // Hiển thị thanh cuộn dọc nếu vượt quá chiều cao
-            padding: "0 4px", // Giảm padding để hiển thị tốt hơn
+            maxHeight: "100px",
+            overflowY: "auto",
+            padding: "0 4px",
           }}
         >
-          {stopTimeLine?.map((item, index) => (
+          {stopTimeLine.map((time, index) => (
             <li key={index} className="text-sm">
-              <strong>{item.name}</strong>: {item.time} times
+              <strong>{nameTimeLine[index]}</strong>: {time} times
             </li>
           ))}
         </ul>

@@ -9,15 +9,15 @@ import {
 export const fetchEfficiencyByLine = (year, month) => async (dispatch) => {
   dispatch(setLoading(true)); // Bắt đầu loading
   try {
-    // const response = await request.post(
-    //   `/EFFICIENCY_BY_LINE_Building`,
-    //   { YEAR: year, MONTH: month, Building: "C" }
-    // );
-    // const rawData = response.data;
-    const response = await fetch(`/data/week_total_output.json`, {
-      params: { YEAR: year, MONTH: month, Building: "A" }, 
-    });
-    const rawData = await response.json();
+    const response = await request.post(
+      `/EFFICIENCY_BY_LINE_Building`,
+      { YEAR: year, MONTH: month, Building: "C" }
+    );
+    const rawData = response.data;
+    // const response = await fetch(`/data/week_total_output.json`, {
+    //   params: { YEAR: year, MONTH: month, Building: "A" }, 
+    // });
+    // const rawData = await response.json();
 
     const line = [];
     const EFF = [];

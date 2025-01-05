@@ -10,14 +10,14 @@ import {
   Typography,
 } from "@mui/material";
 import { fetchDailyRFT } from "@/apis/product_report_api/factoryAPI/DayAPI";
-import { setLoading, setError } from "@/redux/loading/loadingSlice";
+import { setLoading, setError } from "@/redux/data_factory_redux/DayReportSlice";
 
 const DailyRFT = ({selectedDate}) => {
   const dispatch = useDispatch();
   const { chartDataDailyRFT, loading, error } = useSelector((state) => ({
-    chartDataDailyRFT: state.loading.chartDataDailyRFT, // Lấy chartDataDailyRFT từ state của Redux
-    loading: state.loading.loading,
-    error: state.loading.error,
+    chartDataDailyRFT: state.dayreport.chartDataDailyRFT, // Lấy chartDataDailyEfficiency từ state của Redux
+    loading: state.dayreport.loading,
+    error: state.dayreport.error,
   }));
 
 

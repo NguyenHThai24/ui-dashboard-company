@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import {
   CircularProgress,
   Table,
@@ -10,34 +9,39 @@ import {
   TableContainer,
   Paper,
 } from "@mui/material";
+import { fetchHourlyFloorDataS } from "@/apis/factory_kpi_api/FactoryAPI";
+import {fetchHourlyFloorData} from "@/apis/factory_kpi_api/FactoryFloorAPI"
 
-const HourlyOutputByFloor = () => {
+const HourlyOutputByFloor = ({date, floor}) => {
+  // console.log(floor);
+  
   const [floorData, setFloorData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [timePeriods, setTimePeriods] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://192.168.30.245:8989/factory/getFloorDataS?date=2025/01/03&factory=LHG")
-      .then((response) => {
-        if (response.data.status === 0) {
-          const data = response.data.data.floorData;
-          const times = Array.from(
-            new Set(data.flatMap((item) => Object.keys(item.actualAssembly)))
-          );
-          setTimePeriods(times);
-          setFloorData(data);
+    const fetchData = async () => {
+      try {
+        let response;
+        if (floor) {
+          response = await fetchHourlyFloorData(date.format("YYYY/MM/DD"), floor);
         } else {
-          setError("Failed to fetch data");
+          response = await fetchHourlyFloorDataS(date.format("YYYY/MM/DD"), "LHG");
         }
+
+        const { data, times } = response;
+        setTimePeriods(times);
+        setFloorData(data);
         setLoading(false);
-      })
-      .catch(() => {
-        setError("Error fetching data");
+      } catch (err) {
+        setError("Error fetching data: " + err.message);
         setLoading(false);
-      });
-  }, []);
+      }
+    };
+
+    fetchData();
+  }, [date, floor]);
 
   return (
     <div className="bg-white rounded-xl shadow-md font-bold">
@@ -49,7 +53,8 @@ const HourlyOutputByFloor = () => {
           color: "#195b12",
           textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
           letterSpacing: "0px",
-          textAlign:"center"
+          textAlign: "center",
+          paddingTop: "10px"
         }}
       >
         HOURLY OUTPUT BY FLOOR
@@ -60,13 +65,34 @@ const HourlyOutputByFloor = () => {
       ) : error ? (
         <p style={{ color: "red" }}>{error}</p>
       ) : (
-        <TableContainer component={Paper} sx={{ maxHeight: "full", overflowY: "auto"}}>
+        <TableContainer
+              component={Paper}
+              sx={{
+                maxHeight: "full",
+                overflowY: "auto",
+                marginTop: "10px",
+                "&::-webkit-scrollbar": {
+                  width: "6px", // Độ rộng của thanh cuộn
+                  height: "6px", // Chiều cao của thanh cuộn (nếu là cuộn ngang)
+                },
+                "&::-webkit-scrollbar-thumb": {
+                  backgroundColor: "#888", // Màu thanh cuộn
+                  borderRadius: "10px", // Độ cong của thanh cuộn
+                },
+                "&::-webkit-scrollbar-thumb:hover": {
+                  backgroundColor: "#555", // Màu khi hover vào thanh cuộn
+                },
+                "&::-webkit-scrollbar-track": {
+                  backgroundColor: "#f1f1f1", // Màu nền của đường ray thanh cuộn
+                },
+              }}
+            >
+
           <Table
             sx={{
               "& .MuiTableCell-root": {
-                padding: "0px 2px", // Giảm padding để thu nhỏ khoảng cách dòng
-                fontWeight: "bold", // Toàn bộ in đậm
-                fontSize: "10px", // Cỡ chữ nhỏ hơn
+                padding: "3px 4px",
+                fontSize: "10px",
               },
             }}
           >
@@ -74,14 +100,17 @@ const HourlyOutputByFloor = () => {
               sx={{
                 backgroundColor: "#c0f1c5",
                 "& .MuiTableCell-root": {
-                 textAlign:"center",
-                 fontWeight: "bold"
+                  textAlign: "center",
+                  fontWeight: 900,
+                  color: "#000"
                 },
               }}
             >
-              <TableRow>
-                <TableCell rowSpan={2}>Line</TableCell>
-                <TableCell rowSpan={2}>Target</TableCell>
+               <TableRow>
+                <TableCell rowSpan={2} sx={{ width: "45px", minWidth: "45px" }}>
+                  Line
+                </TableCell>
+                <TableCell rowSpan={2} sx={{}}>Target</TableCell>
                 <TableCell colSpan={timePeriods.length}>Time</TableCell>
               </TableRow>
               <TableRow>
@@ -98,16 +127,31 @@ const HourlyOutputByFloor = () => {
                     backgroundColor: rowIndex % 2 === 0 ? "#f5f5f5" : "white",
                   }}
                 >
-                  <TableCell>{row.lineAlias}</TableCell>
-                  <TableCell>{row.totalTarget}</TableCell>
-                  {timePeriods?.map((time, colIndex) => (
-                    <TableCell key={colIndex} style={{ textAlign: "center" }}>
-                      {row.actualAssembly[time] || "-"}
-                    </TableCell>
-                  ))}
+                  <TableCell sx={{ width: "45px", minWidth: "45px", fontWeight: 900 }}>
+                    {row.lineAlias}
+                  </TableCell>
+                  <TableCell sx={{ color: "blue", fontWeight: 900 }}>{row.totalTarget}</TableCell>
+                  {timePeriods?.map((time, colIndex) => {
+                    const actualValue = row.actualAssembly[time];
+                    const isExceeding = actualValue > row.totalTarget;
+                    return (
+                      <TableCell
+                        key={colIndex}
+                        sx={{
+                          textAlign: "center",
+                          color: isExceeding ? "green" : "red", // Màu chữ
+                          fontWeight: isExceeding ? "bold" : "normal",
+                        }}
+                      >
+                        {actualValue || "-"}
+                      </TableCell>
+                    );
+                  })}
                 </TableRow>
               ))}
             </TableBody>
+
+
           </Table>
         </TableContainer>
       )}
