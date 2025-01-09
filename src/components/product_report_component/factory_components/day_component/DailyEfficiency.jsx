@@ -34,32 +34,32 @@ const DailyEfficiency = ({selectedDate}) => {
   const options = {
     chart: {
       type: "area",
-      marginTop: 150, // Tăng khoảng cách từ đỉnh biểu đồ đến vùng vẽ
+      marginTop: 150,
       marginLeft: 0,
       marginRight: 0,
       events: {
         load: function () {
           const chart = this;
-
+  
           const actualData =
             chart.series[0]?.data.map((point) => point.y) || [];
           if (actualData.length === 0) {
             console.warn("No data available for calculations.");
             return;
           }
-
+  
           const average =
             actualData.reduce((sum, value) => sum + value, 0) /
             actualData.length;
           const current = actualData[actualData.length - 1] || 0;
-
+  
           const textX = chart.plotLeft + chart.plotWidth - 150;
           const lineWidth = 6;
           const lineHeight = 30;
           const lineX = textX - 20;
-          const averageY = chart.plotTop - 100; // Đẩy "AVERAGE" xuống dưới
-          const currentY = chart.plotTop - 75; // Đẩy "CURRENT" xuống dưới
-
+          const averageY = chart.plotTop - 100;
+          const currentY = chart.plotTop - 75;
+  
           chart.renderer
             .rect(lineX, averageY, lineWidth, lineHeight)
             .attr({
@@ -67,7 +67,7 @@ const DailyEfficiency = ({selectedDate}) => {
               radius: 2,
             })
             .add();
-
+  
           chart.renderer
             .text(
               `AVERAGE: ${average.toFixed(2)}%`,
@@ -80,7 +80,7 @@ const DailyEfficiency = ({selectedDate}) => {
               fontWeight: "bold",
             })
             .add();
-
+  
           chart.renderer
             .rect(lineX, currentY, lineWidth, lineHeight)
             .attr({
@@ -88,7 +88,7 @@ const DailyEfficiency = ({selectedDate}) => {
               radius: 2,
             })
             .add();
-
+  
           chart.renderer
             .text(
               `CURRENT: ${current.toFixed(2)}%`,
@@ -101,13 +101,27 @@ const DailyEfficiency = ({selectedDate}) => {
               fontWeight: "bold",
             })
             .add();
+          
+          // Hiển thị baseline chỉ ở cuối dòng
+          // chart.renderer
+          //   .text(
+          //     `65%`,
+          //     chart.plotLeft + chart.plotWidth - 45, // Chỉnh vị trí cho phù hợp
+          //     chart.plotTop + chart.plotHeight - 95  // Chỉnh vị trí cho phù hợp
+          //   )
+          //   .css({
+          //     color: "#333",
+          //     fontSize: "12px",
+          //     fontWeight: "bold",
+          //   })
+            // .add();
         },
       },
     },
     title: {
       text: "DAILY EFFICIENCY",
       align: "center",
-      verticalAlign: "top", // Đặt title ở trên cùng
+      verticalAlign: "top",
       style: {
         fontSize: "20px",
         fontWeight: "bold",
@@ -180,34 +194,21 @@ const DailyEfficiency = ({selectedDate}) => {
         data: Array(chartDataDailyEfficiency?.date.length).fill(65),
         lineColor: "#0000FF",
         dashStyle: "ShortDash",
-        dataLabels: {
-          enabled: true,
-          style: {
-            color: "#333",
-            fontSize: "10px",
-          },
-          formatter: function () {
-            return "65%";
-          },
+        marker: {
+          enabled: false, // Không hiển thị marker cho đường này
         },
-        label: {
-          align: "right",
-          style: {
-            color: "#333",
-            fontSize: "10px",
-          },
-          formatter: function () {
-            return "65%";
-          },
+        dataLabels: {
+          enabled: false, 
         },
         fillColor: "none",
       },
     ],
-
+  
     credits: {
       enabled: false,
     },
   };
+  
 
   return (
     <Card>

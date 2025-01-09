@@ -186,7 +186,7 @@ const DailyRFT = ({selectedDate}) => {
         name: "Baseline", // Tên của đường trung bình
         data: Array(chartDataDailyRFT?.date.length).fill(100), // Giá trị cố định 65% cho tất cả các điểm trên trục x
         marker: {
-          enabled: true, // Không hiển thị marker cho đường này
+          enabled: false, // Không hiển thị marker cho đường này
         },
         lineColor: "#0e6251", // Màu đường trung bình
         dashStyle: "ShortDash", // Kiểu nét đứt

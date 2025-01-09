@@ -4,6 +4,7 @@ import { useTranslations } from "@/config/useTranslations";
 import { useSelector } from "react-redux";
 
 const Navbar = () => {
+  const selectedItem = useSelector((state) => state.sidebar.selectedItem);
   const language = useSelector((state) => state.language.language);
   const translations = useTranslations(language);
   console.log(translations);
@@ -12,8 +13,8 @@ const Navbar = () => {
     <Grid container sx={{ py: 1, px: 2 }}>
       <Grid item xs={10}>
         <h1 className="font-bold text-5xl text-green-700">
-        {/* {translations["LHG"] } */}
-        LHG
+        {/* {translations["LHG"] } */}LHG {selectedItem && `- ${selectedItem}`}
+      
         </h1>
       </Grid>
 

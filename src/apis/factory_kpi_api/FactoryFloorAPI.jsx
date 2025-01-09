@@ -1,11 +1,11 @@
-//http://192.168.30.245:8989/factory/getFloorData?date=2025/01/04&floor=A-F2
-import axios from 'axios';
+//http://192.168.30.245:8989/factory/getFloorData?date=2025/01/04&floor=A-F2import axios from 'axios';
+import { req } from '../../utils/request';
 
 // Gọi API factory
 
 export const fetchDistinctFloor = async () => {
   try {
-    const response = await axios.get('http://192.168.30.245:8989/factory/getDistinctFloor');
+    const response = await req.get('/getDistinctFloor');
     if (response.data.status === 0) {
       return response.data.data;
     } else {
@@ -24,8 +24,8 @@ export const fetchDistinctFloor = async () => {
 
 export const fetchFloorData = async (date, floor) => {
   try {
-    const response = await axios.get(
-      `http://192.168.30.245:8989/factory/getFloorData?date=${date}&floor=${floor}`
+    const response = await req.get(
+      `/getFloorData?date=${date}&floor=${floor}`
     );
     if (response.data.status === 0) {
       return response.data.data.floorData.map((item) => ({
@@ -45,8 +45,8 @@ export const fetchFloorData = async (date, floor) => {
 
 export const fetchStopLineData = async (date, floor) => {
   try {
-    const response = await axios.get(
-      `http://192.168.30.245:8989/factory/getFloorData?date=${date}&floor=${floor}`
+    const response = await req.get(
+      `/getFloorData?date=${date}&floor=${floor}`
     );
     if (response.data.status === 0) {
       const stopLineData = response.data.data.stopLineData || [];
@@ -65,8 +65,8 @@ export const fetchStopLineData = async (date, floor) => {
 
 export const fetchHourlyFloorData = async (date, floor) => {
   try {
-    const response = await axios.get(
-      `http://192.168.30.245:8989/factory/getFloorData?date=${date}&floor=${floor}`
+    const response = await req.get(
+      `/getFloorData?date=${date}&floor=${floor}`
     );
     if (response.data.status === 0) {
       const floorData = response.data.data.floorData;
@@ -92,8 +92,8 @@ export const fetchHourlyFloorData = async (date, floor) => {
 
 export const fetchFloorOutputData = async (date, floor) => {
   try {
-    const response = await axios.get(
-      `http://192.168.30.245:8989/factory/getFloorData?date=${date}&floor=${floor}`
+    const response = await req.get(
+      `/getFloorData?date=${date}&floor=${floor}`
     );
     if (response.data.status === 0) {
       const floorData = response.data.data.floorData;
@@ -119,8 +119,8 @@ export const fetchFloorOutputData = async (date, floor) => {
 
 export const fetchRFTFloorData = async (date, floor) => {
   try {
-    const response = await axios.get(
-      `http://192.168.30.245:8989/factory/getFloorData?date=${date}&floor=${floor}`
+    const response = await req.get(
+      `/getFloorData?date=${date}&floor=${floor}`
     );
     if (response.data.status === 0) {
       return {

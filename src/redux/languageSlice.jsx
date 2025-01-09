@@ -5,11 +5,11 @@ const initialLanguage = Cookies.get("language") || "vi";
 
 const languageSlice = createSlice({
   name: "language",
-  initialState: { language: initialLanguage },
+  initialState: { language: initialLanguage || "vi" },
   reducers: {
     setLanguage: (state, action) => {
       state.language = action.payload; 
-      Cookies.set("language", action.payload, { expires: 1 }); 
+      Cookies.set("language", action.payload, { expires: 365 }); 
     },
   },
 });

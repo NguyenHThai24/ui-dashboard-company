@@ -17,11 +17,11 @@ const Production_Report_Month = () => {
      <HeaderProductReport selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
        <ButtonTime/>
       <div className="grid grid-rows-2 gap-4 my-4 mx-1">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <MonthTotalOutputChart selectedDate={selectedDate} />
           <MonthStitchingAssemblyMP selectedDate={selectedDate} />
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <MonthEfficiency selectedDate={selectedDate} />
           <MonthRFT selectedDate={selectedDate} />
         </div>

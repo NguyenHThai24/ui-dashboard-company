@@ -1,9 +1,10 @@
-import { Button, Grid2, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import {  Button, Grid2, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { useEffect, useState } from "react";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { fetchDistinctFloor } from "@/apis/factory_kpi_api/FactoryAPI"
 
-const FloorLineList = ({onFloorChange}) => {
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+
+const FloorLineList = ({ onFloorChange, onLineChange }) => {
   const [data, setData] = useState([]);
   const [selectedFloor, setSelectedFloor] = useState(null);
   const [selectedLine, setSelectedLine] = useState(null);
@@ -31,15 +32,19 @@ const FloorLineList = ({onFloorChange}) => {
       onFloorChange(floorAlias);
     }
   };
-  
 
   const handleSelectLine = (lineAlias) => {
+    //console.log("Selected Line in FloorLineList:", lineAlias); // Debu
     setSelectedLine(lineAlias);
+    if (onLineChange) {
+      onLineChange(lineAlias);
+    }
   };
+  
 
   return (
     <>
-      <Grid2 container spacing={1} sx={{ pt: "10px" }}>
+    <Grid2 container spacing={1} sx={{ py: "5px" }}>
         <Grid2
           item
           sx={{
@@ -83,23 +88,15 @@ const FloorLineList = ({onFloorChange}) => {
           </Grid2>
         </Grid2>
       </Grid2>
-
-      {/*floor*/}
-      <Grid2 container spacing={2} sx={{ py: "10px" }}>
-        <Grid2
-          item
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "10px",
-          }}
-        >
+     {/* Floor rendering */}
+        <Grid2 container spacing={1} alignItems="center">
           <Grid2
             item
             xs={6}
             sx={{
               bgcolor: "#049962",
+              py: 0.5,
+              px: 1.5,
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
@@ -107,78 +104,58 @@ const FloorLineList = ({onFloorChange}) => {
               height: "42px",
               borderRadius: "5px",
               fontSize: "13px",
-              padding: "0 12px", // Add padding for better text alignment
             }}
           >
-            <p style={{ color: "white", margin: 0 }}>Floor</p>
+            <p style={{ color: "white" }}>Floor</p>
             <ArrowForwardIosIcon sx={{ color: "white", fontSize: "15px" }} />
           </Grid2>
-          <Grid2 item sx={{ display: "flex", alignItems: "center" }}>
+          <Grid2
+            item
+            sx={{
+              display: "flex",
+              alignItems: "center", // Align items vertically in the center
+              justifyContent: "flex-start",
+              py: "0px",
+            }}
+          >
             <List
               sx={{
                 display: "flex",
-                flexDirection: "row", // Ensures items are in a row
+                flexDirection: "row",
                 gap: "10px",
-                padding: 0,
+                alignItems: "center", // Align buttons vertically with the title
               }}
             >
               {data?.map((floor) => (
-                <ListItem
-                  key={floor.floorId}
-                  disablePadding
-                  sx={{ width: "auto" }} // Ensures item auto adjusts
-                >
+                <ListItem key={floor.floorId} disablePadding sx={{ width: "auto" }}>
                   <ListItemButton
                     onClick={() => handleSelect(floor.floorAlias)}
                     sx={{
-                      bgcolor:
-                        selectedFloor === floor.floorAlias ? "#049962" : "gray",
+                      bgcolor: selectedFloor === floor.floorAlias ? "#049962" : "gray",
                       color: "white",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
                       width: "70px",
                       height: "42px",
                       borderRadius: "5px",
                       textAlign: "center",
                     }}
                   >
-                    <ListItemText
-                      primary={floor.floorAlias}
-                      primaryTypographyProps={{
-                        sx: {
-                          textAlign: "center",
-                          color:
-                            selectedFloor === floor.floorAlias
-                              ? "white"
-                              : "inherit",
-                        },
-                      }}
-                    />
+                    <ListItemText primary={floor.floorAlias} />
                   </ListItemButton>
                 </ListItem>
               ))}
             </List>
           </Grid2>
         </Grid2>
-      </Grid2>
 
-      {/*Line*/}
-      <Grid2 container spacing={2}>
-        <Grid2
-          item
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "10px",
-          }}
-        >
+        {/* Line rendering */}
+        <Grid2 container spacing={1} alignItems="center">
           <Grid2
             item
             xs={6}
             sx={{
               bgcolor: "#049962",
+              py: 0.5,
+              px: 1.5,
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
@@ -186,19 +163,26 @@ const FloorLineList = ({onFloorChange}) => {
               height: "42px",
               borderRadius: "5px",
               fontSize: "13px",
-              padding: "0 12px",
             }}
           >
-            <p style={{ color: "white", margin: 0 }}>Line</p>
+            <p style={{ color: "white" }}>Line</p>
             <ArrowForwardIosIcon sx={{ color: "white", fontSize: "15px" }} />
           </Grid2>
-          <Grid2 item sx={{ display: "flex", alignItems: "center" }}>
+          <Grid2
+            item
+            sx={{
+              display: "flex",
+              alignItems: "center", // Align items vertically in the center
+              justifyContent: "flex-start",
+              gap: "10px",
+            }}
+          >
             <List
               sx={{
                 display: "flex",
                 flexDirection: "row",
                 gap: "10px",
-                padding: 0,
+                alignItems: "center", // Align buttons vertically with the title
               }}
             >
               {lines?.map((line, index) => (
@@ -206,37 +190,22 @@ const FloorLineList = ({onFloorChange}) => {
                   <ListItemButton
                     onClick={() => handleSelectLine(line.lineAlias)}
                     sx={{
-                      bgcolor:
-                        selectedLine === line.lineAlias ? "#049962" : "gray",
+                      bgcolor: selectedLine === line.lineAlias ? "#049962" : "gray",
                       color: "white",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
                       width: "70px",
                       height: "42px",
                       borderRadius: "5px",
                       textAlign: "center",
                     }}
                   >
-                    <ListItemText
-                      primary={line.lineAlias}
-                      primaryTypographyProps={{
-                        sx: {
-                          textAlign: "center",
-                          color:
-                            selectedLine === line.lineAlias
-                              ? "white"
-                              : "inherit",
-                        },
-                      }}
-                    />
+                    <ListItemText primary={line.lineAlias} />
                   </ListItemButton>
                 </ListItem>
               ))}
             </List>
           </Grid2>
         </Grid2>
-      </Grid2>
+
     </>
   );
 };

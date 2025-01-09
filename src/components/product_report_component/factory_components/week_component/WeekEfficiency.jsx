@@ -107,6 +107,7 @@ const WeekEfficiency = ({selectedDate}) => {
               fontWeight: "bold",
             })
             .add();
+            
         },
       },
     },

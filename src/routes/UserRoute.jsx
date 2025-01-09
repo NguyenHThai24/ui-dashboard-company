@@ -12,9 +12,14 @@ import ProductionReportDay from "@/pages/factory_production/production_report/fa
 import ProductionReportWeek from "@/pages/factory_production/production_report/factory/ProductionReportWeek"; 
 import Production_Report_Month from "@/pages/factory_production/production_report/factory/ProductionReportMonth";
 
+import Daily_Factory_KPI from "@/pages/factory_production/daily_factory_kpi/Daily_Factory_KPI"
 import Building from "@/pages/factory_production/production_report/building/Building"
 
-import Daily_Factory_KPI from "@/pages/factory_production/daily_factory_kpi/Daily_Factory_KPI"
+import DailyEfficiencyReport from "@/pages/factory_production/DailyEfficiencyReport";
+import DailyKPIOverview from "@/pages/factory_production/DailyKPIOverview"
+import ProdHourlyOutput from "@/pages/factory_production/ProductionHourlyOutput";
+
+import KaizenPage from "@/pages/KaizenPage";
 
 const UserRoute = () => (
   <Routes>
@@ -38,6 +43,42 @@ const UserRoute = () => (
         }
       />
 
+       <Route
+        path="/daily-efficiency"
+        element={
+          <HomePage>
+            <DailyEfficiencyReport />
+          </HomePage>
+        }
+      />
+
+      <Route
+        path="/daily-kpi-overview"
+        element={
+          <HomePage>
+            <DailyKPIOverview />
+          </HomePage>
+        }
+      />
+
+    <Route
+        path="/production-hourly-output"
+        element={
+          <HomePage>
+            <ProdHourlyOutput />
+          </HomePage>
+        }
+      />
+
+<Route
+        path="/kaizen"
+        element={
+          <HomePage>
+            <KaizenPage />
+          </HomePage>
+        }
+      />
+
       {/*Start Product Report Layout*/}
       <Route
         path="/production-report/factory-day"
@@ -45,21 +86,25 @@ const UserRoute = () => (
             <ProductionReportDay />
         }
       />
+
       <Route
         path="/production-report/factory-week"
         element={
             <ProductionReportWeek />
         }
       />
+
       <Route
         path="/production-report/factory-month"
         element={
             <Production_Report_Month />
         }
       />
+
       {/*End Product Report Layout*/}
       <Route  path="/production-report/building" element={<Building/>}/>
       <Route path="/production" element={<ProductionPage />} />
+      
     </Route>
     <Route path="*" element={<NotFoundPage />} />
   </Routes>

@@ -1,10 +1,10 @@
-import axios from 'axios';
+import {req} from "@/utils/request"
 
 // Gọi API factory
 
 export const fetchDistinctFloor = async () => {
   try {
-    const response = await axios.get('http://192.168.30.245:8989/factory/getDistinctFloor');
+    const response = await req.get('/getDistinctFloor');
     if (response.data.status === 0) {
       return response.data.data;
     } else {
@@ -23,8 +23,8 @@ export const fetchDistinctFloor = async () => {
 
 export const fetchFloorDataS = async (date, factory) => {
   try {
-    const response = await axios.get(
-      `http://192.168.30.245:8989/factory/getFloorDataS?date=${date}&factory=${factory}`
+    const response = await req.get(
+      `/getFloorDataS?date=${date}&factory=${factory}`
     );
     if (response.data.status === 0) {
       return response.data.data.floorData.map((item) => ({
@@ -44,8 +44,8 @@ export const fetchFloorDataS = async (date, factory) => {
 
 export const fetchStopLineDataS = async (date, factory) => {
   try {
-    const response = await axios.get(
-      `http://192.168.30.245:8989/factory/getFloorDataS?date=${date}&factory=${factory}`
+    const response = await req.get(
+      `/getFloorDataS?date=${date}&factory=${factory}`
     );
     if (response.data.status === 0) {
       const stopLineData = response.data.data.stopLineData || [];
@@ -64,8 +64,8 @@ export const fetchStopLineDataS = async (date, factory) => {
 
 export const fetchHourlyFloorDataS = async (date, factory) => {
   try {
-    const response = await axios.get(
-      `http://192.168.30.245:8989/factory/getFloorDataS?date=${date}&factory=${factory}`
+    const response = await req.get(
+      `/getFloorDataS?date=${date}&factory=${factory}`
     );
     if (response.data.status === 0) {
       const floorData = response.data.data.floorData;
@@ -88,8 +88,8 @@ export const fetchHourlyFloorDataS = async (date, factory) => {
 
 export const fetchFloorOutputDataS = async (date, factory) => {
   try {
-    const response = await axios.get(
-      `http://192.168.30.245:8989/factory/getFloorDataS?date=${date}&factory=${factory}`
+    const response = await req.get(
+      `/getFloorDataS?date=${date}&factory=${factory}`
     );
     if (response.data.status === 0) {
       const floorData = response.data.data.floorData;
@@ -115,8 +115,8 @@ export const fetchFloorOutputDataS = async (date, factory) => {
 
 export const fetchRFTFloorDataS = async (date, factory) => {
   try {
-    const response = await axios.get(
-      `http://192.168.30.245:8989/factory/getFloorDataS?date=${date}&factory=${factory}`
+    const response = await req.get(
+      `/getFloorDataS?date=${date}&factory=${factory}`
     );
     if (response.data.status === 0) {
       return {

@@ -25,10 +25,14 @@ const Calendar = ({ onDateChange }) => {
   const classes = useStyles();
   const [selectedDate, setSelectedDate] = useState(dayjs());
 
+ 
   const handleDateChange = (date) => {
     setSelectedDate(date);
-    onDateChange(date); // Gửi ngày đã chọn tới parent component
+    if (onDateChange) {
+      onDateChange(date); // Gửi ngày đã chọn tới parent component
+    }
   };
+
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>

@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import languageReducer from "@/redux/languageSlice";
+import sidebarReducer from "@/redux/SidebarSlice"
 import loadingReducer from "@/redux/loading/loadingSlice";
 
 import weekReportReducer from "@/redux/data_factory_redux/WeekReportSlice";
@@ -15,6 +16,7 @@ import buildingGReducer from "@/redux/data_building_redux/BuildingGSlice";
 const store = configureStore({
   reducer: {
     language: languageReducer,
+    sidebar: sidebarReducer,
     loading: loadingReducer,
 
     // daily report factory

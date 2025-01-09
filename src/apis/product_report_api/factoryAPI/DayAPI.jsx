@@ -7,7 +7,7 @@ import {
   setChartDataDailySAMP,
   setChartDataDailyEfficiency,
   setChartDataDailyRFT,
-} from "../../../redux/data_factory_redux/DayReportSlice";
+} from "@/redux/data_factory_redux/DayReportSlice";
 
 export const fetchDailyTotalOutput = (year, month) => async (dispatch) => {
   dispatch(setLoading(true)); // Bắt đầu loading

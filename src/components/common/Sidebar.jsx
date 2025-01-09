@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import {
   Box,
@@ -25,20 +25,20 @@ import iconFG from "@public/images/Icon-FG.png";
 import iconKaizen from "@public/images/Icon-Kaizen.png";
 import iconTierMeeting from "@public/images/Icon-Tier-Meeting.png";
 import iconDownTime from "@public/images/Icon-Down-Time.png";
-// import { useSelector } from "react-redux";
-// import { useTranslations } from "@/config/useTranslations";
+import { useDispatch } from "react-redux";
+import {setSelectedItem} from "@/redux/SidebarSlice"
 
-const Sidebar = () => {
-  const [collapsed, setCollapsed] = useState(false);
+const Sidebar = ({setCollapsed,collapsed}) => {
+  // const [collapsed, setCollapsed] = useState(false);
   const [expanded, setExpanded] = useState({});
+  const [selectedKey, setSelectedKey] = useState(""); // Trạng thái để lưu key của mục được chọn
 
-  // sử dụng language
-  // const language = useSelector((state) => state.language.language);
-  // const translations = useTranslations(language);
+  const dispatch = useDispatch(); // Lấy dispatch từ Redux
 
-  // console.log(translations); // Xem log để kiểm tra dữ liệu ngôn ngữ
-
-  // console.log("Importing language file:", `@/languages/${language}.json`);
+  const handleItemClick = (item) => {
+    setSelectedKey(item.key); // Đánh dấu mục được chọn
+    dispatch(setSelectedItem(item.label)); // Cập nhật Redux Store với tên mục
+  };
 
   const toggleCollapsed = () => {
     setCollapsed((prev) => {
@@ -61,7 +61,6 @@ const Sidebar = () => {
       key: "1",
       label: "Productions",
       icon: iconProduction,
-
       children: [
         {
           key: "1.1",
@@ -70,26 +69,26 @@ const Sidebar = () => {
           children: [
             {
               key: "1.1.1",
-              label: "Item 1.1.1",
-              link: "/production/item1/item-1-1",
+              label: "Daily KPI Overview",
+              link: "/daily-kpi-overview",
             },
             {
-              key: "1.1.1",
+              key: "1.1.2",
               label: "Daily Factory KPI",
               link: "/factory-kpi",
             },
             {
-              key: "1.1.1",
-              label: "Item 1.1.1",
-              link: "/production/item1/item-1-1",
+              key: "1.1.3",
+              label: "Daily Efficiency Report",
+              link: "/daily-efficiency",
             },
             {
-              key: "1.1.1",
-              label: "Item 1.1.1",
-              link: "/production/item1/item-1-1",
+              key: "1.1.4",
+              label: "Prod.Hourly Output",
+              link: "/production-hourly-output",
             },
             {
-              key: "1.1.1",
+              key: "1.1.5",
               label: "Production Report",
               link: "/production-report/factory-day",
             },
@@ -125,7 +124,7 @@ const Sidebar = () => {
       key: "6",
       label: "Kaizen",
       icon: iconKaizen,
-      link: "/",
+      link: "/kaizen",
     },
     {
       key: "7",
@@ -143,18 +142,23 @@ const Sidebar = () => {
 
   const renderMenuItems = (menuItems, level = 0) =>
     menuItems?.map((item) => (
-      <Box key={item.key}>
+      <Box key={item.key} sx={{
+         border: "1px solid white",
+      }}>
         <ListItem
           button
           component={item.link ? Link : undefined}
           to={item.link || undefined}
           onClick={() => {
+            setSelectedKey(item.key); // Cập nhật selectedKey khi click vào item
+            handleItemClick(item);
             if (!collapsed && item.children) toggleExpand(item.key);
           }}
           sx={{
             justifyContent: "flex-start",
             pl: 2 + level * 2,
             backgroundColor:
+              selectedKey === item.key ? "#cdf2b4" : // Thêm màu nền cho mục được chọn
               level > 0 ? "rgba(218, 218, 218 , 0.7)" : "transparent",
             color: "#000",
             fontWeight: "bold",
@@ -219,14 +223,13 @@ const Sidebar = () => {
       variant="permanent"
       open={!collapsed}
       sx={{
-        width: collapsed ? 72 : 240,
+        width: collapsed ? 72 : 250,
         flexShrink: 0,
         [`& .MuiDrawer-paper`]: {
-          width: collapsed ? 72 : 240,
+          width: collapsed ? 72 : 250,
           boxSizing: "border-box",
           backgroundColor: "#fff",
           fontWeight: "bold",
-          //color: "#141947",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
