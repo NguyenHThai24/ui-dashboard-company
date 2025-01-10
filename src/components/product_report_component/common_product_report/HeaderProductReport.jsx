@@ -31,7 +31,7 @@ const HeaderProductReport = ({ selectedDate, setSelectedDate }) => {
 
   const handleFactoryClick = () => {
     setSelectedButton("factory");
-    navigate("/production-report/factory-day");
+    navigate("/production-report");
   };
 
   return (
@@ -44,7 +44,7 @@ const HeaderProductReport = ({ selectedDate, setSelectedDate }) => {
         <Grid item>
           <Button
             sx={{
-              bgcolor: selectedButton === "factory" ? "#196f3d" : "#979a9a",
+              bgcolor: selectedButton === "factory" ? "#239d85" : "#979a9a",
               color: "white",
               width: "100px",
               height: "40px",
@@ -59,7 +59,7 @@ const HeaderProductReport = ({ selectedDate, setSelectedDate }) => {
         <Grid item>
           <Button
             sx={{
-              bgcolor: selectedButton === "building" ? "#196f3d" : "#979a9a",
+              bgcolor: selectedButton === "building" ? "#239d85" : "#979a9a",
               color: "white",
               width: "100px",
               height: "40px",

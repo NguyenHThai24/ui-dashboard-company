@@ -7,8 +7,8 @@ const initialState = {
   
 };
 
-const buildingASlice = createSlice({
-    name: "buildinga", 
+const buildingSlice = createSlice({
+    name: "building", 
     initialState,
     reducers: {
       setLoading: (state, action) => {
@@ -54,7 +54,7 @@ const buildingASlice = createSlice({
     setChartDataEfficiency,
     setChartDataRFT,
     resetState,
-  } = buildingASlice.actions;
+  } = buildingSlice.actions;
   
-  export default buildingASlice.reducer;
+  export default buildingSlice.reducer;
   

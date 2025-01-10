@@ -1,4 +1,4 @@
-import { CircularProgress } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { useState, useEffect } from "react";
 
 import { fetchStopLineDataS } from "@/apis/factory_kpi_api/FactoryAPI";
@@ -32,7 +32,7 @@ const CardTopLineData = ({ date, floor }) => {
   }, [date, floor]);
 
   return (
-    <div className="bg-white p-1 rounded-xl shadow-md w-full border-4 border-red-600 h-[162px]">
+    <div className="bg-white p-1 rounded-xl shadow-md w-full border-4 border-red-600 ">
       <p
         style={{
           fontSize: "14px",
@@ -49,7 +49,16 @@ const CardTopLineData = ({ date, floor }) => {
       </p>
 
       {loading ? (
-        <CircularProgress />
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+
+          }}
+        >
+          <CircularProgress />
+        </Box>
       ) : error ? (
         <p style={{ color: "red" }}>{error}</p>
       ) : (

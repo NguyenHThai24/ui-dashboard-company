@@ -2,16 +2,16 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { Card, CardContent, CircularProgress, Typography } from "@mui/material";
-import { fetchRFTByLine } from "@/apis/product_report_api/buildingAPI/BuildingBAPI";
+import { Box, Card, CardContent, CircularProgress, Typography } from "@mui/material";
+import { fetchRFTByLine } from "@/apis/product_report_api/buildingAPI/BuildingAPI";
 import { setLoading, setError } from "@/redux/loading/loadingSlice";
 
-const RFTByLineB = ({ selectedDate }) => {
+const RFTByLine = ({ selectedDate , selectedBuilding}) => {
   const dispatch = useDispatch();
   const { chartDataRFT, loading, error } = useSelector((state) => ({
-    chartDataRFT: state.buildingb.chartDataRFT,
-    loading: state.buildingb.loading,
-    error: state.buildingb.error,
+    chartDataRFT: state.building.chartDataRFT,
+    loading: state.building.loading,
+    error: state.building.error,
   }));
 
   //console.log(chartDataEfficiency);
@@ -22,7 +22,7 @@ const RFTByLineB = ({ selectedDate }) => {
       try {
         const year = selectedDate.year();
         const month = selectedDate.month() + 1; // month() returns 0-11
-        await dispatch(fetchRFTByLine(year, month));
+        await dispatch(fetchRFTByLine(year, month, selectedBuilding));
         dispatch(setLoading(false));
       } catch (error) {
         dispatch(setError(error.toString()));
@@ -30,32 +30,23 @@ const RFTByLineB = ({ selectedDate }) => {
     };
 
     fetchData();
-  }, [selectedDate, dispatch]);
+  }, [selectedDate,selectedBuilding, dispatch]);
 
   const options = {
     chart: {
       type: "area",
       marginLeft: 0,
       marginRight: 0,
+      height: 320,
+      spacingBottom: 0,
+      spacingTop: 0,
     },
-    title: {
-      text: "BUILDING B: RFT BY LINE",
-      align: "center",
-      verticalAlign: "top", // Đặt title ở trên cùng
-      style: {
-        fontSize: "20px",
-        fontWeight: "bold",
-        fontFamily: "'Roboto', sans-serif",
-        color: "#333",
-        textShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
-        letterSpacing: "1.5px",
-      },
-    },
+    title: null,
     legend: {
       layout: "vertical",
       align: "left",
       verticalAlign: "top", // Đặt legend ở trên cùng
-      y: 40, // Tạo khoảng cách với top
+      y: 0, // Tạo khoảng cách với top
 
       borderColor: "#ccc",
       borderWidth: 2,
@@ -111,33 +102,6 @@ const RFTByLineB = ({ selectedDate }) => {
           },
         },
       },
-      // {
-      //   name: "Baseline",
-      //   data: Array(chartDataRFT?.line.length).fill(65),
-      //   lineColor: "#0000FF",
-      //   dashStyle: "ShortDash",
-      //   dataLabels: {
-      //     enabled: true,
-      //     style: {
-      //       color: "#333",
-      //       fontSize: "10px",
-      //     },
-      //     formatter: function () {
-      //       return "65%";
-      //     },
-      //   },
-      //   label: {
-      //     align: "right",
-      //     style: {
-      //       color: "#333",
-      //       fontSize: "10px",
-      //     },
-      //     formatter: function () {
-      //       return "65%";
-      //     },
-      //   },
-      //   fillColor: "none",
-      // },
     ],
 
     credits: {
@@ -146,10 +110,43 @@ const RFTByLineB = ({ selectedDate }) => {
   };
 
   return (
-    <Card>
-      <CardContent>
+    <Card  sx={{
+      height: 450,
+      border: 1,
+      boxShadow: "2px 4px 10px rgba(255, 255, 255, 0.8)",
+      borderRadius: "10px",
+      overflow: "hidden",
+    }}>
+      <CardContent  sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          height: "100%",
+        }}>
+      <Typography
+           
+           sx={{
+              fontSize: "20px",
+              fontWeight: "bold",
+              fontFamily: "'Roboto', sans-serif",
+              color: "#239d85",
+              textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
+              letterSpacing: "0px",
+              textAlign:"center"
+              }}
+          >
+            Building {selectedBuilding}: RFT By Line
+          </Typography>
         {loading ? (
-          <CircularProgress />
+          <Box    
+              sx={{      
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <CircularProgress />
+            </Box>
         ) : error ? (
           <Typography color="error" align="center">
             Error: {error}
@@ -162,4 +159,4 @@ const RFTByLineB = ({ selectedDate }) => {
   );
 };
 
-export default RFTByLineB;
+export default RFTByLine;

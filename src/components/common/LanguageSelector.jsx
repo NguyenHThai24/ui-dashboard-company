@@ -47,7 +47,10 @@ const LanguageSelector = () => {
   };
 
   return (
-    <div className="flex justify-center items-center border-2 w-32 rounded-lg border-green-900">
+    <div className="flex justify-center items-center border-2 w-32 rounded-lg" 
+    style={{
+      borderColor:"#239d85"
+    }}>
       <IconButton onClick={toggleMenu} color="primary">
         {getLanguageFlag(language)}
         <Typography variant="body2" style={{ marginLeft: 8 }}>

@@ -6,7 +6,7 @@ import TotalActualOutput from "../../components/daily_kpi_overview/TotalActualOu
 import TotalAttendanceWorker from "../../components/daily_kpi_overview/TotalAttendanceWorker";
 import TotalOuputByArea from "../../components/daily_kpi_overview/TotalOuputByArea";
 
-import Calendar from "../../components/factory_kpi_components/common_factory_kpi/Calendar";
+import Calendar from "../../components/common/Calendar";
 
 const DailyKPIOverview = () => {
   return (

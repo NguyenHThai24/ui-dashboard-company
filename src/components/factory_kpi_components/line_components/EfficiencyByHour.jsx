@@ -3,7 +3,7 @@ import { Card, CardContent, Box, CircularProgress, Typography, styled } from '@m
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts';
 
-const EfficiencyByHour = () => {
+const EfficiencyByHour = ({mode}) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -33,18 +33,7 @@ const EfficiencyByHour = () => {
       marginRight: 0,
       height: "300px",
     },
-    title: {
-      text: "Efficiency By The Hour",
-      align: "left",
-      style: {
-        fontSize: "16px",
-        fontWeight: "bold",
-        fontFamily: "'Roboto', sans-serif",
-        color: "#195b12",
-        textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
-        letterSpacing: "0px",
-      },
-    },
+    title: null,
     legend: {
       layout: "horizontal",
       align: "right",
@@ -150,13 +139,24 @@ const EfficiencyByHour = () => {
         }}
       >
         <CardContent>
+        <Typography
+            sx={{
+             fontSize: "16px",
+        fontWeight: "bold",
+        fontFamily: "'Roboto', sans-serif",
+        color: "#239d85",
+        textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
+        letterSpacing: "0px",
+            }}
+          >
+            {mode === "assembly" ? "Assembly Efficiency By The Hour" : "Stitching Efficiency By The Hour"}
+          </Typography>
           {loading ? (
             <Box
               sx={{
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                minHeight: "100px",
               }}
             >
               <CircularProgress />

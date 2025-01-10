@@ -33,7 +33,7 @@ const StopLine = () => {
         fontSize: "16px",
         fontWeight: "bold",
         fontFamily: "'Roboto', sans-serif",
-        color: "#195b12",
+        color: "#239d85",
         textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
         letterSpacing: "0px",
       },

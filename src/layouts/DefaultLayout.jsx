@@ -11,11 +11,12 @@ const DefaultLayout = () => {
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed}  />
       <div className="flex flex-col h-full w-screen">
         <Navbar  />
-        <div className="h-[100vh]  border-t-2 overflow-auto bg-[#e5e7e9]  px-4"
+        <div className="h-[100vh]  border-t-2 overflow-auto  px-4"
         style={{
             width: !collapsed ? '81.5vw' : '94.6vw',
             maxHeight: "full", // Giới hạn chiều cao
             overflow: "auto", // Cho phép cuộn
+            backgroundColor: "rgba(221, 255, 93, 0.08)"
           }}
         >
         

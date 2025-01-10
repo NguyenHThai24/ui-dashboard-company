@@ -40,14 +40,11 @@ const DailyEfficiencyReport = () => {
       </div>
 
       {/* Charts and Summary */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <EfficiencyChart timeFrame={timeFrame} />
         <TotalManpowerChart timeFrame={timeFrame} />
-      </div>
+    
 
-      <div className="my-6">
         <FloorEfficiencySummary timeFrame={timeFrame} />
-      </div>
     </div>
   );
 };

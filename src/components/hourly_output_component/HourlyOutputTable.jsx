@@ -61,7 +61,26 @@ const HourlyOutputTable = ({ date }) => {
           <Grid item xs={6} key={index}>
             <div>
               <h1 className="text-center font-bold text-2xl">{locKey}</h1>
-              <TableContainer component={Paper} style={{ marginBottom: '20px' }}>
+              <TableContainer  component={Paper}
+              sx={{
+                maxHeight: "full",
+                overflowY: "auto",
+                marginTop: "10px",
+                "&::-webkit-scrollbar": {
+                  width: "6px", // Độ rộng của thanh cuộn
+                  height: "6px", // Chiều cao của thanh cuộn (nếu là cuộn ngang)
+                },
+                "&::-webkit-scrollbar-thumb": {
+                  backgroundColor: "#888", // Màu thanh cuộn
+                  borderRadius: "10px", // Độ cong của thanh cuộn
+                },
+                "&::-webkit-scrollbar-thumb:hover": {
+                  backgroundColor: "#555", // Màu khi hover vào thanh cuộn
+                },
+                "&::-webkit-scrollbar-track": {
+                  backgroundColor: "#f1f1f1", // Màu nền của đường ray thanh cuộn
+                },
+              }}>
                 <Table>
                   <TableHead sx={{ bgcolor: '#9aff7a' }}>
                     <TableRow>

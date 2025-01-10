@@ -32,16 +32,6 @@ const ModelRunByLine = ({ date, floor, line }) => {
     setPage(value);
   };
 
-  
-
-  if (loading) {
-    return <CircularProgress />;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
-
   const shoesPerPage = 1;
   const startIndex = (page - 1) * shoesPerPage;
   const currentShoes = shoeData.slice(startIndex, startIndex + shoesPerPage);
@@ -65,7 +55,7 @@ const ModelRunByLine = ({ date, floor, line }) => {
           fontSize: "16px",
           fontWeight: "bold",
           fontFamily: "'Roboto', sans-serif",
-          color: "#195b12",
+          color: "#239d85",
           textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
           letterSpacing: "0px",
           marginBottom: 2,
@@ -73,7 +63,22 @@ const ModelRunByLine = ({ date, floor, line }) => {
       >
         Model Run By Line
       </Typography>
-      {currentShoes.length === 0 ? (
+
+      {loading ? (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      ) : error ? (
+        <Typography variant="h8" sx={{ textAlign: "center", color: "red" }}>
+          No data found
+        </Typography>
+      ) : currentShoes.length === 0 ? (
         <Typography variant="h8" sx={{ textAlign: "center", color: "red" }}>
           No shoes found
         </Typography>
@@ -97,23 +102,24 @@ const ModelRunByLine = ({ date, floor, line }) => {
               alt={shoe.shoesName}
             />
             <CardContent sx={{ padding: 1 }}>
-              <Typography variant="h6" sx={{ fontWeight: "bold" , paddingBottom: "5px"}}>
+              <Typography variant="h6" sx={{ fontWeight: "bold", paddingBottom: "5px" }}>
                 {shoe.shoesName}
               </Typography>
               <div className="grid grid-row-2 gap-2 justify-items-start">
                 <Typography variant="body2">
-                    Article: <span className="font-semibold">{shoe.article}</span>
+                  Article: <span className="font-semibold">{shoe.article}</span>
                 </Typography>
                 <div className="flex">
-                    <Typography variant="body2">
-                        Labor Count: <span className="font-semibold">{(shoe.realStitchingLcValues + shoe.realAssemblyLcValues).toFixed(2)}</span>
-                    </Typography>
-                    <Typography variant="body2" sx={{px: 2}}>
-                        (A: <span className="font-semibold">{shoe.realAssemblyLcValues}</span>) 
-                    </Typography>
-                    <Typography variant="body2">
-                        (S: <span className="font-semibold">{shoe.realStitchingLcValues}</span>)
-                    </Typography>
+                  <Typography variant="body2">
+                    Labor Count:{" "}
+                    <span className="font-semibold">{(shoe.realStitchingLcValues + shoe.realAssemblyLcValues).toFixed(2)}</span>
+                  </Typography>
+                  <Typography variant="body2" sx={{ px: 2 }}>
+                    (A: <span className="font-semibold">{shoe.realAssemblyLcValues}</span>)
+                  </Typography>
+                  <Typography variant="body2">
+                    (S: <span className="font-semibold">{shoe.realStitchingLcValues}</span>)
+                  </Typography>
                 </div>
               </div>
             </CardContent>

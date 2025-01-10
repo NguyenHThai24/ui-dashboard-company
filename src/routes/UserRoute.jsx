@@ -8,9 +8,6 @@ import NotFoundPage from "@/pages/NotFoundPage";
 import ProductionPage from "@/pages/ProductionPage";
 import HomePage from "@/pages/HomePage";
 
-import ProductionReportDay from "@/pages/factory_production/production_report/factory/ProductionReportDay";
-import ProductionReportWeek from "@/pages/factory_production/production_report/factory/ProductionReportWeek"; 
-import Production_Report_Month from "@/pages/factory_production/production_report/factory/ProductionReportMonth";
 
 import Daily_Factory_KPI from "@/pages/factory_production/daily_factory_kpi/Daily_Factory_KPI"
 import Building from "@/pages/factory_production/production_report/building/Building"
@@ -20,6 +17,7 @@ import DailyKPIOverview from "@/pages/factory_production/DailyKPIOverview"
 import ProdHourlyOutput from "@/pages/factory_production/ProductionHourlyOutput";
 
 import KaizenPage from "@/pages/KaizenPage";
+import ProductionReport from "../pages/factory_production/production_report/factory/ProductionReport";
 
 const UserRoute = () => (
   <Routes>
@@ -81,26 +79,13 @@ const UserRoute = () => (
 
       {/*Start Product Report Layout*/}
       <Route
-        path="/production-report/factory-day"
+        path="/production-report"
         element={
-            <ProductionReportDay />
+            <ProductionReport />
         }
       />
 
-      <Route
-        path="/production-report/factory-week"
-        element={
-            <ProductionReportWeek />
-        }
-      />
-
-      <Route
-        path="/production-report/factory-month"
-        element={
-            <Production_Report_Month />
-        }
-      />
-
+   
       {/*End Product Report Layout*/}
       <Route  path="/production-report/building" element={<Building/>}/>
       <Route path="/production" element={<ProductionPage />} />

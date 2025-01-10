@@ -4,10 +4,10 @@ import {
   setLoading,
   setError,
   setChartData,
-  setChartDataDailySAMP,
-  setChartDataDailyEfficiency,
-  setChartDataDailyRFT,
-} from "@/redux/data_factory_redux/DayReportSlice";
+  setChartDataSAMP,
+  setChartDataEfficiency,
+  setChartDataRFT,
+} from "@/redux/data_factory_redux/ReportSlice";
 
 export const fetchDailyTotalOutput = (year, month) => async (dispatch) => {
   dispatch(setLoading(true)); // Bắt đầu loading
@@ -81,7 +81,7 @@ export const fetchDailyStitchingAssemblyMP =
       const formatedData = { worker, outputdate };
       //console.log(formatedData);
 
-      dispatch(setChartDataDailySAMP(formatedData));
+      dispatch(setChartDataSAMP(formatedData));
       dispatch(setLoading(false));
     } catch (error) {
       dispatch(setLoading(false)); // Kết thúc loading khi lỗi xảy ra
@@ -118,7 +118,7 @@ export const fetchDailyEfficiency = (year, month) => async (dispatch) => {
     const formatedData = { Factory_EFF, date };
     //console.log(formatedData);
 
-    dispatch(setChartDataDailyEfficiency(formatedData));
+    dispatch(setChartDataEfficiency(formatedData));
     dispatch(setLoading(false));
   } catch (error) {
     dispatch(setLoading(false)); // Kết thúc loading khi lỗi xảy ra
@@ -155,7 +155,7 @@ export const fetchDailyRFT = (year, month) => async (dispatch) => {
     const formatedData = { RFT, date };
     //console.log(formatedData);
 
-    dispatch(setChartDataDailyRFT(formatedData));
+    dispatch(setChartDataRFT(formatedData));
     dispatch(setLoading(false));
   } catch (error) {
     dispatch(setLoading(false)); // Kết thúc loading khi lỗi xảy ra

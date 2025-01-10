@@ -3,13 +3,13 @@ const initialState = {
   loading: false,
   error: null,
   chartData: { categories: [], actual: [], unachieved: [], Target: [] },
-  chartDataWeekSAMP: {Week:[], worker: []},
-  chartDataWeekEfficiency: {Week:[], Factory_EFF:[]},
-  chartDataWeekRFT: {week:[], RFT:[]}
+  chartDataSAMP: { outputdate: [], worker: [] },
+  chartDataEfficiency: { date: [], Factory_EFF: [] },
+  chartDataRFT: { date: [], RFT: [] },
 };
 
-const weekReportSlice = createSlice({
-  name: "weekreport",
+const reportSlice = createSlice({
+  name: "report",
   initialState,
   reducers: {
     setLoading: (state, action) => {
@@ -34,33 +34,30 @@ const weekReportSlice = createSlice({
         state.error = "Invalid chart data format";
       }
     },
-
-    setChartDataWeekSAMP: (state, action) => {
-      const { Week, worker } = action.payload;
-      if (Array.isArray(Week) && Array.isArray(worker)) {
-        state.chartDataWeekSAMP = { Week, worker };
+    setChartDataSAMP: (state, action) => {
+      const { outputdate, worker, Week } = action.payload;
+      if (Array.isArray(outputdate) || Array.isArray(Week) && Array.isArray(worker)) {
+        state.chartDataSAMP = { outputdate, worker, Week };
       } else {
         state.error = "Invalid chart data format";
       }
     },
-
-    setChartDataWeekEfficiency: (state, action) => {
-      const { Week, Factory_EFF } = action.payload;
-      if (Array.isArray(Week) && Array.isArray(Factory_EFF)) {
-        state.chartDataWeekEfficiency = { Week, Factory_EFF };
+    setChartDataEfficiency: (state, action) => {
+      const { date, Week, Month, Factory_EFF } = action.payload;
+      if (Array.isArray(date) || Array.isArray(Week) || Array.isArray(Month) && Array.isArray(Factory_EFF)) {
+        state.chartDataEfficiency = { date,Week, Month, Factory_EFF };
       } else {
         state.error = "Invalid chart data format";
       }
     },
-    setChartDataWeekRFT: (state, action) => {
-      const { week, RFT } = action.payload;
-      if (Array.isArray(week) && Array.isArray(RFT)) {
-        state.chartDataWeekRFT = { week, RFT };
+    setChartDataRFT: (state, action) => {
+      const { date, RFT, week, Month } = action.payload;
+      if (Array.isArray(date) || Array.isArray(week) || Array.isArray(Month) && Array.isArray(RFT)) {
+        state.chartDataRFT = { date, RFT, week, Month };
       } else {
         state.error = "Invalid chart data format";
       }
     },
-  
 
     resetState: (state) => {
       state.loading = false;
@@ -71,19 +68,9 @@ const weekReportSlice = createSlice({
         unachieved: [],
         Target: [],
       };
-      state.chartDataWeekSAMP = {
-        Week: [],
-        worker: []
-      };
-      state.chartDataWeekEfficiency ={
-        Week:[],
-        Factory_EFF:[]
-      };
-      state.chartDataWeekRFT = {
-        week:[],
-        RFT:[]
-      }
-      
+      state.chartDataSAMP = { worker: [] };
+      state.chartDataEfficiency = { Factory_EFF: [] };
+      state.chartDataRFT = { RFT: [] };
     },
   },
 });
@@ -93,9 +80,9 @@ export const {
   setError,
   clearError,
   setChartData,
-  setChartDataWeekSAMP,
-  setChartDataWeekEfficiency,
-  setChartDataWeekRFT,
+  setChartDataSAMP,
+  setChartDataEfficiency,
+  setChartDataRFT,
   resetState,
-} = weekReportSlice.actions;
-export default weekReportSlice.reducer;
+} = reportSlice.actions;
+export default reportSlice.reducer;

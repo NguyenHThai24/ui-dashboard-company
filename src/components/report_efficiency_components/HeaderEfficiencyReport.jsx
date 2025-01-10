@@ -1,4 +1,4 @@
-import Calendar from "@/components/report_efficiency_components/Calendar";
+import Calendar from "@/components/common/Calendar";
 import { Button, Grid } from "@mui/material";
 
 const HeaderEfficiencyReport = ({ onSelectTimeFrame, selectedTimeFrame }) => {

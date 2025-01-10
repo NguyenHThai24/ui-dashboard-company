@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import {
   Box,
@@ -28,32 +28,18 @@ import iconDownTime from "@public/images/Icon-Down-Time.png";
 import { useDispatch } from "react-redux";
 import {setSelectedItem} from "@/redux/SidebarSlice"
 
-const Sidebar = ({setCollapsed,collapsed}) => {
-  // const [collapsed, setCollapsed] = useState(false);
+const Sidebar = ({ setCollapsed, collapsed }) => {
   const [expanded, setExpanded] = useState({});
-  const [selectedKey, setSelectedKey] = useState(""); // Trạng thái để lưu key của mục được chọn
-
-  const dispatch = useDispatch(); // Lấy dispatch từ Redux
+  const [selectedKey, setSelectedKey] = useState("");
+  const dispatch = useDispatch();
 
   const handleItemClick = (item) => {
-    setSelectedKey(item.key); // Đánh dấu mục được chọn
-    dispatch(setSelectedItem(item.label)); // Cập nhật Redux Store với tên mục
-  };
-
-  const toggleCollapsed = () => {
-    setCollapsed((prev) => {
-      if (!prev) {
-        setExpanded({});
-      }
-      return !prev;
-    });
+    setSelectedKey(item.key);
+    dispatch(setSelectedItem(item.label));
   };
 
   const toggleExpand = (key) => {
-    setExpanded((prev) => ({
-      ...prev,
-      [key]: !prev[key],
-    }));
+    setExpanded((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
   const items = [
@@ -65,151 +51,52 @@ const Sidebar = ({setCollapsed,collapsed}) => {
         {
           key: "1.1",
           label: "FACTORY",
-          link: "",
           children: [
-            {
-              key: "1.1.1",
-              label: "Daily KPI Overview",
-              link: "/daily-kpi-overview",
-            },
-            {
-              key: "1.1.2",
-              label: "Daily Factory KPI",
-              link: "/factory-kpi",
-            },
-            {
-              key: "1.1.3",
-              label: "Daily Efficiency Report",
-              link: "/daily-efficiency",
-            },
-            {
-              key: "1.1.4",
-              label: "Prod.Hourly Output",
-              link: "/production-hourly-output",
-            },
-            {
-              key: "1.1.5",
-              label: "Production Report",
-              link: "/production-report/factory-day",
-            },
+            { key: "1.1.1", label: "Daily KPI Overview", link: "/daily-kpi-overview" },
+            { key: "1.1.2", label: "Daily Factory KPI", link: "/factory-kpi" },
+            { key: "1.1.3", label: "Daily Efficiency Report", link: "/daily-efficiency" },
+            { key: "1.1.4", label: "Prod.Hourly Output", link: "/production-hourly-output" },
+            { key: "1.1.5", label: "Production Report", link: "/production-report" },
           ],
         },
       ],
     },
-    {
-      key: "2",
-      label: "Material W?H",
-      icon: iconMaterial,
-      link: "/",
-    },
-    {
-      key: "3",
-      label: "Auto Cutting",
-      icon: iconAutoCutting,
-      link: "/",
-    },
-    {
-      key: "4",
-      label: "Stock Fitting",
-      icon: iconStockFitting,
-      link: "/",
-    },
-    {
-      key: "5",
-      label: "FG W/H",
-      icon: iconFG,
-      link: "/",
-    },
-    {
-      key: "6",
-      label: "Kaizen",
-      icon: iconKaizen,
-      link: "/kaizen",
-    },
-    {
-      key: "7",
-      label: "Tier Meeting",
-      icon: iconTierMeeting,
-      link: "/",
-    },
-    {
-      key: "8",
-      label: "Down Time",
-      icon: iconDownTime,
-      link: "/",
-    },
+    { key: "2", label: "Material W/H", icon: iconMaterial, link: "/" },
+    { key: "3", label: "Auto Cutting", icon: iconAutoCutting, link: "/" },
+    { key: "4", label: "Stock Fitting", icon: iconStockFitting, link: "/" },
+    { key: "5", label: "FG W/H", icon: iconFG, link: "/" },
+    { key: "6", label: "Kaizen", icon: iconKaizen, link: "/kaizen" },
+    { key: "7", label: "Tier Meeting", icon: iconTierMeeting, link: "/" },
+    { key: "8", label: "Down Time", icon: iconDownTime, link: "/down-time" },
   ];
 
   const renderMenuItems = (menuItems, level = 0) =>
-    menuItems?.map((item) => (
-      <Box key={item.key} sx={{
-         border: "1px solid white",
-      }}>
+    menuItems.map((item) => (
+      <Box key={item.key}>
         <ListItem
           button
           component={item.link ? Link : undefined}
           to={item.link || undefined}
           onClick={() => {
-            setSelectedKey(item.key); // Cập nhật selectedKey khi click vào item
             handleItemClick(item);
-            if (!collapsed && item.children) toggleExpand(item.key);
+            if (item.children) toggleExpand(item.key);
           }}
           sx={{
-            justifyContent: "flex-start",
             pl: 2 + level * 2,
-            backgroundColor:
-              selectedKey === item.key ? "#cdf2b4" : // Thêm màu nền cho mục được chọn
-              level > 0 ? "rgba(218, 218, 218 , 0.7)" : "transparent",
-            color: "#000",
-            fontWeight: "bold",
+            backgroundColor: selectedKey === item.key ? "#2cc7a8" : level > 0 ? "rgba(14, 114, 95, 1)" : "#239d85",
+            color: "#fff",
           }}
         >
           {level === 0 && (
-            <ListItemIcon
-              sx={{
-                minWidth: collapsed ? "auto" : "36px",
-                justifyContent: "center",
-                display: "flex",
-                color: "#000", // Màu giống màu chữ
-              }}
-            >
-              <Box
-                component="img"
-                src={item.icon}
-                alt={item.label}
-                sx={{
-                  width: 30,
-                  height: 30,
-                  objectFit: "cover",
-                  filter:
-                    "invert(8%) sepia(15%) saturate(100%) hue-rotate(180deg) brightness(30%) contrast(150%)",
-                }}
-              />
+            <ListItemIcon sx={{ minWidth: collapsed ? "auto" : "36px" }}>
+              <Box component="img" src={item.icon} alt={item.label} sx={{ width: 30, height: 30 }} />
             </ListItemIcon>
           )}
-          <ListItemText
-            primary={item.label}
-            sx={{
-              display: collapsed ? "none" : "block",
-              paddingLeft: "10px",
-              color: "#000",
-              fontWeight: "bold",
-            }}
-          />
-          {!collapsed &&
-            item.children &&
-            (expanded[item.key] ? (
-              <ExpandLessIcon sx={{ color: "#000" }} /> // Màu chữ
-            ) : (
-              <ExpandMoreIcon sx={{ color: "#000" }} /> // Màu chữ
-            ))}
+          <ListItemText primary={item.label} sx={{ display: collapsed ? "none" : "block", paddingLeft: "10px" }} />
+          {!collapsed && item.children && (expanded[item.key] ? <ExpandLessIcon /> : <ExpandMoreIcon />)}
         </ListItem>
         {item.children && (
-          <Collapse
-            in={!collapsed && expanded[item.key]}
-            timeout="auto"
-            unmountOnExit
-          >
+          <Collapse in={!collapsed && expanded[item.key]} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               {renderMenuItems(item.children, level + 1)}
             </List>
@@ -221,70 +108,29 @@ const Sidebar = ({setCollapsed,collapsed}) => {
   return (
     <Drawer
       variant="permanent"
-      open={!collapsed}
       sx={{
         width: collapsed ? 72 : 250,
-        flexShrink: 0,
         [`& .MuiDrawer-paper`]: {
           width: collapsed ? 72 : 250,
-          boxSizing: "border-box",
-          backgroundColor: "#fff",
-          fontWeight: "bold",
+          backgroundColor: "#239d85",
+          color: "#fff",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          overflow: "hidden", // Ẩn thanh cuộn
         },
       }}
     >
-      <Box
-        sx={{
-          overflowY: collapsed ? "hidden" : "auto", // Ẩn thanh cuộn khi thu nhỏ
-          height: "100%",
-        }}
-      >
-        {/* Logo */}
-        <Box
-          display="flex"
-          alignItems="center"
-          justifyContent={collapsed ? "center" : "flex-start"}
-          px={!collapsed ? 2 : 1}
-          py={2}
-        >
-          <Typography
-            sx={{
-              fontWeight: "bold",
-              fontSize: "22px",
-              color: "#000",
-              fontFamily: "'Roboto', sans-serif", // Font chữ đẹp và phổ biến
-              textShadow: "2px 2px 4px rgba(218, 218, 218, 1)", // Bóng chữ nhẹ
-              letterSpacing: "1.5px", // Tăng khoảng cách giữa các chữ cái
-            }}
-          >
+      <Box sx={{ overflowY: collapsed ? "hidden" : "auto", height: "100%" }}>
+        <Box display="flex" alignItems="center" justifyContent={collapsed ? "center" : "flex-start"} px={2} py={2}>
+          <Typography sx={{ fontWeight: "bold", fontSize: "22px", color: "#fff", py: 0.5}}>
             {collapsed ? "LHG" : "LHG DASHBOARD"}
           </Typography>
         </Box>
         <Divider />
-        {/* Danh sách menu */}
         <List>{renderMenuItems(items)}</List>
       </Box>
-
-      {/* Phần dưới cùng của Sidebar */}
-      <Box
-        py={1}
-        sx={{
-          borderTop: "2px solid rgba(230, 231, 242, 1)",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <IconButton
-          onClick={toggleCollapsed}
-          sx={{
-            color: "#000",
-          }}
-        >
+      <Box py={1} sx={{ borderTop: "2px solid #e6e7f2", textAlign: "center" }}>
+        <IconButton onClick={() => setCollapsed((prev) => !prev)} sx={{ color: "#fff" }}>
           {collapsed ? <ArrowForwardIcon /> : <ArrowBackIcon />}
         </IconButton>
       </Box>

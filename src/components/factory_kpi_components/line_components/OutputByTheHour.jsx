@@ -58,18 +58,7 @@ const OutputByTheHour = ({ date, floor, line, mode }) => {
       marginRight: 0,
       height: "300px",
     },
-    title: {
-      text: mode === "assembly" ? "Output By The Hour" : "Output By The Hour",
-      align: "left",
-      style: {
-        fontSize: "16px",
-        fontWeight: "bold",
-        fontFamily: "'Roboto', sans-serif",
-        color: "#195b12",
-        textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
-        letterSpacing: "0px",
-      },
-    },
+    title: null,
     legend: {
       layout: "horizontal",
       align: "right",
@@ -152,6 +141,18 @@ const OutputByTheHour = ({ date, floor, line, mode }) => {
     <div>
       <Card sx={{ borderRadius: 2 }}>
         <CardContent>
+        <Typography
+            sx={{
+             fontSize: "16px",
+        fontWeight: "bold",
+        fontFamily: "'Roboto', sans-serif",
+        color: "#239d85",
+        textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
+        letterSpacing: "0px",
+            }}
+          >
+            {mode === "assembly" ? "Assembly Output By The Hour" : "Stitching Output By The Hour"}
+          </Typography>
           {loading ? (
             <Box
               sx={{

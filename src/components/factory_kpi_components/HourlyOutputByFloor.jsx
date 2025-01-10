@@ -8,6 +8,7 @@ import {
   TableRow,
   TableContainer,
   Paper,
+  Box,
 } from "@mui/material";
 import { fetchHourlyFloorDataS } from "@/apis/factory_kpi_api/FactoryAPI";
 import {fetchHourlyFloorData} from "@/apis/factory_kpi_api/FactoryFloorAPI"
@@ -50,7 +51,7 @@ const HourlyOutputByFloor = ({date, floor}) => {
           fontSize: "14px",
           fontWeight: "bold",
           fontFamily: "'Roboto', sans-serif",
-          color: "#195b12",
+          color: "#239d85",
           textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
           letterSpacing: "0px",
           textAlign: "center",
@@ -61,7 +62,16 @@ const HourlyOutputByFloor = ({date, floor}) => {
       </p>
 
       {loading ? (
-        <CircularProgress />
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+
+          }}
+        >
+          <CircularProgress />
+        </Box>
       ) : error ? (
         <p style={{ color: "red" }}>{error}</p>
       ) : (

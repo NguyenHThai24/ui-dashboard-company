@@ -3,9 +3,9 @@ import { Card, CardContent, Box, CircularProgress, Typography } from "@mui/mater
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 import { fetchRFTFloorDataS } from "@/apis/factory_kpi_api/FactoryAPI";
-import {fetchRFTFloorData} from "@/apis/factory_kpi_api/FactoryFloorAPI"
+import { fetchRFTFloorData } from "@/apis/factory_kpi_api/FactoryFloorAPI";
 
-const RFTByFloor = ({date,floor}) => {
+const RFTByFloor = ({ date, floor }) => {
   const [chartData, setChartData] = useState([]);
   const [baseline, setBaseline] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -14,7 +14,6 @@ const RFTByFloor = ({date,floor}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        
         let response;
         if (floor) {
           response = await fetchRFTFloorData(date.format("YYYY/MM/DD"), floor);
@@ -47,18 +46,7 @@ const RFTByFloor = ({date,floor}) => {
       marginRight: 0,
       height: "300px",
     },
-    title: {
-      text: "RFT By Floor",
-      align: "left",
-      style: {
-        fontSize: "16px",
-        fontWeight: "bold",
-        fontFamily: "'Roboto', sans-serif",
-        color: "#195b12",
-        textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
-        letterSpacing: "0px",
-      },
-    },
+    title: null, // Remove title from the chart configuration
     legend: {
       layout: "horizontal",
       align: "right",
@@ -136,16 +124,30 @@ const RFTByFloor = ({date,floor}) => {
       <Card
         sx={{
           borderRadius: 2,
+          boxShadow: 3,
         }}
       >
         <CardContent>
+          <Typography
+           
+           sx={{
+              fontSize: "16px",
+        fontWeight: "bold",
+        fontFamily: "'Roboto', sans-serif",
+        color: "#239d85",
+        textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
+        letterSpacing: "0px",
+            }}
+          >
+            RFT By Floor
+          </Typography>
+
           {loading ? (
             <Box
               sx={{
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                minHeight: "100px",
               }}
             >
               <CircularProgress />

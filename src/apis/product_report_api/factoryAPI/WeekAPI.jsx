@@ -3,10 +3,10 @@ import {
   setLoading,
   setError,
   setChartData,
-  setChartDataWeekSAMP,
-  setChartDataWeekEfficiency,
-  setChartDataWeekRFT
-} from "@/redux/data_factory_redux/WeekReportSlice";
+  setChartDataSAMP,
+  setChartDataEfficiency,
+  setChartDataRFT,
+} from "@/redux/data_factory_redux/ReportSlice";
 
 export const fetchWeekTotalOutput = (year, month) => async (dispatch) => {
   dispatch(setLoading(true)); // Bắt đầu loading
@@ -82,7 +82,7 @@ export const fetchWeekStitchingAssemblyMP =
       const formatedData = { worker, Week };
       //console.log(formatedData);
 
-      dispatch(setChartDataWeekSAMP(formatedData));
+      dispatch(setChartDataSAMP(formatedData));
       dispatch(setLoading(false));
     } catch (error) {
       dispatch(setLoading(false)); // Kết thúc loading khi lỗi xảy ra
@@ -121,7 +121,7 @@ export const fetchWeekStitchingAssemblyMP =
       const formatedData = { Factory_EFF, Week };
       //console.log(formatedData);
   
-      dispatch(setChartDataWeekEfficiency(formatedData));
+      dispatch(setChartDataEfficiency(formatedData));
       dispatch(setLoading(false));
     } catch (error) {
       dispatch(setLoading(false)); // Kết thúc loading khi lỗi xảy ra
@@ -158,7 +158,7 @@ export const fetchWeekStitchingAssemblyMP =
       const formatedData = { RFT, week };
       //console.log(formatedData);
   
-      dispatch(setChartDataWeekRFT(formatedData));
+      dispatch(setChartDataRFT(formatedData));
       dispatch(setLoading(false));
     } catch (error) {
       dispatch(setLoading(false)); // Kết thúc loading khi lỗi xảy ra

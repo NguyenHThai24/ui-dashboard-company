@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { Box, Card, CardContent, CircularProgress } from "@mui/material";
+import { Box, Card, CardContent, CircularProgress, Typography } from "@mui/material";
 import { fetchFloorOutputDataS } from "@/apis/factory_kpi_api/FactoryAPI";
 import { fetchFloorOutputData } from "@/apis/factory_kpi_api/FactoryFloorAPI";
 
@@ -38,18 +38,7 @@ const OutputByFloor = ({ date, floor }) => {
       marginRight: 0,
       height: "300px",
     },
-    title: {
-      text: "Output By Floor",
-      align: "left",
-      style: {
-        fontSize: "16px",
-        fontWeight: "bold",
-        fontFamily: "'Roboto', sans-serif",
-        color: "#195b12",
-        textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
-        letterSpacing: "0px",
-      },
-    },
+    title: null,
     legend: {
       layout: "horizontal",
       align: "right",
@@ -126,8 +115,25 @@ const OutputByFloor = ({ date, floor }) => {
   return (
     <Card sx={{ borderRadius: 2 }}>
       <CardContent>
+      <Typography
+           
+           sx={{
+             fontSize: "16px",
+       fontWeight: "bold",
+       fontFamily: "'Roboto', sans-serif",
+       color: "#239d85",
+       textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
+       letterSpacing: "0px",
+           }}
+         >
+          Output By Floor
+         </Typography>
         {loading ? (
-          <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <Box sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}>
             <CircularProgress />
           </Box>
         ) : error ? (

@@ -1,80 +1,69 @@
-import { Button, Grid } from "@mui/material"
+import { Button, Grid } from "@mui/material";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-const ButtonTime = () => {
-      const [selectedButton, setSelectedButton] = useState("day"); // Mặc định là "day"
-      const navigate = useNavigate();
-    
-      const handleButtonClick = (buttonType) => {
-        setSelectedButton(buttonType); // Update the selected button
-      };
+const ButtonTime = ({ onTimePeriodChange }) => {
+  const [selectedButton, setSelectedButton] = useState("day"); // Mặc định là "day"
 
-      const handleDayClick = () => {
-        handleButtonClick("day");
-        navigate("/production-report/factory-day");
-      };
-    
-      const handleWeekClick = () => {
-        handleButtonClick("week");
-        navigate("/production-report/factory-week");
-      };
-    
-      const handleMonthClick = () => {
-        handleButtonClick("month");
-        navigate("/production-report/factory-month");
-      };
+  const handleButtonClick = (timePeriod) => {
+    setSelectedButton(timePeriod); // Cập nhật trạng thái được chọn
+    onTimePeriodChange(timePeriod); // Gửi trạng thái về cha
+  };
 
-      
   return (
     <Grid container spacing={2} alignItems="center">
-        <Grid item>
-          <Button
-            sx={{
-              bgcolor: selectedButton === "month" ? "#363636" : "#B7B7B7", // Change color if selected
-              color: "white",
-              width: "100px",
-              height: "40px",
-              borderRadius: "5px",
-              fontWeight: "bold",
-            }}
-            onClick={handleMonthClick}
-          >
-            MONTH
-          </Button>
-        </Grid>
-        <Grid item>
-          <Button
-            sx={{
-              bgcolor: selectedButton === "week" ? "#363636" : "#B7B7B7", // Change color if selected
-              color: "white",
-              width: "100px",
-              height: "40px",
-              borderRadius: "5px",
-              fontWeight: "bold",
-            }}
-            onClick={handleWeekClick}
-          >
-            WEEK
-          </Button>
-        </Grid>
-        <Grid item>
-          <Button
-            sx={{
-              bgcolor: selectedButton === "day" ? "#363636" : "#B7B7B7", // Change color if selected
-              color: "white",
-              width: "100px",
-              height: "40px",
-              borderRadius: "5px",
-              fontWeight: "bold",
-            }}
-            onClick={handleDayClick}
-          >
-            DAY
-          </Button>
-        </Grid>
+      <Grid item>
+        <Button
+          sx={{
+            bgcolor: selectedButton === "month" ? "#239d85" : "#B7B7B7",
+            color: "white",
+            width: "100px",
+            height: "40px",
+            borderRadius: "5px",
+            fontWeight: "bold",
+            boxShadow: selectedButton === "month" ? "0 0 10px rgba(0, 0, 0, 0.3)" : "none",
+            border: selectedButton === "month" ? "2px solid #ffffff" : "none",
+          }}
+          onClick={() => handleButtonClick("month")}
+        >
+          MONTH
+        </Button>
       </Grid>
-  )
-}
+      <Grid item>
+        <Button
+          sx={{
+            bgcolor: selectedButton === "week" ? "#239d85" : "#B7B7B7",
+            color: "white",
+            width: "100px",
+            height: "40px",
+            borderRadius: "5px",
+            fontWeight: "bold",
+            boxShadow: selectedButton === "week" ? "0 0 10px rgba(0, 0, 0, 0.3)" : "none",
+            border: selectedButton === "week" ? "2px solid #ffffff" : "none",
+          }}
+          onClick={() => handleButtonClick("week")}
+        >
+          WEEK
+        </Button>
+      </Grid>
+      <Grid item>
+        <Button
+          sx={{
+            bgcolor: selectedButton === "day" ? "#239d85" : "#B7B7B7",
+            color: "white",
+            width: "100px",
+            height: "40px",
+            borderRadius: "5px",
+            fontWeight: "bold",
+            boxShadow: selectedButton === "day" ? "0 0 10px rgba(0, 0, 0, 0.3)" : "none",
+            border: selectedButton === "day" ? "2px solid #ffffff" : "none",
+          }}
+          onClick={() => handleButtonClick("day")}
+        >
+          DAY
+        </Button>
+      </Grid>
+    </Grid>
+  );
+};
 
-export default ButtonTime
+export default ButtonTime;

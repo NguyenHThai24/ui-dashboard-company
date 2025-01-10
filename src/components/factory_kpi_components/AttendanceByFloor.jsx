@@ -38,18 +38,8 @@ const AttendanceByFloor = ({date, floor}) => {
       marginRight: 0,
       height: "300px",
     },
-    title: {
-      text: "Attendance By Floor",
-      align: "left",
-      style: {
-        fontSize: "16px",
-        fontWeight: "bold",
-        fontFamily: "'Roboto', sans-serif",
-        color: "#195b12",
-        textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
-        letterSpacing: "0px",
-      },
-    },
+    title: null,
+    
     xAxis: {
       categories: chartData?.map((item) => item.lineAlias),
       labels: {
@@ -120,14 +110,26 @@ const AttendanceByFloor = ({date, floor}) => {
       }}
     >
       <CardContent>
+      <Typography
+           
+           sx={{
+             fontSize: "16px",
+       fontWeight: "bold",
+       fontFamily: "'Roboto', sans-serif",
+       color: "#239d85",
+       textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
+       letterSpacing: "0px",
+           }}
+         >
+          Attendance By Floor
+         </Typography>
         {loading ? (
           <Box
             sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              minHeight: "100px",
-            }}
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
           >
             <CircularProgress />
           </Box>

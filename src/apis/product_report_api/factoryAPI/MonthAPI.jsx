@@ -3,10 +3,10 @@ import {
   setLoading,
   setError,
   setChartData,
-  setChartDataMonthSAMP,
-  setChartDataMonthEfficiency,
-  setChartDataMonthRFT
-} from "@/redux/data_factory_redux/MonthReportSlice";
+  setChartDataSAMP,
+  setChartDataEfficiency,
+  setChartDataRFT,
+} from "@/redux/data_factory_redux/ReportSlice";
 
 export const fetchMonthTotalOutput = (year, month) => async (dispatch) => {
   dispatch(setLoading(true)); // Bắt đầu loading
@@ -82,7 +82,7 @@ export const fetchMonthStitchingAssemblyMP =
       const formatedData = { worker, Week };
       //console.log(formatedData);
 
-      dispatch(setChartDataMonthSAMP(formatedData));
+      dispatch(setChartDataSAMP(formatedData));
       dispatch(setLoading(false));
     } catch (error) {
       dispatch(setLoading(false)); // Kết thúc loading khi lỗi xảy ra
@@ -119,9 +119,9 @@ export const fetchMonthStitchingAssemblyMP =
         }
       });
       const formatedData = { Factory_EFF, Month };
-      console.log(formatedData);
+      //console.log(formatedData);
   
-      dispatch(setChartDataMonthEfficiency(formatedData));
+      dispatch(setChartDataEfficiency(formatedData));
       dispatch(setLoading(false));
     } catch (error) {
       dispatch(setLoading(false)); // Kết thúc loading khi lỗi xảy ra
@@ -158,7 +158,7 @@ export const fetchMonthStitchingAssemblyMP =
       const formatedData = { RFT, Month };
       //console.log(formatedData);
   
-      dispatch(setChartDataMonthRFT(formatedData));
+      dispatch(setChartDataRFT(formatedData));
       dispatch(setLoading(false));
     } catch (error) {
       dispatch(setLoading(false)); // Kết thúc loading khi lỗi xảy ra

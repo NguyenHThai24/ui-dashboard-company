@@ -1,4 +1,4 @@
-import {  Grid } from "@mui/material";
+import {  Grid, Typography } from "@mui/material";
 import LanguageSelector from "./LanguageSelector";
 import { useTranslations } from "@/config/useTranslations";
 import { useSelector } from "react-redux";
@@ -10,12 +10,13 @@ const Navbar = () => {
   console.log(translations);
   
   return (
-    <Grid container sx={{ py: 1, px: 2 }}>
+    <Grid container sx={{  px: 2, backgroundColor: "rgba(221, 255, 93, 0.08)",
+        border: "none"}}
+    >
       <Grid item xs={10}>
-        <h1 className="font-bold text-5xl text-green-700">
+        <Typography sx={{fontSize: "48px", color:"#239d85", fontWeight: 600}} >
         {/* {translations["LHG"] } */}LHG {selectedItem && `- ${selectedItem}`}
-      
-        </h1>
+        </Typography>
       </Grid>
 
       <Grid

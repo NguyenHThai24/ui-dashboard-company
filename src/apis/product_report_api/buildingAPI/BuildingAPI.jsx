@@ -4,14 +4,14 @@ import {
   setError,
   setChartDataEfficiency,
   setChartDataRFT
-} from "@/redux/data_building_redux/BuildingASlice";
+} from "@/redux/data_building_redux/BuildingSlice";
 
-export const fetchEfficiencyByLine = (year, month) => async (dispatch) => {
+export const fetchEfficiencyByLine = (year, month, building) => async (dispatch) => {
   dispatch(setLoading(true)); // Bắt đầu loading
   try {
     const response = await request.post(
       `/EFFICIENCY_BY_LINE_Building`,
-      { YEAR: year, MONTH: month, Building: "A" }
+      { YEAR: year, MONTH: month, Building: building }
     );
     const rawData = response.data;
     // const response = await fetch(`/data/week_total_output.json`, {
@@ -46,12 +46,12 @@ export const fetchEfficiencyByLine = (year, month) => async (dispatch) => {
   }
 };
 
-export const fetchRFTByLine = (year, month) => async (dispatch) => {
+export const fetchRFTByLine = (year, month, building) => async (dispatch) => {
   dispatch(setLoading(true)); // Bắt đầu loading
   try {
     const response = await request.post(
       `/RFT_BY_LINE_Building`,
-      { YEAR: year, MONTH: month, Building: "A" }
+      { YEAR: year, MONTH: month, Building: building }
     );
     const rawData = response.data;
     // const response = await fetch(`/data/testData.json`, {
