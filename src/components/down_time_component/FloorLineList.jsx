@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { fetchDistinctFloor } from "@/apis/factory_kpi_api/FactoryAPI"
 
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import ButtonCuttingFitting from "@/components/down_time_component/ButtonCuttingFitting";
 
 const FloorLineList = ({ onFloorChange, onLineChange }) => {
   const [data, setData] = useState([]);
@@ -151,7 +152,7 @@ const FloorLineList = ({ onFloorChange, onLineChange }) => {
                 </ListItem>
               ))}
             </List>
-           
+            <ButtonCuttingFitting/>
           </Grid2>
         </Grid2>
 

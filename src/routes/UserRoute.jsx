@@ -18,6 +18,7 @@ import ProdHourlyOutput from "@/pages/factory_production/ProductionHourlyOutput"
 
 import KaizenPage from "@/pages/KaizenPage";
 import ProductionReport from "../pages/factory_production/production_report/factory/ProductionReport";
+import DownTimePage from "../pages/DownTimePage";
 
 const UserRoute = () => (
   <Routes>
@@ -77,7 +78,6 @@ const UserRoute = () => (
         }
       />
 
-      {/*Start Product Report Layout*/}
       <Route
         path="/production-report"
         element={
@@ -85,8 +85,13 @@ const UserRoute = () => (
         }
       />
 
+      <Route
+        path="/down-time"
+        element={
+            <DownTimePage />
+        }
+      />
    
-      {/*End Product Report Layout*/}
       <Route  path="/production-report/building" element={<Building/>}/>
       <Route path="/production" element={<ProductionPage />} />
       

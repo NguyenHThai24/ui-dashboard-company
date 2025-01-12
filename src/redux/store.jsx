@@ -6,11 +6,10 @@ import loadingReducer from "@/redux/loading/loadingSlice";
 
 
 import ReportReducer from "@/redux/data_factory_redux/ReportSlice"
-
 import buildingReducer from "@/redux/data_building_redux/BuildingSlice";
-// import buildingBReducer from "@/redux/data_building_redux/BuidingBSlice";
-// import buildingCReducer from "@/redux/data_building_redux/BuildingCSlice";
-// import buildingGReducer from "@/redux/data_building_redux/BuildingGSlice";
+
+import downTimeReducer from "@/redux/downTimeSlice"
+
 
 const store = configureStore({
   reducer: {
@@ -20,13 +19,11 @@ const store = configureStore({
 
     //  report factory
     report: ReportReducer,
-   
-
     // daily report buildingASlice
     building: buildingReducer,
-    // buildingb: buildingBReducer,
-    // buildingc: buildingCReducer,
-    // buildingg: buildingGReducer,
+
+    downtime: downTimeReducer,
+
   },
 });
 export default store;
