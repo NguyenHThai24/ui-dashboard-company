@@ -1,6 +1,6 @@
 import { useEffect } from "react"; 
 import { fetchChartMostBreakdown } from "../../../apis/down_time_api/FloorAPI";
-import { Card, CardContent, CircularProgress, Alert, Typography } from "@mui/material";
+import { Card, CardContent, CircularProgress, Alert, Typography, styled } from "@mui/material";
 import { Bar } from "react-chartjs-2"; // Đổi từ Line sang Bar
 import {
   Chart as ChartJS,
@@ -32,9 +32,10 @@ const MostBreakdownChart = ({ floor, line, date }) => {
 
   const data = {
     labels: [...(chartMostBreakdown.Name_en || [])], // X-axis labels (ensure it's not undefined)
+    
     datasets: [
       {
-        label: "Total (Min)",
+        label: "Total",
         data: chartMostBreakdown.total || [], // Y-axis data
         backgroundColor: "rgba(30, 143, 44, 0.8)", // Background color
         borderColor: "rgba(75, 192, 192, 1)", // Border color
@@ -50,7 +51,20 @@ const MostBreakdownChart = ({ floor, line, date }) => {
     indexAxis: 'y', // Horizontal bar chart
     plugins: {
       legend: {
-        position: "top", // Position of legend
+        display: false, // Hide the legend (label)
+      },
+      tooltip: {
+        
+        callbacks: {
+          // Hiển thị tên đầy đủ khi hover vào trục X
+          label: function (tooltipItem) {
+            const index = tooltipItem.dataIndex;
+            const fullName = chartMostBreakdown.Name_en[index] || "Unknown"; // Tên đầy đủ
+            const value = tooltipItem.raw; // Giá trị
+            return [`${fullName}`, `${tooltipItem.dataset.label}: ${value}`];
+          },
+          
+        },
       },
       title: null,
     },
@@ -60,12 +74,19 @@ const MostBreakdownChart = ({ floor, line, date }) => {
           display: true,
           text: "", // X-axis label
         },
+      
         beginAtZero: true, // Start X-axis from 0
       },
       y: {
-        title: {
-          display: false,
+        ticks: {
+          callback: function (value, index) {
+            // Lấy 6 ký tự cuối trên trục X
+            return chartMostBreakdown.Name_en
+              ? chartMostBreakdown.Name_en[index].slice(-6)
+              : value;
+          },
         },
+        
       },
     },
   };
@@ -75,7 +96,7 @@ const MostBreakdownChart = ({ floor, line, date }) => {
       <Typography sx={{ fontWeight: "bold", color: "gray", fontSize: "15px", p: 1 }}>
       Most Breakdown By Machine Type (Count)
       </Typography>
-      <CardContent sx={{ height: "100%", p: 0, pb:1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+      <CardContent sx={{ height: "100%", p: 1, pb:1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
         {loading ? (
           <CircularProgress sx={{ display: "block", margin: "auto" }} />
         ) : error ? (

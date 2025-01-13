@@ -1,5 +1,5 @@
 import { useEffect } from "react"; 
-import { fetchChartMostDowntime } from "../../../apis/down_time_api/FloorAPI";
+import { fetchChartMostRepairing } from "../../../apis/down_time_api/FloorAPI";
 import { Card, CardContent, CircularProgress, Alert, Typography } from "@mui/material";
 import { Bar } from "react-chartjs-2"; // Đổi từ Line sang Bar
 import {
@@ -15,12 +15,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const MostDowntimeChart = ({ floor, line, date }) => {
-  const { chartMostDowntime, loading, error } = useSelector((state) => state.downtime);
+const MostRepairingChart = ({ floor, line, date }) => {
+  const { chartMostRepairing, loading, error } = useSelector((state) => state.downtime);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchChartMostDowntime(
+    dispatch(fetchChartMostRepairing(
       "LHG",    // Factory (example value)
       floor,    // Floor from props
       line,     // Line from props
@@ -31,13 +31,13 @@ const MostDowntimeChart = ({ floor, line, date }) => {
   }, [dispatch, floor, line, date]); // Run effect when floor, line, or date changes
 
   const data = {
-    labels: [...(chartMostDowntime.Name_en || [])], // X-axis labels (ensure it's not undefined)
+    labels: [...(chartMostRepairing.Name_en || [])], // X-axis labels (ensure it's not undefined)
     datasets: [
       {
         label: "Total",
-        data: chartMostDowntime.total || [], // Y-axis data
-        backgroundColor: "rgba(56, 168, 255, 0.8)", // Background color
-        borderColor: "rgba(75, 192, 192, 1)", // Border color
+        data: chartMostRepairing.total || [], // Y-axis data
+        backgroundColor: "rgba(15, 15, 234, 0.8)", // Background color
+        borderColor: "rgba(15, 15, 234, 1)", // Border color
         borderWidth: 1,
         barPercentage: 0.5, // Adjust bar thickness
         categoryPercentage: 0.8, // Adjust spacing between bars
@@ -57,7 +57,7 @@ const MostDowntimeChart = ({ floor, line, date }) => {
           // Hiển thị tên đầy đủ khi hover vào trục X
           label: function (tooltipItem) {
             const index = tooltipItem.dataIndex;
-            const fullName = chartMostDowntime.Name_en[index] || "Unknown"; // Tên đầy đủ
+            const fullName = chartMostRepairing.Name_en[index] || "Unknown"; // Tên đầy đủ
             const value = tooltipItem.raw; // Giá trị
             return [`${fullName}`, `${tooltipItem.dataset.label}: ${value}`];
           },
@@ -72,15 +72,14 @@ const MostDowntimeChart = ({ floor, line, date }) => {
           display: true,
           text: "", // X-axis label
         },
-        
         beginAtZero: true, // Start X-axis from 0
       },
       y: {
-        ticks: {
+       ticks: {
           callback: function (value, index) {
             // Lấy 6 ký tự cuối trên trục X
-            return chartMostDowntime.Name_en
-              ? chartMostDowntime.Name_en[index]?.slice(-6)
+            return chartMostRepairing.Name_en
+              ? chartMostRepairing.Name_en[index].slice(-6)
               : value;
           },
         },
@@ -91,7 +90,7 @@ const MostDowntimeChart = ({ floor, line, date }) => {
   return (
     <Card sx={{ width: "100%", margin: "auto", height: "100%", boxShadow: 10, borderRadius: 2, bgcolor: "white" }}>
       <Typography sx={{ fontWeight: "bold", color: "gray", fontSize: "15px", p: 1 }}>
-      Most Downtime By Machine Type (Min)
+      Most Repairing Time By Machine Type (Min)
       </Typography>
       <CardContent sx={{ height: "100%", p: 1, pb:1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
         {loading ? (
@@ -106,4 +105,4 @@ const MostDowntimeChart = ({ floor, line, date }) => {
   );
 };
 
-export default MostDowntimeChart;
+export default MostRepairingChart;

@@ -19,6 +19,7 @@
     "@reduxjs/toolkit": "^2.5.0",
     "axios": "^1.7.9",
     "chart.js": "^4.4.7",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "dayjs": "^1.11.13",
     "highcharts": "^12.1.2",
     "highcharts-react-official": "^3.2.1",

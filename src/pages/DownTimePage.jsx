@@ -10,6 +10,13 @@ import MachineDowntimeByLineChart from "../components/down_time_component/floor_
 import RepairingTimeChart from "../components/down_time_component/floor_data/RepairingTimeChart";
 import MostDowntimeChart from "../components/down_time_component/floor_data/MostDowntimeChart";
 import MostBreakdownChart from "../components/down_time_component/floor_data/MostBreakdownChart";
+import MostRepairingChart from "../components/down_time_component/floor_data/MostRepairingChart";
+import TotalMachineChart from "../components/down_time_component/floor_data/TotalMachineChart";
+import TableMechanicList from "../components/down_time_component/floor_data/TableMechanicList";
+import ReasonMinChart from "../components/down_time_component/floor_data/ReasonMinChart";
+import TotalReasonChart from "../components/down_time_component/floor_data/TotalReasonChart";
+import RepairingMethodChart from "../components/down_time_component/floor_data/RepairingMethodChart";
+import TableRepairingStatus from "../components/down_time_component/floor_data/TableRepairingStatus";
 
 const DownTimePage = () => {
   const [selectedDate, setSelectedDate] = useState(dayjs());
@@ -30,7 +37,7 @@ const DownTimePage = () => {
       };
 
   return (
-    <div>
+    <div className="">
         <FloorLineList
         onFloorChange={handleFloorChange}
         onLineChange={handleFloorLineChange}
@@ -62,17 +69,28 @@ const DownTimePage = () => {
           </div>
         </div>
 
-        <div className="grid col-span-4 border-2 border-black">Cột 2</div>
+        <div className="grid col-span-4">
+          <TableRepairingStatus date={selectedDate} floor={selectedFloor} line={selectedLine}/>
+        </div>
       </section>
+
       <section  className="my-4 grid grid-cols-4 gap-4">
         <MostBreakdownChart   date={selectedDate} floor={selectedFloor} line={selectedLine} />
         <MostDowntimeChart date={selectedDate} floor={selectedFloor} line={selectedLine} />
-        <MostDowntimeChart date={selectedDate} floor={selectedFloor} line={selectedLine} />
-        <MostDowntimeChart date={selectedDate} floor={selectedFloor} line={selectedLine} />
+        <MostRepairingChart date={selectedDate} floor={selectedFloor} line={selectedLine} />
+        <TotalMachineChart date={selectedDate} floor={selectedFloor} line={selectedLine} />
       </section>
 
-
-       
+      <section className="grid grid-cols-12 gap-4 grid-rows-[350px] pb-4">
+        <div className="grid grid-cols-3 col-span-8 gap-4"> 
+          <TotalReasonChart date={selectedDate} floor={selectedFloor} line={selectedLine} />
+          <ReasonMinChart date={selectedDate} floor={selectedFloor} line={selectedLine} />
+          <RepairingMethodChart date={selectedDate} floor={selectedFloor} line={selectedLine} />
+        </div>
+        <div className="grid col-span-4"> 
+          <TableMechanicList date={selectedDate} floor={selectedFloor} line={selectedLine} />
+        </div>
+      </section>
     </div>
   )
 }

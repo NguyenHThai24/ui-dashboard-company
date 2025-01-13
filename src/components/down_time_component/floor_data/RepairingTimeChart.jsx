@@ -56,7 +56,7 @@ const RepairingTimeChart = ({ floor, line, date }) => {
     responsive: true,
     plugins: {
       legend: {
-        position: "top",
+        display: false, // Hide the legend (label)
       },
       tooltip: {
         callbacks: {
@@ -111,7 +111,7 @@ const RepairingTimeChart = ({ floor, line, date }) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          p: 0, // Remove padding
+          p: 1, // Remove padding
         }}
       >
         {loading ? (

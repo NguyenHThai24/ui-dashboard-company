@@ -49,7 +49,7 @@ const CardMachineDown = ({ floor, date, line }) => {
               component="div"
               sx={{ fontWeight: "bold", color: "gray", fontSize:"15px" }}
             >
-              Total Machine Downtime (MIN)
+              Total Machine Downtime (Min)
             </Typography>
       <CardContent sx={{
           display: "flex",

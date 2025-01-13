@@ -36,7 +36,7 @@ const MachineBreakByLineChart = ({ floor, line, date }) => {
     labels: chartData.name || [], // X-axis labels (ensure it's not undefined)
     datasets: [
       {
-        label: "Total Breakdown (Count)",
+        label: "Total",
         data: chartData.total || [], // Y-axis data
         backgroundColor: "rgba(33, 154, 154, 0.8)", // Background color
         borderColor: "rgba(75, 192, 192, 1)", // Border color
@@ -49,7 +49,7 @@ const MachineBreakByLineChart = ({ floor, line, date }) => {
     responsive: true,
     plugins: {
       legend: {
-        position: "top", // Position of legend
+        display: false, // Hide the legend (label)
       },
       title: null,
     },
@@ -63,7 +63,6 @@ const MachineBreakByLineChart = ({ floor, line, date }) => {
       y: {
         title: {
           display: false,
-          text: "Total (Min)", // Y-axis label
         },
         beginAtZero: true, // Start Y-axis from 0
       },
@@ -75,7 +74,7 @@ const MachineBreakByLineChart = ({ floor, line, date }) => {
     <Typography sx={{fontWeight: "bold", color: "gray", fontSize: "15px" , p:1}}>
     Total Breakdown by Hour
     </Typography>
-      <CardContent sx={{ height: "100%", p: 0, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+      <CardContent sx={{ height: "100%", p: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
         {loading ? (
           <CircularProgress sx={{ display: "block", margin: "auto" }} />
         ) : error ? (

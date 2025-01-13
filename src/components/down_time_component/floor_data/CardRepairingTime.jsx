@@ -56,7 +56,7 @@ const CardRepairingTime = ({ floor, date, line }) => {
           component="div"
           sx={{ fontWeight: "bold", color: "gray", fontSize: "15px" }}
         >
-          Total Repairing Time (MIN)
+          Total Repairing Time (Min)
         </Typography>
 
         {loading ? (
