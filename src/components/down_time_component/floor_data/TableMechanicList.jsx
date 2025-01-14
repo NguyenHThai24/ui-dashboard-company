@@ -32,7 +32,7 @@ const MechanicTable = ({ floor, date, line }) => {
 
   return (
     <div
-      className="bg-white h-[350px] rounded-xl font-bold"
+      className="bg-white h-[350px] rounded-lg font-bold"
       style={{
         boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.5)", // Hiệu ứng đổ bóng
       }}
@@ -55,6 +55,8 @@ const MechanicTable = ({ floor, date, line }) => {
       <TableContainer
         component={Paper}
         sx={{
+          paddingLeft: "4px",
+          paddingRight: '4px',
           maxHeight: "300px", // Bớt chiều cao để dành không gian cho tiêu đề
           marginTop: "10px",
           "&::-webkit-scrollbar": {
@@ -101,32 +103,32 @@ const MechanicTable = ({ floor, date, line }) => {
           <Table
             sx={{
               "& .MuiTableCell-root": {
-                padding: "10px 4px", // Padding chung cho tất cả cell
-                fontSize: "12px", // Font chữ lớn hơn
+                padding: "4px 8px", // Padding chung cho tất cả cell
+                fontSize: "13px", // Font chữ lớn hơn
               },
             }}
           >
             <TableHead
               sx={{
-                backgroundColor: "#c0f1c5",
+                backgroundColor: "#1e6a65",
                 position: "sticky", // Cố định tiêu đề
                 top: 0, // Vị trí cố định ở trên cùng
                 zIndex: 1, // Đặt z-index để tiêu đề luôn nổi trên nội dung
                 "& .MuiTableCell-root": {
                   textAlign: "center",
-                  fontWeight: 900,
-                  color: "#000",
-                  py: 2,
+                  fontWeight: "bold",
+                  color: "#fff",
+                  py: 1,
                   fontSize: "13px", // Font chữ lớn hơn cho tiêu đề
                 },
               }}
             >
               <TableRow>
-                <TableCell>Mechanic</TableCell>
-                <TableCell sx={{ textAlign: "center" }}>Type</TableCell>
-                <TableCell sx={{ textAlign: "center" }}>Current Task</TableCell>
-                <TableCell sx={{ textAlign: "center" }}>Status</TableCell>
-                <TableCell sx={{ textAlign: "center" }}>Counts</TableCell>
+                <TableCell  sx={{ fontSize: "13px", width:'150px' }}>Mechanic</TableCell>
+                <TableCell  sx={{ fontSize: "13px", width:'150px' }}>Type</TableCell>
+                <TableCell  sx={{ fontSize: "13px", width:'150px' }}>Current Task</TableCell>
+                <TableCell  sx={{ fontSize: "13px", width:'150px' }}>Status</TableCell>
+                <TableCell  sx={{ fontSize: "13px", width:'150px' }}>Counts</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -134,20 +136,20 @@ const MechanicTable = ({ floor, date, line }) => {
                 <TableRow
                   key={index}
                   sx={{
-                    backgroundColor: index % 2 === 0 ? "#f9f9f9" : "#ffffff", // Tô màu cho hàng chẵn và lẻ
+                    backgroundColor: index % 2 === 0 ? "#b9f7b9" : "#ffffff", // Tô màu cho hàng chẵn và lẻ
                   }}
                 >
-                  <TableCell sx={{ py: 2 }}>{tableMechanic.mechanic[index]}</TableCell>
+                  <TableCell sx={{ py: 2, fontWeight:"bold" }}>{tableMechanic.mechanic[index]}</TableCell>
                   <TableCell sx={{ textAlign: "center", py: 2 }}>
                     {tableMechanic.mechanic_type[index]}
                   </TableCell>
-                  <TableCell sx={{ textAlign: "center", py: 2 }}>
+                  <TableCell sx={{ textAlign: "center", py: 2 , fontWeight:"bold"}}>
                     {tableMechanic.current_task[index] || ""}
                   </TableCell>
                   <TableCell sx={{ textAlign: "center", py: 2 }}>
                     {tableMechanic.status[index]}
                   </TableCell>
-                  <TableCell sx={{ textAlign: "center", py: 2 }}>
+                  <TableCell sx={{ textAlign: "center", py: 2, fontWeight:"bold" }}>
                     {tableMechanic.counts[index]}
                   </TableCell>
                 </TableRow>

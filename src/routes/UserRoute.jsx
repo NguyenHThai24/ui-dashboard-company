@@ -19,6 +19,8 @@ import ProdHourlyOutput from "@/pages/factory_production/ProductionHourlyOutput"
 import KaizenPage from "@/pages/KaizenPage";
 import ProductionReport from "../pages/factory_production/production_report/factory/ProductionReport";
 import DownTimePage from "../pages/DownTimePage";
+import DowntimeTableExcel from "../components/down_time_component/floor_data/DowntimeTableExcel";
+import AutoCuttingPage from "../pages/AutoCuttingPage";
 
 const UserRoute = () => (
   <Routes>
@@ -89,6 +91,20 @@ const UserRoute = () => (
         path="/down-time"
         element={
             <DownTimePage />
+        }
+      />
+
+      <Route
+        path="/report-downtime"
+        element={
+            <DowntimeTableExcel />
+        }
+      />
+
+      <Route
+        path="/auto-cutting"
+        element={
+            <AutoCuttingPage />
         }
       />
    

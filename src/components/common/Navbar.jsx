@@ -7,15 +7,14 @@ const Navbar = () => {
   const selectedItem = useSelector((state) => state.sidebar.selectedItem);
   const language = useSelector((state) => state.language.language);
   const translations = useTranslations(language);
-  console.log(translations);
   
   return (
     <Grid container sx={{  px: 2, backgroundColor: "rgba(221, 255, 93, 0.08)",
         border: "none"}}
     >
       <Grid item xs={10}>
-        <Typography sx={{fontSize: "48px", color:"#239d85", fontWeight: 600}} >
-        {/* {translations["LHG"] } */}LHG {selectedItem && `- ${selectedItem}`}
+        <Typography sx={{fontSize: "36px", color:"#239d85", fontWeight: 600}} >
+        {/* {translations["LHG"] }*/} LHG {selectedItem && `- ${selectedItem}`} 
         </Typography>
       </Grid>
 

@@ -16,7 +16,7 @@ const DefaultLayout = () => {
             width: !collapsed ? '81.5vw' : '94.6vw',
             maxHeight: "full", // Giới hạn chiều cao
             overflow: "auto", // Cho phép cuộn
-            backgroundColor: "rgba(221, 255, 93, 0.08)"
+            backgroundColor: "rgba(221, 255, 93, 0.2)"
           }}
         >
         

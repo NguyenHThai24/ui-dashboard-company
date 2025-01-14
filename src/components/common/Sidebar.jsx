@@ -62,7 +62,7 @@ const Sidebar = ({ setCollapsed, collapsed }) => {
       ],
     },
     { key: "2", label: "Material W/H", icon: iconMaterial, link: "/" },
-    { key: "3", label: "Auto Cutting", icon: iconAutoCutting, link: "/" },
+    { key: "3", label: "Auto Cutting", icon: iconAutoCutting, link: "/auto-cutting" },
     { key: "4", label: "Stock Fitting", icon: iconStockFitting, link: "/" },
     { key: "5", label: "FG W/H", icon: iconFG, link: "/" },
     { key: "6", label: "Kaizen", icon: iconKaizen, link: "/kaizen" },

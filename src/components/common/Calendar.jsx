@@ -12,6 +12,11 @@ const useStyles = makeStyles({
       width: "320px",
       marginTop: "10px",
       marginBottom: "10px",
+      border: "1px solid black", // Đường viền màu đen
+      borderRadius: "4px", // Góc bo tròn
+    },
+    "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "black", // Đường viền màu đen khi được chọn
     },
   },
   textField: {
@@ -20,6 +25,7 @@ const useStyles = makeStyles({
     },
   },
 });
+
 
 const Calendar = ({ onDateChange }) => {
   const classes = useStyles();

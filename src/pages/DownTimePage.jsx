@@ -1,5 +1,5 @@
 import FloorLineList from "../components/down_time_component/FloorLineList";
-import Calendar from "@/components/common/Calendar";
+import Calendar from "../components/common/Calendar";
 import { useState } from "react";
 import dayjs from "dayjs";
 import CardBreakdown from "../components/down_time_component/floor_data/CardBreakDown";
@@ -17,6 +17,7 @@ import ReasonMinChart from "../components/down_time_component/floor_data/ReasonM
 import TotalReasonChart from "../components/down_time_component/floor_data/TotalReasonChart";
 import RepairingMethodChart from "../components/down_time_component/floor_data/RepairingMethodChart";
 import TableRepairingStatus from "../components/down_time_component/floor_data/TableRepairingStatus";
+import { Link } from "react-router-dom";
 
 const DownTimePage = () => {
   const [selectedDate, setSelectedDate] = useState(dayjs());
@@ -42,11 +43,20 @@ const DownTimePage = () => {
         onFloorChange={handleFloorChange}
         onLineChange={handleFloorLineChange}
       />
-
+    <div className="flex gap-4">
       <Calendar onDateChange={handleDateChange} />
-
+      <Link to="/report-downtime" >
+        <img src="../../public/images/excel.png" style={{
+         height: "40px", // Giảm chiều cao của input field
+          width: "40px",
+          marginTop: "10px",
+          marginBottom: "10px",
+        }}/>
+      </Link>
+    </div>
+      
       <section className="grid grid-cols-12 gap-4">
-        <div className="grid col-span-8 grid-rows-[166px,350px]"> {/* Đặt chiều cao cho từng hàng */}
+        <div className="grid col-span-8  grid-rows-[166px,350px]"> {/* Đặt chiều cao cho từng hàng */}
           <div className="grid row-span-1 h-[150px]"> {/* Row 1 */}
             <div className="grid grid-cols-8 gap-4">
               <div className="grid col-span-2">
@@ -69,7 +79,9 @@ const DownTimePage = () => {
           </div>
         </div>
 
-        <div className="grid col-span-4">
+        <div className="grid col-span-4 w-full overflow-auto rounded-lg" style={{
+        boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.8)",
+      }}>
           <TableRepairingStatus date={selectedDate} floor={selectedFloor} line={selectedLine}/>
         </div>
       </section>
@@ -87,7 +99,9 @@ const DownTimePage = () => {
           <ReasonMinChart date={selectedDate} floor={selectedFloor} line={selectedLine} />
           <RepairingMethodChart date={selectedDate} floor={selectedFloor} line={selectedLine} />
         </div>
-        <div className="grid col-span-4"> 
+        <div className="grid col-span-4 w-full overflow-auto rounded-lg" style={{
+        boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.8)",
+      }}> 
           <TableMechanicList date={selectedDate} floor={selectedFloor} line={selectedLine} />
         </div>
       </section>
