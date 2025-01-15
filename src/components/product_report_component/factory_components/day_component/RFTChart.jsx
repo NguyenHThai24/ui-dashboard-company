@@ -1,20 +1,20 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
 import {
   Box,
   Card,
   CardContent,
   CircularProgress,
   Typography,
-} from "@mui/material";
-import { fetchDailyRFT } from "@/apis/product_report_api/factoryAPI/DayAPI";
-import { fetchWeekRFT } from "@/apis/product_report_api/factoryAPI/WeekAPI";
-import { fetchMonthRFT } from "@/apis/product_report_api/factoryAPI/MonthAPI";
-import { setLoading, setError } from "@/redux/data_factory_redux/ReportSlice";
+} from '@mui/material';
+import { fetchDailyRFT } from '@/apis/product_report_api/factoryAPI/DayAPI';
+import { fetchWeekRFT } from '@/apis/product_report_api/factoryAPI/WeekAPI';
+import { fetchMonthRFT } from '@/apis/product_report_api/factoryAPI/MonthAPI';
+import { setLoading, setError } from '@/redux/data_factory_redux/ReportSlice';
 
-const RFTChart = ({ selectedDate , timePeriod}) => {
+const RFTChart = ({ selectedDate, timePeriod }) => {
   const dispatch = useDispatch();
   const { chartDataRFT, loading, error } = useSelector((state) => ({
     chartDataRFT: state.report.chartDataRFT,
@@ -28,14 +28,14 @@ const RFTChart = ({ selectedDate , timePeriod}) => {
       try {
         const year = selectedDate.year();
         const month = selectedDate.month() + 1;
-        if (timePeriod === "day") {
+        if (timePeriod === 'day') {
           await dispatch(fetchDailyRFT(year, month));
-        } else if (timePeriod === "week") {
+        } else if (timePeriod === 'week') {
           await dispatch(fetchWeekRFT(year, month));
-        } else if (timePeriod === "month") {
+        } else if (timePeriod === 'month') {
           await dispatch(fetchMonthRFT(year, month));
         } else {
-          throw new Error("Invalid timePeriod");
+          throw new Error('Invalid timePeriod');
         }
       } catch (error) {
         dispatch(setError(error.toString()));
@@ -46,9 +46,22 @@ const RFTChart = ({ selectedDate , timePeriod}) => {
     fetchData();
   }, [selectedDate, timePeriod, dispatch]);
 
+  const getTitle = () => {
+    switch (timePeriod) {
+      case 'day':
+        return 'DAILY RFT';
+      case 'week':
+        return 'WEEKLY RFT';
+      case 'month':
+        return 'MONTHLY RFT';
+      default:
+        return 'TOTAL OUTPUT';
+    }
+  };
+
   const options = {
     chart: {
-      type: "area",
+      type: 'area',
       height: 280,
       spacingBottom: 0,
       spacingTop: 0,
@@ -57,30 +70,30 @@ const RFTChart = ({ selectedDate , timePeriod}) => {
     },
     title: null,
     legend: {
-      layout: "vertical",
-      align: "right",
-      verticalAlign: "top",
-      backgroundColor: "white",
+      layout: 'vertical',
+      align: 'right',
+      verticalAlign: 'top',
+      backgroundColor: 'white',
       itemStyle: {
-        fontSize: "10px",
-        fontWeight: "bold",
+        fontSize: '10px',
+        fontWeight: 'bold',
       },
       itemHoverStyle: {
-        color: "#0000FF",
+        color: '#0000FF',
       },
       itemDistance: 10,
       y: -10,
     },
     xAxis: {
       categories:
-        timePeriod === "day"
+        timePeriod === 'day'
           ? [...(chartDataRFT?.date || [])]
-          : timePeriod === "week"
-          ? [...(chartDataRFT?.week || [])]
-          : [...(chartDataRFT?.Month || [])],
+          : timePeriod === 'week'
+            ? [...(chartDataRFT?.week || [])]
+            : [...(chartDataRFT?.Month || [])],
       labels: {
         style: {
-          fontSize: "10px",
+          fontSize: '10px',
           fontWeight: 600,
         },
       },
@@ -90,99 +103,97 @@ const RFTChart = ({ selectedDate , timePeriod}) => {
     },
     series: [
       {
-        name: "Actual",
+        name: 'Actual',
         data: [...(chartDataRFT?.RFT || [])],
         marker: {
           enabled: true,
           radius: 4,
-          fillColor: "#117864",
+          fillColor: '#117864',
         },
         fillColor: {
           linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
           stops: [
-            [0, "rgba(17, 120, 100, 0.6)"],
-            [1, "rgba(17, 120, 100, 0.4)"],
+            [0, 'rgba(17, 120, 100, 0.6)'],
+            [1, 'rgba(17, 120, 100, 0.4)'],
           ],
         },
-        lineColor: "#117864",
+        lineColor: '#117864',
         dataLabels: {
           enabled: true,
           style: {
-            color: "#000",
+            color: '#000',
             fontWeight: 600,
-            fontSize: "10px",
+            fontSize: '10px',
           },
           formatter: function () {
-            return this.y.toFixed(2) + "%";
+            return this.y.toFixed(2) + '%';
           },
         },
       },
       {
-        name: "Baseline",
+        name: 'Baseline',
         data: Array(
-          (timePeriod === "day"
+          (timePeriod === 'day'
             ? chartDataRFT?.date?.length
-            : timePeriod === "week"
-            ? chartDataRFT?.week?.length
-            : chartDataRFT?.Month?.length) || 0
+            : timePeriod === 'week'
+              ? chartDataRFT?.week?.length
+              : chartDataRFT?.Month?.length) || 0
         ).fill(100),
         marker: {
           enabled: false,
         },
-        lineColor: "#0e6251",
-        dashStyle: "ShortDash",
+        lineColor: '#0e6251',
+        dashStyle: 'ShortDash',
         enableMouseTracking: true,
         dataLabels: {
           enabled: false,
         },
-        fillColor: "none",
+        fillColor: 'none',
       },
     ],
     credits: {
       enabled: false,
     },
   };
-  
-  
 
   return (
     <Card
       sx={{
         height: 350,
         border: 1,
-        boxShadow: "2px 4px 10px rgba(255, 255, 255, 0.8)",
-        borderRadius: "10px",
-        overflow: "hidden",
+        boxShadow: '2px 4px 10px rgba(255, 255, 255, 0.8)',
+        borderRadius: '10px',
+        overflow: 'hidden',
       }}
     >
       <CardContent
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          height: "100%",
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          height: '100%',
         }}
       >
         <Typography
           sx={{
-            fontSize: "20px",
-            fontWeight: "bold",
+            fontSize: '20px',
+            fontWeight: 'bold',
             fontFamily: "'Roboto', sans-serif",
-            color: "#333",
-            textAlign: "center",
-            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
-            letterSpacing: "1.5px",
+            color: '#333',
+            textAlign: 'center',
+            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)',
+            letterSpacing: '1.5px',
           }}
         >
-          DAILY RFT
+          {getTitle()}
         </Typography>
         {loading ? (
           <Box
             sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              height: "100%",
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100%',
             }}
           >
             <CircularProgress />

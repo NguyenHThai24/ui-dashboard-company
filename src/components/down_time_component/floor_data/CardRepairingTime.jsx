@@ -1,6 +1,12 @@
-import { useState, useEffect } from "react";
-import { fetchTotalRepairingTime } from "../../../apis/down_time_api/FloorAPI";
-import { Card, CardContent, Typography, CircularProgress, Alert } from "@mui/material";
+import { useState, useEffect } from 'react';
+import { fetchTotalRepairingTime } from '../../../apis/down_time_api/FloorAPI';
+import {
+  Card,
+  CardContent,
+  Typography,
+  CircularProgress,
+  Alert,
+} from '@mui/material';
 
 const CardRepairingTime = ({ floor, date, line }) => {
   const [loading, setLoading] = useState(false);
@@ -12,12 +18,12 @@ const CardRepairingTime = ({ floor, date, line }) => {
       setLoading(true);
       try {
         const totalBreakdown = await fetchTotalRepairingTime(
-          "LHG",   // Factory
-          floor,   // Floor from props
-          "",      // Line
-          "",      // Section
-          date,    // Start date
-          date     // End date
+          'LHG', // Factory
+          floor, // Floor from props
+          '', // Line
+          '', // Section
+          date, // Start date
+          date // End date
         );
         setTotal(totalBreakdown);
       } catch (err) {
@@ -33,36 +39,36 @@ const CardRepairingTime = ({ floor, date, line }) => {
   return (
     <Card
       sx={{
-        width: "100%",
-        margin: "auto",
-        height: "150px",
+        width: '100%',
+        margin: 'auto',
+        height: '150px',
         boxShadow: 10,
         borderRadius: 2,
-        textAlign: "left",
-        bgcolor: "white",
+        textAlign: 'left',
+        bgcolor: 'white',
       }}
     >
       <CardContent
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between", // Đẩy phần tử đầu và cuối ra hai phía
-          height: "100%", // Đảm bảo chiếm toàn bộ chiều cao của Card
-          padding: "16px",
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between', // Đẩy phần tử đầu và cuối ra hai phía
+          height: '100%', // Đảm bảo chiếm toàn bộ chiều cao của Card
+          padding: '16px',
         }}
       >
         <Typography
           variant="h6"
           component="div"
-          sx={{ fontWeight: "bold", color: "gray", fontSize: "15px" }}
+          sx={{ fontWeight: 'bold', color: 'gray', fontSize: '15px' }}
         >
           Total Repairing Time (Min)
         </Typography>
 
         {loading ? (
-          <CircularProgress sx={{ margin: "auto" }} />
+          <CircularProgress sx={{ margin: 'auto' }} />
         ) : error ? (
-          <Alert severity="error" sx={{ margin: "auto" }}>
+          <Alert severity="error" sx={{ margin: 'auto' }}>
             {error}
           </Alert>
         ) : (
@@ -70,10 +76,10 @@ const CardRepairingTime = ({ floor, date, line }) => {
             variant="h4"
             component="div"
             sx={{
-              alignSelf: "flex-end", // Đưa giá trị xuống cuối
-              mt: "auto", // Tự động đẩy cách đều
-              color: "#049962",
-              fontWeight: "900"
+              alignSelf: 'flex-end', // Đưa giá trị xuống cuối
+              mt: 'auto', // Tự động đẩy cách đều
+              color: '#049962',
+              fontWeight: '900',
             }}
           >
             {total || 0}
@@ -81,7 +87,6 @@ const CardRepairingTime = ({ floor, date, line }) => {
         )}
       </CardContent>
     </Card>
-
   );
 };
 

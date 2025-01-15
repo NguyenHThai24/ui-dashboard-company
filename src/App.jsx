@@ -1,16 +1,13 @@
-import UserRoute from "./routes/UserRoute"
-
-
+import UserRoute from './routes/UserRoute';
 
 function App() {
-
   return (
     <>
-    <div style={{ maxHeight: 'scroll', overflowY: 'scroll' }}>
-      <UserRoute/>
-    </div>
+      <div style={{ maxHeight: 'scroll', overflowY: 'scroll' }}>
+        <UserRoute />
+      </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

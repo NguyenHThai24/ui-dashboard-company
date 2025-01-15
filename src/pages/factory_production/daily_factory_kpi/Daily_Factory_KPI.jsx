@@ -1,35 +1,81 @@
-import { lazy, Suspense, useState } from "react";
-import dayjs from "dayjs";
+import { lazy, Suspense, useState } from 'react';
+import dayjs from 'dayjs';
 
-import Calendar from "../../../components/common/Calendar";
-import FloorLineList from "@/components/factory_kpi_components/common_factory_kpi/FloorLineList";
-import ButtonAssemblyStitching from "@/components/factory_kpi_components/common_factory_kpi/ButtonAssemblyStitching";
-import { Box, CircularProgress } from "@mui/material";
+import Calendar from '../../../components/common/Calendar';
+import FloorLineList from '@/components/factory_kpi_components/common_factory_kpi/FloorLineList';
+import ButtonAssemblyStitching from '@/components/factory_kpi_components/common_factory_kpi/ButtonAssemblyStitching';
+import { Box, CircularProgress } from '@mui/material';
 
+const EfficiencyByFloor = lazy(
+  () => import('@/components/factory_kpi_components/EfficiencyByFloor')
+);
+const RFTByFloor = lazy(
+  () => import('@/components/factory_kpi_components/RFTByFloor')
+);
+const OutputByFloor = lazy(
+  () => import('@/components/factory_kpi_components/OutputByFloor')
+);
+const AttendanceByFloor = lazy(
+  () => import('@/components/factory_kpi_components/AttendanceByFloor')
+);
+const HourlyOutputByFloor = lazy(
+  () => import('@/components/factory_kpi_components/HourlyOutputByFloor')
+);
 
-const EfficiencyByFloor = lazy(() => import("@/components/factory_kpi_components/EfficiencyByFloor"));
-const RFTByFloor = lazy(() => import("@/components/factory_kpi_components/RFTByFloor"));
-const OutputByFloor = lazy(() => import("@/components/factory_kpi_components/OutputByFloor"));
-const AttendanceByFloor = lazy(() => import("@/components/factory_kpi_components/AttendanceByFloor"));
-const HourlyOutputByFloor = lazy(() => import("@/components/factory_kpi_components/HourlyOutputByFloor"));
+const EfficiencyByHour = lazy(
+  () =>
+    import(
+      '@/components/factory_kpi_components/line_components/EfficiencyByHour'
+    )
+);
+const AssemblyRFTChart = lazy(
+  () =>
+    import(
+      '@/components/factory_kpi_components/line_components/AssemblyRFTChart'
+    )
+);
+const OutputByTheHour = lazy(
+  () =>
+    import(
+      '@/components/factory_kpi_components/line_components/OutputByTheHour'
+    )
+);
+const ModelRunByLine = lazy(
+  () =>
+    import('@/components/factory_kpi_components/line_components/ModelRunByLine')
+);
+const StopLine = lazy(
+  () =>
+    import(
+      '../../../components/factory_kpi_components/line_components/StopLine'
+    )
+);
 
-const EfficiencyByHour = lazy(() => import("@/components/factory_kpi_components/line_components/EfficiencyByHour"));
-const AssemblyRFTChart = lazy(() => import("@/components/factory_kpi_components/line_components/AssemblyRFTChart"));
-const OutputByTheHour = lazy(() => import("@/components/factory_kpi_components/line_components/OutputByTheHour"));
-const ModelRunByLine = lazy(() => import("@/components/factory_kpi_components/line_components/ModelRunByLine"));
-const StopLine = lazy(() => import("../../../components/factory_kpi_components/line_components/StopLine"));
-
-const CardEfficiency = lazy(() => import("@/components/factory_kpi_components/card_components/CardEfficiency"));
-const CardRFT = lazy(() => import("@/components/factory_kpi_components/card_components/CardRFT"));
-const CardTotalOutput = lazy(() => import("@/components/factory_kpi_components/card_components/CardTotalOutput"));
-const CardTopLineData = lazy(() => import("@/components/factory_kpi_components/card_components/CardTopLineData"));
-
+const CardEfficiency = lazy(
+  () =>
+    import('@/components/factory_kpi_components/card_components/CardEfficiency')
+);
+const CardRFT = lazy(
+  () => import('@/components/factory_kpi_components/card_components/CardRFT')
+);
+const CardTotalOutput = lazy(
+  () =>
+    import(
+      '@/components/factory_kpi_components/card_components/CardTotalOutput'
+    )
+);
+const CardTopLineData = lazy(
+  () =>
+    import(
+      '@/components/factory_kpi_components/card_components/CardTopLineData'
+    )
+);
 
 const Daily_Factory_KPI = () => {
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [selectedFloor, setSelectedFloor] = useState(null);
   const [selectedLine, setSelectedLine] = useState(null);
-  const [selectedMode, setSelectedMode] = useState("assembly");
+  const [selectedMode, setSelectedMode] = useState('assembly');
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -57,19 +103,20 @@ const Daily_Factory_KPI = () => {
 
       <Calendar onDateChange={handleDateChange} />
 
-      <Suspense 
-      fallback={   
-        <Box
+      <Suspense
+        fallback={
+          <Box
             sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              height: "100%",
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100%',
             }}
           >
             <CircularProgress />
-        </Box>
-        }>
+          </Box>
+        }
+      >
         {selectedLine ? (
           <>
             <ButtonAssemblyStitching onSelectionChange={handleModeChange} />
@@ -192,6 +239,3 @@ const Daily_Factory_KPI = () => {
 };
 
 export default Daily_Factory_KPI;
-
-
-

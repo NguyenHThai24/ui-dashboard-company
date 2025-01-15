@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { Button, ButtonGroup } from "@mui/material";
+import { useState } from 'react';
+import { Button, ButtonGroup } from '@mui/material';
 
 const ButtonCuttingFitting = ({ onSelectionChange }) => {
-  const [selectedCutting, setSelectedCutting] = useState("");
+  const [selectedCutting, setSelectedCutting] = useState('');
 
   const handleSelectionChange = (selection) => {
     setSelectedCutting(selection);
@@ -13,32 +13,34 @@ const ButtonCuttingFitting = ({ onSelectionChange }) => {
     <>
       <ButtonGroup
         sx={{
-          marginTop: "10px",
-          marginBottom: "10px",
-          marginLeft: "10px",
-          fontSize: "13px",
-          backgroundColor: "#049962",
-          py: "2px",
-          px: "2px",
+          marginTop: '10px',
+          marginBottom: '10px',
+          marginLeft: '10px',
+          fontSize: '13px',
+          backgroundColor: '#049962',
+          py: '2px',
+          px: '2px',
         }}
       >
         <Button
           sx={{
-            backgroundColor: selectedCutting === "cutting" ? "#049962" : "white",
-            color: selectedCutting === "cutting" ? "white" : "#049962",
-            fontWeight: "bold",
+            backgroundColor:
+              selectedCutting === 'cutting' ? '#049962' : 'white',
+            color: selectedCutting === 'cutting' ? 'white' : '#049962',
+            fontWeight: 'bold',
           }}
-          onClick={() => handleSelectionChange("cutting")}
+          onClick={() => handleSelectionChange('cutting')}
         >
           Auto Cutting
         </Button>
         <Button
           sx={{
-            backgroundColor: selectedCutting === "fitting" ? "#049962" : "white",
-            color: selectedCutting === "fitting" ? "white" : "#049962",
-            fontWeight: "bold",
+            backgroundColor:
+              selectedCutting === 'fitting' ? '#049962' : 'white',
+            color: selectedCutting === 'fitting' ? 'white' : '#049962',
+            fontWeight: 'bold',
           }}
-          onClick={() => handleSelectionChange("fitting")}
+          onClick={() => handleSelectionChange('fitting')}
         >
           Stock Fitting
         </Button>

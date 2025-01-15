@@ -1,112 +1,241 @@
-import FloorLineList from "../components/down_time_component/FloorLineList";
-import Calendar from "../components/common/Calendar";
-import { useState } from "react";
-import dayjs from "dayjs";
-import CardBreakdown from "../components/down_time_component/floor_data/CardBreakDown";
-import CardMachineDown from "../components/down_time_component/floor_data/CardMachineDown";
-import CardRepairingTime from "../components/down_time_component/floor_data/CardRepairingTime";
-import MachineBreakByLineChart from "../components/down_time_component/floor_data/MachineBreakByLineChart";
-import MachineDowntimeByLineChart from "../components/down_time_component/floor_data/MachineDowntimeByLineChart";
-import RepairingTimeChart from "../components/down_time_component/floor_data/RepairingTimeChart";
-import MostDowntimeChart from "../components/down_time_component/floor_data/MostDowntimeChart";
-import MostBreakdownChart from "../components/down_time_component/floor_data/MostBreakdownChart";
-import MostRepairingChart from "../components/down_time_component/floor_data/MostRepairingChart";
-import TotalMachineChart from "../components/down_time_component/floor_data/TotalMachineChart";
-import TableMechanicList from "../components/down_time_component/floor_data/TableMechanicList";
-import ReasonMinChart from "../components/down_time_component/floor_data/ReasonMinChart";
-import TotalReasonChart from "../components/down_time_component/floor_data/TotalReasonChart";
-import RepairingMethodChart from "../components/down_time_component/floor_data/RepairingMethodChart";
-import TableRepairingStatus from "../components/down_time_component/floor_data/TableRepairingStatus";
-import { Link } from "react-router-dom";
+import { useState, Suspense, lazy } from 'react';
+import dayjs from 'dayjs';
+import { Link } from 'react-router-dom';
+import Calendar from '../components/common/Calendar';
+
+// Sử dụng React.lazy để lazy load các component
+const FloorLineList = lazy(
+  () => import('../components/down_time_component/FloorLineList')
+);
+const CardBreakdown = lazy(
+  () => import('../components/down_time_component/floor_data/CardBreakDown')
+);
+const CardMachineDown = lazy(
+  () => import('../components/down_time_component/floor_data/CardMachineDown')
+);
+const CardRepairingTime = lazy(
+  () => import('../components/down_time_component/floor_data/CardRepairingTime')
+);
+const MachineBreakByLineChart = lazy(
+  () =>
+    import(
+      '../components/down_time_component/floor_data/MachineBreakByLineChart'
+    )
+);
+const MachineDowntimeByLineChart = lazy(
+  () =>
+    import(
+      '../components/down_time_component/floor_data/MachineDowntimeByLineChart'
+    )
+);
+const RepairingTimeChart = lazy(
+  () =>
+    import('../components/down_time_component/floor_data/RepairingTimeChart')
+);
+const MostDowntimeChart = lazy(
+  () => import('../components/down_time_component/floor_data/MostDowntimeChart')
+);
+const MostBreakdownChart = lazy(
+  () =>
+    import('../components/down_time_component/floor_data/MostBreakdownChart')
+);
+const MostRepairingChart = lazy(
+  () =>
+    import('../components/down_time_component/floor_data/MostRepairingChart')
+);
+const TotalMachineChart = lazy(
+  () => import('../components/down_time_component/floor_data/TotalMachineChart')
+);
+const TableMechanicList = lazy(
+  () => import('../components/down_time_component/floor_data/TableMechanicList')
+);
+const ReasonMinChart = lazy(
+  () => import('../components/down_time_component/floor_data/ReasonMinChart')
+);
+const TotalReasonChart = lazy(
+  () => import('../components/down_time_component/floor_data/TotalReasonChart')
+);
+const RepairingMethodChart = lazy(
+  () =>
+    import('../components/down_time_component/floor_data/RepairingMethodChart')
+);
+const TableRepairingStatus = lazy(
+  () =>
+    import('../components/down_time_component/floor_data/TableRepairingStatus')
+);
 
 const DownTimePage = () => {
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [selectedFloor, setSelectedFloor] = useState(null);
   const [selectedLine, setSelectedLine] = useState(null);
 
-    const handleFloorChange = (floorAlias) => {
-        setSelectedFloor(floorAlias);
-        setSelectedLine(null); // Reset line when a new floor is selected
-      };
-    
-      const handleFloorLineChange = (lineAlias) => {
-        setSelectedLine(lineAlias); // Update selected line
-      };
+  const handleFloorChange = (floorAlias) => {
+    setSelectedFloor(floorAlias);
+    setSelectedLine(null); // Reset line when a new floor is selected
+  };
 
-      const handleDateChange = (date) => {
-        setSelectedDate(date);
-      };
+  const handleFloorLineChange = (lineAlias) => {
+    setSelectedLine(lineAlias); // Update selected line
+  };
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
 
   return (
-    <div className="">
+    <div>
+      <Suspense fallback={<div>Loading Floor and Line List...</div>}>
         <FloorLineList
-        onFloorChange={handleFloorChange}
-        onLineChange={handleFloorLineChange}
-      />
-    <div className="flex gap-4">
-      <Calendar onDateChange={handleDateChange} />
-      <Link to="/report-downtime" >
-        <img src="../../public/images/excel.png" style={{
-         height: "40px", // Giảm chiều cao của input field
-          width: "40px",
-          marginTop: "10px",
-          marginBottom: "10px",
-        }}/>
-      </Link>
-    </div>
-      
+          onFloorChange={handleFloorChange}
+          onLineChange={handleFloorLineChange}
+        />
+      </Suspense>
+
+      <div className="flex gap-4">
+        <Calendar onDateChange={handleDateChange} />
+        <Link to="/report-downtime">
+          <img
+            src="../../public/images/excel.png"
+            alt="Export to Excel"
+            style={{
+              height: '40px',
+              width: '40px',
+              marginTop: '10px',
+              marginBottom: '10px',
+            }}
+          />
+        </Link>
+      </div>
+
       <section className="grid grid-cols-12 gap-4">
-        <div className="grid col-span-8  grid-rows-[166px,350px]"> {/* Đặt chiều cao cho từng hàng */}
-          <div className="grid row-span-1 h-[150px]"> {/* Row 1 */}
-            <div className="grid grid-cols-8 gap-4">
-              <div className="grid col-span-2">
-                <CardBreakdown date={selectedDate} floor={selectedFloor} line={selectedLine} />
+        <div className="grid col-span-8 grid-rows-[166px,350px]">
+          <div className="grid row-span-1 h-[150px]">
+            <Suspense fallback={<div>Loading Cards...</div>}>
+              <div className="grid grid-cols-8 gap-4">
+                <div className="grid col-span-2">
+                  <CardBreakdown
+                    date={selectedDate}
+                    floor={selectedFloor}
+                    line={selectedLine}
+                  />
+                </div>
+                <div className="grid col-span-4">
+                  <CardMachineDown
+                    date={selectedDate}
+                    floor={selectedFloor}
+                    line={selectedLine}
+                  />
+                </div>
+                <div className="grid col-span-2">
+                  <CardRepairingTime
+                    date={selectedDate}
+                    floor={selectedFloor}
+                    line={selectedLine}
+                  />
+                </div>
               </div>
-              <div className="grid col-span-4">
-                <CardMachineDown date={selectedDate} floor={selectedFloor} line={selectedLine} />
-              </div>
-              <div className="grid col-span-2">
-                <CardRepairingTime date={selectedDate} floor={selectedFloor} line={selectedLine} />
-              </div>
-            </div>
+            </Suspense>
           </div>
 
-          {/* Row 2 with dynamic height */}
           <div className="grid row-span-1 grid-cols-3 gap-4 h-auto">
-            <MachineBreakByLineChart date={selectedDate} floor={selectedFloor} line={selectedLine} />
-            <MachineDowntimeByLineChart date={selectedDate} floor={selectedFloor} line={selectedLine} />
-            <RepairingTimeChart date={selectedDate} floor={selectedFloor} line={selectedLine} />
+            <Suspense fallback={<div>Loading Charts...</div>}>
+              <MachineBreakByLineChart
+                date={selectedDate}
+                floor={selectedFloor}
+                line={selectedLine}
+              />
+              <MachineDowntimeByLineChart
+                date={selectedDate}
+                floor={selectedFloor}
+                line={selectedLine}
+              />
+              <RepairingTimeChart
+                date={selectedDate}
+                floor={selectedFloor}
+                line={selectedLine}
+              />
+            </Suspense>
           </div>
         </div>
 
-        <div className="grid col-span-4 w-full overflow-auto rounded-lg" style={{
-        boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.8)",
-      }}>
-          <TableRepairingStatus date={selectedDate} floor={selectedFloor} line={selectedLine}/>
+        <div
+          className="grid col-span-4 w-full overflow-auto rounded-lg"
+          style={{
+            boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.8)',
+          }}
+        >
+          <Suspense fallback={<div>Loading Repairing Status...</div>}>
+            <TableRepairingStatus
+              date={selectedDate}
+              floor={selectedFloor}
+              line={selectedLine}
+            />
+          </Suspense>
         </div>
       </section>
 
-      <section  className="my-4 grid grid-cols-4 gap-4">
-        <MostBreakdownChart   date={selectedDate} floor={selectedFloor} line={selectedLine} />
-        <MostDowntimeChart date={selectedDate} floor={selectedFloor} line={selectedLine} />
-        <MostRepairingChart date={selectedDate} floor={selectedFloor} line={selectedLine} />
-        <TotalMachineChart date={selectedDate} floor={selectedFloor} line={selectedLine} />
+      <section className="my-4 grid grid-cols-4 gap-4">
+        <Suspense fallback={<div>Loading Additional Charts...</div>}>
+          <MostBreakdownChart
+            date={selectedDate}
+            floor={selectedFloor}
+            line={selectedLine}
+          />
+          <MostDowntimeChart
+            date={selectedDate}
+            floor={selectedFloor}
+            line={selectedLine}
+          />
+          <MostRepairingChart
+            date={selectedDate}
+            floor={selectedFloor}
+            line={selectedLine}
+          />
+          <TotalMachineChart
+            date={selectedDate}
+            floor={selectedFloor}
+            line={selectedLine}
+          />
+        </Suspense>
       </section>
 
       <section className="grid grid-cols-12 gap-4 grid-rows-[350px] pb-4">
-        <div className="grid grid-cols-3 col-span-8 gap-4"> 
-          <TotalReasonChart date={selectedDate} floor={selectedFloor} line={selectedLine} />
-          <ReasonMinChart date={selectedDate} floor={selectedFloor} line={selectedLine} />
-          <RepairingMethodChart date={selectedDate} floor={selectedFloor} line={selectedLine} />
+        <div className="grid grid-cols-3 col-span-8 gap-4">
+          <Suspense fallback={<div>Loading Breakdown Charts...</div>}>
+            <TotalReasonChart
+              date={selectedDate}
+              floor={selectedFloor}
+              line={selectedLine}
+            />
+            <ReasonMinChart
+              date={selectedDate}
+              floor={selectedFloor}
+              line={selectedLine}
+            />
+            <RepairingMethodChart
+              date={selectedDate}
+              floor={selectedFloor}
+              line={selectedLine}
+            />
+          </Suspense>
         </div>
-        <div className="grid col-span-4 w-full overflow-auto rounded-lg" style={{
-        boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.8)",
-      }}> 
-          <TableMechanicList date={selectedDate} floor={selectedFloor} line={selectedLine} />
+        <div
+          className="grid col-span-4 w-full overflow-auto rounded-lg"
+          style={{
+            boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.8)',
+          }}
+        >
+          <Suspense fallback={<div>Loading Mechanic List...</div>}>
+            <TableMechanicList
+              date={selectedDate}
+              floor={selectedFloor}
+              line={selectedLine}
+            />
+          </Suspense>
         </div>
       </section>
     </div>
-  )
-}
+  );
+};
 
-export default DownTimePage
+export default DownTimePage;

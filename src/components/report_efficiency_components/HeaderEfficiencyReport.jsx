@@ -1,5 +1,5 @@
-import Calendar from "@/components/common/Calendar";
-import { Button, Grid } from "@mui/material";
+import Calendar from '@/components/common/Calendar';
+import { Button, Grid } from '@mui/material';
 
 const HeaderEfficiencyReport = ({ onSelectTimeFrame, selectedTimeFrame }) => {
   return (
@@ -12,16 +12,18 @@ const HeaderEfficiencyReport = ({ onSelectTimeFrame, selectedTimeFrame }) => {
         <Grid item>
           <Button
             sx={{
-              color: selectedTimeFrame === "DAILY" ? "white" : "#000",
-              width: "100px",
-              height: "40px",
-              borderRadius: "5px",
-              fontWeight: "bold",
-              bgcolor: selectedTimeFrame === "DAILY" ? "#049962" : "transparent",
-              border: selectedTimeFrame === "DAILY" ? "#049962" : "2px solid #049962",
-              transition: "all 0.3s",
+              color: selectedTimeFrame === 'DAILY' ? 'white' : '#000',
+              width: '100px',
+              height: '40px',
+              borderRadius: '5px',
+              fontWeight: 'bold',
+              bgcolor:
+                selectedTimeFrame === 'DAILY' ? '#049962' : 'transparent',
+              border:
+                selectedTimeFrame === 'DAILY' ? '#049962' : '2px solid #049962',
+              transition: 'all 0.3s',
             }}
-            onClick={() => onSelectTimeFrame("DAILY")}
+            onClick={() => onSelectTimeFrame('DAILY')}
           >
             DAILY
           </Button>
@@ -30,16 +32,20 @@ const HeaderEfficiencyReport = ({ onSelectTimeFrame, selectedTimeFrame }) => {
         <Grid item>
           <Button
             sx={{
-              color: selectedTimeFrame === "WEEKLY" ? "white" : "#000",
-              width: "100px",
-              height: "40px",
-              borderRadius: "5px",
-              fontWeight: "bold",
-              bgcolor: selectedTimeFrame === "WEEKLY" ? "#049962" : "transparent",
-              border: selectedTimeFrame === "WEEKLY" ? "#049962" : "2px solid #049962",
-              transition: "all 0.3s",
+              color: selectedTimeFrame === 'WEEKLY' ? 'white' : '#000',
+              width: '100px',
+              height: '40px',
+              borderRadius: '5px',
+              fontWeight: 'bold',
+              bgcolor:
+                selectedTimeFrame === 'WEEKLY' ? '#049962' : 'transparent',
+              border:
+                selectedTimeFrame === 'WEEKLY'
+                  ? '#049962'
+                  : '2px solid #049962',
+              transition: 'all 0.3s',
             }}
-            onClick={() => onSelectTimeFrame("WEEKLY")}
+            onClick={() => onSelectTimeFrame('WEEKLY')}
           >
             WEEKLY
           </Button>
@@ -48,16 +54,20 @@ const HeaderEfficiencyReport = ({ onSelectTimeFrame, selectedTimeFrame }) => {
         <Grid item>
           <Button
             sx={{
-              color: selectedTimeFrame === "MONTHLY" ? "white" : "#000",
-              width: "100px",
-              height: "40px",
-              borderRadius: "5px",
-              fontWeight: "bold",
-              bgcolor: selectedTimeFrame === "MONTHLY" ? "#049962" : "transparent",
-              border: selectedTimeFrame === "MONTHLY" ? "#049962" : "2px solid #049962",
-              transition: "all 0.3s",
+              color: selectedTimeFrame === 'MONTHLY' ? 'white' : '#000',
+              width: '100px',
+              height: '40px',
+              borderRadius: '5px',
+              fontWeight: 'bold',
+              bgcolor:
+                selectedTimeFrame === 'MONTHLY' ? '#049962' : 'transparent',
+              border:
+                selectedTimeFrame === 'MONTHLY'
+                  ? '#049962'
+                  : '2px solid #049962',
+              transition: 'all 0.3s',
             }}
-            onClick={() => onSelectTimeFrame("MONTHLY")}
+            onClick={() => onSelectTimeFrame('MONTHLY')}
           >
             MONTHLY
           </Button>

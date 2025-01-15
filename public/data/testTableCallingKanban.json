@@ -1,0 +1,51 @@
+[
+    {
+      "DATE": "2025-01-15",
+      "RY": "RY12345",
+      "COMPONENT": "Component X",
+      "MATERIALID": "MAT001",
+      "MATERIALNAME": "Material Alpha",
+      "UNIT": "Kg",
+      "USAGE": 50,
+      "REQUEST": 10,
+      "ONGOING": 25,
+      "DONE": 30
+    },
+    {
+      "DATE": "2025-01-14",
+      "RY": "RY54321",
+      "COMPONENT": "Component Y",
+      "MATERIALID": "MAT002",
+      "MATERIALNAME": "Material Beta",
+      "UNIT": "L",
+      "USAGE": 60,
+      "REQUEST": 24,
+      "ONGOING": 120,
+      "DONE": 25
+    },
+    {
+      "DATE": "2025-01-13",
+      "RY": "RY67890",
+      "COMPONENT": "Component Z",
+      "MATERIALID": "MAT003",
+      "MATERIALNAME": "Material Gamma",
+      "UNIT": "m",
+      "USAGE": 30,
+      "REQUEST": 100,
+      "ONGOING": 50,
+      "DONE": 50
+    },
+    {
+      "DATE": "2025-01-12",
+      "RY": "RY11122",
+      "COMPONENT": "Component W",
+      "MATERIALID": "MAT004",
+      "MATERIALNAME": "Material Delta",
+      "UNIT": "Pcs",
+      "USAGE": 80,
+      "REQUEST": 250,
+      "ONGOING": 150,
+      "DONE": 100
+    }
+  ]
+  

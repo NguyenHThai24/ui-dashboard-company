@@ -1,6 +1,14 @@
-import { useEffect, useState } from "react";
-import { fetchShoeData } from "@/apis/factory_kpi_api/FactoryLineAssemblyAPI";
-import { Card, CardContent, CardMedia, Typography, Pagination, Box, CircularProgress } from "@mui/material";
+import { useEffect, useState } from 'react';
+import { fetchShoeData } from '@/apis/factory_kpi_api/FactoryLineAssemblyAPI';
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  Pagination,
+  Box,
+  CircularProgress,
+} from '@mui/material';
 
 const ModelRunByLine = ({ date, floor, line }) => {
   const [shoeData, setShoeData] = useState([]);
@@ -20,8 +28,8 @@ const ModelRunByLine = ({ date, floor, line }) => {
         setShoeData(shoes);
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching data", error);
-        setError("Failed to fetch data");
+        console.error('Error fetching data', error);
+        setError('Failed to fetch data');
         setLoading(false);
       }
     };
@@ -39,25 +47,25 @@ const ModelRunByLine = ({ date, floor, line }) => {
   return (
     <Box
       sx={{
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
         padding: 2,
-        bgcolor: "#fff",
+        bgcolor: '#fff',
         borderRadius: 2,
         boxShadow: 2,
-        overflow: "hidden",
+        overflow: 'hidden',
       }}
     >
       <Typography
         sx={{
-          fontSize: "16px",
-          fontWeight: "bold",
+          fontSize: '16px',
+          fontWeight: 'bold',
           fontFamily: "'Roboto', sans-serif",
-          color: "#239d85",
-          textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
-          letterSpacing: "0px",
+          color: '#239d85',
+          textShadow: '1px 1px 2px rgba(0, 0, 0, 0.2)',
+          letterSpacing: '0px',
           marginBottom: 2,
         }}
       >
@@ -67,19 +75,19 @@ const ModelRunByLine = ({ date, floor, line }) => {
       {loading ? (
         <Box
           sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
           <CircularProgress />
         </Box>
       ) : error ? (
-        <Typography variant="h8" sx={{ textAlign: "center", color: "red" }}>
+        <Typography variant="h8" sx={{ textAlign: 'center', color: 'red' }}>
           No data found
         </Typography>
       ) : currentShoes.length === 0 ? (
-        <Typography variant="h8" sx={{ textAlign: "center", color: "red" }}>
+        <Typography variant="h8" sx={{ textAlign: 'center', color: 'red' }}>
           No shoes found
         </Typography>
       ) : (
@@ -88,21 +96,24 @@ const ModelRunByLine = ({ date, floor, line }) => {
             key={index}
             sx={{
               flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              overflow: "hidden",
-              textAlign: "center",
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              overflow: 'hidden',
+              textAlign: 'center',
             }}
           >
             <CardMedia
               component="img"
-              sx={{ maxHeight: "80px", objectFit: "contain" }}
+              sx={{ maxHeight: '80px', objectFit: 'contain' }}
               image={shoe.img}
               alt={shoe.shoesName}
             />
             <CardContent sx={{ padding: 1 }}>
-              <Typography variant="h6" sx={{ fontWeight: "bold", paddingBottom: "5px" }}>
+              <Typography
+                variant="h6"
+                sx={{ fontWeight: 'bold', paddingBottom: '5px' }}
+              >
                 {shoe.shoesName}
               </Typography>
               <div className="grid grid-row-2 gap-2 justify-items-start">
@@ -111,14 +122,26 @@ const ModelRunByLine = ({ date, floor, line }) => {
                 </Typography>
                 <div className="flex">
                   <Typography variant="body2">
-                    Labor Count:{" "}
-                    <span className="font-semibold">{(shoe.realStitchingLcValues + shoe.realAssemblyLcValues).toFixed(2)}</span>
+                    Labor Count:{' '}
+                    <span className="font-semibold">
+                      {(
+                        shoe.realStitchingLcValues + shoe.realAssemblyLcValues
+                      ).toFixed(2)}
+                    </span>
                   </Typography>
                   <Typography variant="body2" sx={{ px: 2 }}>
-                    (A: <span className="font-semibold">{shoe.realAssemblyLcValues}</span>)
+                    (A:{' '}
+                    <span className="font-semibold">
+                      {shoe.realAssemblyLcValues}
+                    </span>
+                    )
                   </Typography>
                   <Typography variant="body2">
-                    (S: <span className="font-semibold">{shoe.realStitchingLcValues}</span>)
+                    (S:{' '}
+                    <span className="font-semibold">
+                      {shoe.realStitchingLcValues}
+                    </span>
+                    )
                   </Typography>
                 </div>
               </div>
@@ -133,7 +156,7 @@ const ModelRunByLine = ({ date, floor, line }) => {
           page={page}
           onChange={handleChangePage}
           color="primary"
-          sx={{ marginTop: 2, alignSelf: "center" }}
+          sx={{ marginTop: 2, alignSelf: 'center' }}
         />
       )}
     </Box>

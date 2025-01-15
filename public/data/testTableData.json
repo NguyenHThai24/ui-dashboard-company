@@ -1,0 +1,47 @@
+[
+    {
+      "Machine": "Machine 1",
+      "Article": "Article A",
+      "ModelName": "Model Alpha",
+      "Component": "Component X",
+      "Ry": "RY12345",
+      "StitchingDate": "2025-01-15",
+      "TotalQty": 150,
+      "OngoingQty": 80,
+      "FinishedQty": 70
+    },
+    {
+      "Machine": "Machine 2",
+      "Article": "Article B",
+      "ModelName": "Model Beta",
+      "Component": "Component Y",
+      "Ry": "RY54321",
+      "StitchingDate": "2025-01-14",
+      "TotalQty": 200,
+      "OngoingQty": 120,
+      "FinishedQty": 80
+    },
+    {
+      "Machine": "Machine 3",
+      "Article": "Article C",
+      "ModelName": "Model Gamma",
+      "Component": "Component Z",
+      "Ry": "RY67890",
+      "StitchingDate": "2025-01-13",
+      "TotalQty": 100,
+      "OngoingQty": 50,
+      "FinishedQty": 50
+    },
+    {
+      "Machine": "Machine 4",
+      "Article": "Article D",
+      "ModelName": "Model Delta",
+      "Component": "Component W",
+      "Ry": "RY11122",
+      "StitchingDate": "2025-01-12",
+      "TotalQty": 250,
+      "OngoingQty": 150,
+      "FinishedQty": 100
+    }
+  ]
+  

@@ -1,8 +1,14 @@
-import { useEffect, useState } from "react";
-import Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
-import { Card, CardContent, Box, CircularProgress, Typography } from "@mui/material";
-import { fetchRFTLineData } from "@/apis/factory_kpi_api/FactoryLineAssemblyAPI";
+import { useEffect, useState } from 'react';
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+import {
+  Card,
+  CardContent,
+  Box,
+  CircularProgress,
+  Typography,
+} from '@mui/material';
+import { fetchRFTLineData } from '@/apis/factory_kpi_api/FactoryLineAssemblyAPI';
 
 const AssemblyRFTChart = ({ date, floor, line, mode }) => {
   const [chartData, setChartData] = useState(null);
@@ -23,7 +29,7 @@ const AssemblyRFTChart = ({ date, floor, line, mode }) => {
         const floorData = data.data.floorData.find((f) => f.lineAlias === line);
         if (floorData) {
           // Dynamically determine the key based on the mode
-          const key = mode === "assembly" ? "assemblyRFT" : "stitchingRFT";
+          const key = mode === 'assembly' ? 'assemblyRFT' : 'stitchingRFT';
           const rftData = floorData[key];
 
           if (rftData) {
@@ -38,10 +44,10 @@ const AssemblyRFTChart = ({ date, floor, line, mode }) => {
             setError(`No data found for ${mode} mode.`);
           }
         } else {
-          setError("No data found for the selected line");
+          setError('No data found for the selected line');
         }
       } catch (error) {
-        setError("Error fetching data: " + error.message);
+        setError('Error fetching data: ' + error.message);
       } finally {
         setLoading(false);
       }
@@ -52,26 +58,26 @@ const AssemblyRFTChart = ({ date, floor, line, mode }) => {
 
   const options = {
     chart: {
-      type: "line",
+      type: 'line',
       marginTop: 80,
       marginLeft: 45,
       marginRight: 0,
-      height: "300px",
+      height: '300px',
     },
     title: null,
     legend: {
-      layout: "horizontal",
-      align: "right",
-      verticalAlign: "top",
+      layout: 'horizontal',
+      align: 'right',
+      verticalAlign: 'top',
       y: 20,
       floating: true,
-      backgroundColor: "white",
+      backgroundColor: 'white',
       itemStyle: {
-        fontSize: "10px",
+        fontSize: '10px',
         fontWeight: 900,
       },
       itemHoverStyle: {
-        color: "#f44336",
+        color: '#f44336',
       },
       itemDistance: 2,
     },
@@ -79,52 +85,52 @@ const AssemblyRFTChart = ({ date, floor, line, mode }) => {
       categories: chartData ? chartData.map((data) => data.time) : [],
       labels: {
         style: {
-          fontSize: "10px",
+          fontSize: '10px',
         },
       },
     },
     yAxis: {
       visible: true,
-      title: "",
+      title: '',
       labels: {
         style: {
-          fontSize: "10px",
+          fontSize: '10px',
         },
       },
     },
     series: [
       {
-        name: mode === "assembly" ? "Assembly RFT" : "Stitching RFT",
+        name: mode === 'assembly' ? 'Assembly RFT' : 'Stitching RFT',
         data: chartData ? chartData.map((data) => data.value) : [],
-        color: "#003566",
-        lineColor: "#00688B",
+        color: '#003566',
+        lineColor: '#00688B',
         dataLabels: {
           enabled: true,
           style: {
-            color: "#000",
-            fontWeight: "bold",
-            fontSize: "10px",
+            color: '#000',
+            fontWeight: 'bold',
+            fontSize: '10px',
           },
           formatter: function () {
-            return this.y + "%";
+            return this.y + '%';
           },
         },
       },
       {
-        name: "Base Line",
-        type: "line",
+        name: 'Base Line',
+        type: 'line',
         data: Array(chartData ? chartData.length : 0).fill(80),
         marker: {
           enabled: false,
         },
-        lineColor: "#17a589",
-        dashStyle: "ShortDash",
+        lineColor: '#17a589',
+        dashStyle: 'ShortDash',
         lineWidth: 3,
         enableMouseTracking: false,
         dataLabels: {
           enabled: false,
         },
-        fillColor: "none",
+        fillColor: 'none',
       },
     ],
     credits: {
@@ -133,40 +139,42 @@ const AssemblyRFTChart = ({ date, floor, line, mode }) => {
   };
 
   return (
-      <Card sx={{ borderRadius: 2 }}>
-        <CardContent>
-          <Typography
+    <Card sx={{ borderRadius: 2 }}>
+      <CardContent>
+        <Typography
+          sx={{
+            fontSize: '16px',
+            fontWeight: 'bold',
+            fontFamily: "'Roboto', sans-serif",
+            color: '#239d85',
+            textShadow: '1px 1px 2px rgba(0, 0, 0, 0.2)',
+            letterSpacing: '0px',
+          }}
+        >
+          {mode === 'assembly'
+            ? 'Assembly RFT By The Hour'
+            : 'Stitching RFT By The Hour'}
+        </Typography>
+
+        {loading ? (
+          <Box
             sx={{
-             fontSize: "16px",
-        fontWeight: "bold",
-        fontFamily: "'Roboto', sans-serif",
-        color: "#239d85",
-        textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
-        letterSpacing: "0px",
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
-            {mode === "assembly" ? "Assembly RFT By The Hour" : "Stitching RFT By The Hour"}
+            <CircularProgress />
+          </Box>
+        ) : error ? (
+          <Typography color="error" align="center">
+            Error: {error}
           </Typography>
-
-          {loading ? (
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <CircularProgress />
-            </Box>
-          ) : error ? (
-            <Typography color="error" align="center">
-              Error: {error}
-            </Typography>
-          ) : (
-            <HighchartsReact highcharts={Highcharts} options={options} />
-          )}
-        </CardContent>
-      </Card>
+        ) : (
+          <HighchartsReact highcharts={Highcharts} options={options} />
+        )}
+      </CardContent>
+    </Card>
   );
 };
 

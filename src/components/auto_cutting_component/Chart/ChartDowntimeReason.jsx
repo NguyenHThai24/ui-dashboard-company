@@ -1,21 +1,23 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Bar } from "react-chartjs-2";
-import { CircularProgress, Typography, Box } from "@mui/material";
-import { getAutoCuttingUrl } from "../../../apis/auto_cutting_api/AutoCuttingAPI";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Bar } from 'react-chartjs-2';
+import { CircularProgress, Typography, Box } from '@mui/material';
+import { getAutoCuttingUrl } from '../../../apis/auto_cutting_api/AutoCuttingAPI';
 
 const ChartDowntimeReason = ({ date }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const fetchData = async () => {
     if (!date) return;
     setLoading(true);
-    setError("");
+    setError('');
 
     try {
-      const response = await axios.get(getAutoCuttingUrl(date.format("YYYY-MM-DD")));
+      const response = await axios.get(
+        getAutoCuttingUrl(date.format('YYYY-MM-DD'))
+      );
 
       if (response.status === 200) {
         const rawData = response.data.data || [];
@@ -41,10 +43,10 @@ const ChartDowntimeReason = ({ date }) => {
 
         setData(totals);
       } else {
-        setError("Failed to fetch data");
+        setError('Failed to fetch data');
       }
     } catch (err) {
-      setError("Error fetching data");
+      setError('Error fetching data');
     } finally {
       setLoading(false);
     }
@@ -56,10 +58,10 @@ const ChartDowntimeReason = ({ date }) => {
 
   // Dữ liệu biểu đồ
   const chartData = {
-    labels: ["ShutDownData", "ChangeOver", "IdleTime", "StartUp", "Equip"],
+    labels: ['ShutDownData', 'ChangeOver', 'IdleTime', 'StartUp', 'Equip'],
     datasets: [
       {
-        label: "Total Downtime (minutes)",
+        label: 'Total Downtime (minutes)',
         data: [
           data.ShutDownData,
           data.ChangeOver,
@@ -68,19 +70,13 @@ const ChartDowntimeReason = ({ date }) => {
           data.Equip,
         ],
         backgroundColor: [
-          "#1f77b4",
-          "#ff7f0e",
-          "#2ca02c",
-          "#d62728",
-          "#9467bd",
+          '#1f77b4',
+          '#ff7f0e',
+          '#2ca02c',
+          '#d62728',
+          '#9467bd',
         ],
-        borderColor: [
-          "#1a5a88",
-          "#cc650d",
-          "#227d24",
-          "#a51e1f",
-          "#754b95",
-        ],
+        borderColor: ['#1a5a88', '#cc650d', '#227d24', '#a51e1f', '#754b95'],
         borderWidth: 1,
       },
     ],
@@ -90,23 +86,23 @@ const ChartDowntimeReason = ({ date }) => {
   const options = {
     responsive: true,
     plugins: {
-      legend: false
+      legend: false,
     },
     scales: {
       x: {
-        title: false
+        title: false,
       },
       y: {
         title: {
           display: true,
-          text: "Total Downtime (minutes)",
-          color: "#555",
+          text: 'Total Downtime (minutes)',
+          color: '#555',
           font: {
             size: 14,
           },
         },
         ticks: {
-          color: "#555",
+          color: '#555',
         },
         beginAtZero: true,
       },
@@ -117,21 +113,26 @@ const ChartDowntimeReason = ({ date }) => {
     <div className="bg-white rounded-md shadow-xl shadow-slate-500 p-4">
       <Typography
         sx={{
-          fontSize: "16px",
-          fontWeight: "bold",
+          fontSize: '16px',
+          fontWeight: 'bold',
           fontFamily: "'Roboto', sans-serif",
-          color: "#239d85",
-          textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
-          letterSpacing: "0px",
-          marginBottom: "10px",
-          textAlign: "center",
-          borderBottom: "2px solid green",
+          color: '#239d85',
+          textShadow: '1px 1px 2px rgba(0, 0, 0, 0.2)',
+          letterSpacing: '0px',
+          marginBottom: '10px',
+          textAlign: 'center',
+          borderBottom: '2px solid green',
         }}
       >
         DOWNTIME REASON
       </Typography>
       {loading ? (
-        <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          minHeight="100vh"
+        >
           <CircularProgress />
         </Box>
       ) : error ? (

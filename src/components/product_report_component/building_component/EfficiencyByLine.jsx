@@ -1,10 +1,16 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
-import { fetchEfficiencyByLine } from "@/apis/product_report_api/buildingAPI/BuildingAPI"; // Adjust API path
-import { setLoading, setError } from "@/redux/loading/loadingSlice";
-import { Box, Card, CardContent, CircularProgress, Typography } from "@mui/material";
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+import { fetchEfficiencyByLine } from '@/apis/product_report_api/buildingAPI/BuildingAPI'; // Adjust API path
+import { setLoading, setError } from '@/redux/loading/loadingSlice';
+import {
+  Box,
+  Card,
+  CardContent,
+  CircularProgress,
+  Typography,
+} from '@mui/material';
 
 const EfficiencyByLine = ({ selectedDate, selectedBuilding }) => {
   const dispatch = useDispatch();
@@ -32,7 +38,7 @@ const EfficiencyByLine = ({ selectedDate, selectedBuilding }) => {
 
   const options = {
     chart: {
-      type: "area",
+      type: 'area',
       marginLeft: 0,
       marginRight: 0,
       height: 320,
@@ -40,29 +46,29 @@ const EfficiencyByLine = ({ selectedDate, selectedBuilding }) => {
       spacingTop: 0,
     },
     legend: {
-      layout: "vertical",
-      align: "left",
-      verticalAlign: "top", // Đặt legend ở trên cùng
+      layout: 'vertical',
+      align: 'left',
+      verticalAlign: 'top', // Đặt legend ở trên cùng
       y: 0, // Tạo khoảng cách với top
 
-      borderColor: "#ccc",
+      borderColor: '#ccc',
       borderWidth: 2,
-      backgroundColor: "white",
+      backgroundColor: 'white',
       itemStyle: {
-        fontSize: "10px",
-        fontWeight: "bold",
+        fontSize: '10px',
+        fontWeight: 'bold',
       },
       itemHoverStyle: {
-        color: "#0000FF",
+        color: '#0000FF',
       },
       itemDistance: 10,
     },
-    title:null,
+    title: null,
     xAxis: {
       categories: chartDataEfficiency?.line || [],
       labels: {
         style: {
-          fontSize: "10px",
+          fontSize: '10px',
           fontWeight: 600,
         },
       },
@@ -73,27 +79,27 @@ const EfficiencyByLine = ({ selectedDate, selectedBuilding }) => {
     },
     series: [
       {
-        name: "Efficiency",
+        name: 'Efficiency',
         data: chartDataEfficiency?.EFF?.map((val) => parseFloat(val)) || [],
         marker: {
           enabled: true,
           radius: 4,
-          fillColor: "#239d85",
+          fillColor: '#239d85',
         },
         fillColor: {
           linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
           stops: [
-            [0, "rgba(35, 157, 133, 0.6)"],
-            [1, "rgba(35, 157, 133, 0.2)"],
+            [0, 'rgba(35, 157, 133, 0.6)'],
+            [1, 'rgba(35, 157, 133, 0.2)'],
           ],
         },
-        lineColor: "#239d85",
+        lineColor: '#239d85',
         dataLabels: {
           enabled: true,
           style: {
-            color: "#000",
+            color: '#000',
             fontWeight: 600,
-            fontSize: "10px",
+            fontSize: '10px',
           },
           formatter: function () {
             return this.y;
@@ -104,53 +110,57 @@ const EfficiencyByLine = ({ selectedDate, selectedBuilding }) => {
     credits: { enabled: false },
   };
 
-  return  (
-    <Card sx={{
-      height: 450,
-      border: 1,
-      boxShadow: "2px 4px 10px rgba(255, 255, 255, 0.8)",
-      borderRadius: "10px",
-      overflow: "hidden",
-    }}>
-      <CardContent sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          height: "100%",
-        }}>
-      <Typography
-           
-           sx={{
-              fontSize: "20px",
-        fontWeight: "bold",
-        fontFamily: "'Roboto', sans-serif",
-        color: "#239d85",
-        textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
-        letterSpacing: "0px",
-         textAlign:"center"
-            }}
-          >
-            Building {selectedBuilding}: Efficiency By Line
-          </Typography>
+  return (
+    <Card
+      sx={{
+        height: 450,
+        border: 1,
+        boxShadow: '2px 4px 10px rgba(255, 255, 255, 0.8)',
+        borderRadius: '10px',
+        overflow: 'hidden',
+      }}
+    >
+      <CardContent
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          height: '100%',
+        }}
+      >
+        <Typography
+          sx={{
+            fontSize: '20px',
+            fontWeight: 'bold',
+            fontFamily: "'Roboto', sans-serif",
+            color: '#239d85',
+            textShadow: '1px 1px 2px rgba(0, 0, 0, 0.2)',
+            letterSpacing: '0px',
+            textAlign: 'center',
+          }}
+        >
+          Building {selectedBuilding}: Efficiency By Line
+        </Typography>
         {loading ? (
           <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <CircularProgress />
-            </Box>
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <CircularProgress />
+          </Box>
         ) : error ? (
-          <Typography   color="error" align="center">
+          <Typography color="error" align="center">
             Error: {error}
           </Typography>
         ) : (
           <HighchartsReact highcharts={Highcharts} options={options} />
         )}
       </CardContent>
-    </Card>)
+    </Card>
+  );
 };
 
 export default EfficiencyByLine;

@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { Button, ButtonGroup } from "@mui/material";
+import { useState } from 'react';
+import { Button, ButtonGroup } from '@mui/material';
 
 const ButtonAssemblyStitching = ({ onSelectionChange }) => {
-  const [selectedAssembly, setSelectedAssembly] = useState("assembly");
+  const [selectedAssembly, setSelectedAssembly] = useState('assembly');
 
   const handleSelectionChange = (selection) => {
     setSelectedAssembly(selection);
@@ -13,32 +13,34 @@ const ButtonAssemblyStitching = ({ onSelectionChange }) => {
     <>
       <ButtonGroup
         sx={{
-          marginTop: "10px",
-          marginBottom: "10px",
-          marginLeft: "10px",
-          fontSize: "13px",
-          backgroundColor: "#049962",
-          py: "1px",
-          px: "2px",
+          marginTop: '10px',
+          marginBottom: '10px',
+          marginLeft: '10px',
+          fontSize: '13px',
+          backgroundColor: '#049962',
+          py: '1px',
+          px: '2px',
         }}
       >
         <Button
           sx={{
-            backgroundColor: selectedAssembly === "assembly" ? "#049962" : "white",
-            color: selectedAssembly === "assembly" ? "white" : "#049962",
-            fontWeight: "bold",
+            backgroundColor:
+              selectedAssembly === 'assembly' ? '#049962' : 'white',
+            color: selectedAssembly === 'assembly' ? 'white' : '#049962',
+            fontWeight: 'bold',
           }}
-          onClick={() => handleSelectionChange("assembly")}
+          onClick={() => handleSelectionChange('assembly')}
         >
           Assembly
         </Button>
         <Button
           sx={{
-            backgroundColor: selectedAssembly === "stitching" ? "#049962" : "white",
-            color: selectedAssembly === "stitching" ? "white" : "#049962",
-            fontWeight: "bold",
+            backgroundColor:
+              selectedAssembly === 'stitching' ? '#049962' : 'white',
+            color: selectedAssembly === 'stitching' ? 'white' : '#049962',
+            fontWeight: 'bold',
           }}
-          onClick={() => handleSelectionChange("stitching")}
+          onClick={() => handleSelectionChange('stitching')}
         >
           Stitching
         </Button>

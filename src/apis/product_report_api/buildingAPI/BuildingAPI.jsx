@@ -1,61 +1,64 @@
-import { request } from "@/utils/request";
+import { request } from '@/utils/request';
 import {
   setLoading,
   setError,
   setChartDataEfficiency,
-  setChartDataRFT
-} from "@/redux/data_building_redux/BuildingSlice";
+  setChartDataRFT,
+} from '@/redux/data_building_redux/BuildingSlice';
 
-export const fetchEfficiencyByLine = (year, month, building) => async (dispatch) => {
-  dispatch(setLoading(true)); // Bắt đầu loading
-  try {
-    const response = await request.post(
-      `/EFFICIENCY_BY_LINE_Building`,
-      { YEAR: year, MONTH: month, Building: building }
-    );
-    const rawData = response.data;
-    // const response = await fetch(`/data/week_total_output.json`, {
-    //   params: { YEAR: year, MONTH: month, Building: "A" }, 
-    // });
-    // const rawData = await response.json();
-
-    const line = [];
-    const EFF = [];
-
-    if (Array.isArray(rawData)) {
-      rawData.forEach((item) => {
-        const effValue = parseFloat(item.EFF);
-        if (!isNaN(effValue)) {
-          line.push(item.line);
-          EFF.push(item.EFF);
-        }
+export const fetchEfficiencyByLine =
+  (year, month, building) => async (dispatch) => {
+    dispatch(setLoading(true)); // Bắt đầu loading
+    try {
+      const response = await request.post(`/EFFICIENCY_BY_LINE_Building`, {
+        YEAR: year,
+        MONTH: month,
+        Building: building,
       });
-    } else {
-      throw new Error("Dữ liệu API không hợp lệ");
-    }
+      const rawData = response.data;
+      // const response = await fetch(`/data/week_total_output.json`, {
+      //   params: { YEAR: year, MONTH: month, Building: "A" },
+      // });
+      // const rawData = await response.json();
 
-    const formattedData = { line, EFF };
-    dispatch(setChartDataEfficiency(formattedData)); // Gửi dữ liệu vào Redux store
-    dispatch(setLoading(false)); // Kết thúc loading
-  } catch (error) {
-    dispatch(setLoading(false)); // Kết thúc loading khi lỗi xảy ra
-    const errorMessage = error.response?.data?.message || error.toString();
-    dispatch(setError(errorMessage)); // Lưu lỗi vào Redux
-    console.error("API Error:", error.response || error);
-    throw error; // Quăng lỗi cho component xử lý
-  }
-};
+      const line = [];
+      const EFF = [];
+
+      if (Array.isArray(rawData)) {
+        rawData.forEach((item) => {
+          const effValue = parseFloat(item.EFF);
+          if (!isNaN(effValue)) {
+            line.push(item.line);
+            EFF.push(item.EFF);
+          }
+        });
+      } else {
+        throw new Error('Dữ liệu API không hợp lệ');
+      }
+
+      const formattedData = { line, EFF };
+      dispatch(setChartDataEfficiency(formattedData)); // Gửi dữ liệu vào Redux store
+      dispatch(setLoading(false)); // Kết thúc loading
+    } catch (error) {
+      dispatch(setLoading(false)); // Kết thúc loading khi lỗi xảy ra
+      const errorMessage = error.response?.data?.message || error.toString();
+      dispatch(setError(errorMessage)); // Lưu lỗi vào Redux
+      console.error('API Error:', error.response || error);
+      throw error; // Quăng lỗi cho component xử lý
+    }
+  };
 
 export const fetchRFTByLine = (year, month, building) => async (dispatch) => {
   dispatch(setLoading(true)); // Bắt đầu loading
   try {
-    const response = await request.post(
-      `/RFT_BY_LINE_Building`,
-      { YEAR: year, MONTH: month, Building: building }
-    );
+    const response = await request.post(`/RFT_BY_LINE_Building`, {
+      YEAR: year,
+      MONTH: month,
+      Building: building,
+    });
     const rawData = response.data;
     // const response = await fetch(`/data/testData.json`, {
-    //   params: { YEAR: year, MONTH: month, Building: "A" }, 
+    //   params: { YEAR: year, MONTH: month, Building: "A" },
     // });
     // const rawData = await response.json();
 
@@ -71,7 +74,7 @@ export const fetchRFTByLine = (year, month, building) => async (dispatch) => {
         }
       });
     } else {
-      throw new Error("Dữ liệu API không hợp lệ");
+      throw new Error('Dữ liệu API không hợp lệ');
     }
 
     const formattedData = { line, rft };
@@ -81,7 +84,7 @@ export const fetchRFTByLine = (year, month, building) => async (dispatch) => {
     dispatch(setLoading(false)); // Kết thúc loading khi lỗi xảy ra
     const errorMessage = error.response?.data?.message || error.toString();
     dispatch(setError(errorMessage)); // Lưu lỗi vào Redux
-    console.error("API Error:", error.response || error);
+    console.error('API Error:', error.response || error);
     throw error; // Quăng lỗi cho component xử lý
   }
 };

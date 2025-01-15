@@ -1,15 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit";
-import Cookies from "js-cookie";
+import { createSlice } from '@reduxjs/toolkit';
+import Cookies from 'js-cookie';
 
-const initialLanguage = Cookies.get("language") || "vi";
+const initialLanguage = Cookies.get('language') || 'vi';
 
 const languageSlice = createSlice({
-  name: "language",
-  initialState: { language: initialLanguage || "vi" },
+  name: 'language',
+  initialState: { language: initialLanguage },
   reducers: {
     setLanguage: (state, action) => {
-      state.language = action.payload; 
-      Cookies.set("language", action.payload, { expires: 365 }); 
+      state.language = action.payload;
+      Cookies.set('language', action.payload, { expires: 365 }); // Lưu vào Cookies
     },
   },
 });

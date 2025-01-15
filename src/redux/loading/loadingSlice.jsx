@@ -1,11 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   loading: false,
   error: null,
 };
 
 const loadingSlice = createSlice({
-  name: "loading",
+  name: 'loading',
   initialState,
   reducers: {
     setLoading: (state, action) => {
@@ -24,10 +24,6 @@ const loadingSlice = createSlice({
   },
 });
 
-export const {
-  setLoading,
-  setError,
-  clearError,
-  resetState,
-} = loadingSlice.actions;
+export const { setLoading, setError, clearError, resetState } =
+  loadingSlice.actions;
 export default loadingSlice.reducer;

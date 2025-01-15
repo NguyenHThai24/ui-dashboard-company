@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const ProductionPage = () => {
-  return (
-    <div>ProductionPage</div>
-  )
-}
+  return <div>ProductionPage</div>;
+};
 
-export default ProductionPage
+export default ProductionPage;

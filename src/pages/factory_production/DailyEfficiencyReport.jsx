@@ -1,19 +1,19 @@
-import { useState } from "react";
-import HeaderEfficiencyReport from "@/components/report_efficiency_components/HeaderEfficiencyReport";
-import SelectModel from "@/components/report_efficiency_components/SelectModel";
+import { useState } from 'react';
+import HeaderEfficiencyReport from '@/components/report_efficiency_components/HeaderEfficiencyReport';
+import SelectModel from '@/components/report_efficiency_components/SelectModel';
 
-import CardAverageEfficiency from "@/components/report_efficiency_components/card_report_efficiency/CardAverageEfficiency";
-import CardAverageRFT from "@/components/report_efficiency_components/card_report_efficiency/CardAverageRFT";
-import CardTotalOutput from "@/components/report_efficiency_components/card_report_efficiency/CardTotalOutput";
-import CardAverageManPower from "@/components/report_efficiency_components/card_report_efficiency/CardAverageManPower";
-import CardAverageLaborCount from "@/components/report_efficiency_components/card_report_efficiency/CardAverageLaborCount";
+import CardAverageEfficiency from '@/components/report_efficiency_components/card_report_efficiency/CardAverageEfficiency';
+import CardAverageRFT from '@/components/report_efficiency_components/card_report_efficiency/CardAverageRFT';
+import CardTotalOutput from '@/components/report_efficiency_components/card_report_efficiency/CardTotalOutput';
+import CardAverageManPower from '@/components/report_efficiency_components/card_report_efficiency/CardAverageManPower';
+import CardAverageLaborCount from '@/components/report_efficiency_components/card_report_efficiency/CardAverageLaborCount';
 
-import EfficiencyChart from "@/components/report_efficiency_components/EfficiencyChart";
-import TotalManpowerChart from "@/components/report_efficiency_components/TotalManpowerChart";
-import FloorEfficiencySummary from "../../components/report_efficiency_components/FloorEfficiencySummary";
+import EfficiencyChart from '@/components/report_efficiency_components/EfficiencyChart';
+import TotalManpowerChart from '@/components/report_efficiency_components/TotalManpowerChart';
+import FloorEfficiencySummary from '../../components/report_efficiency_components/FloorEfficiencySummary';
 
 const DailyEfficiencyReport = () => {
-  const [timeFrame, setTimeFrame] = useState("DAILY");
+  const [timeFrame, setTimeFrame] = useState('DAILY');
 
   const handleSelectTimeFrame = (selectedTimeFrame) => {
     setTimeFrame(selectedTimeFrame);
@@ -40,11 +40,10 @@ const DailyEfficiencyReport = () => {
       </div>
 
       {/* Charts and Summary */}
-        <EfficiencyChart timeFrame={timeFrame} />
-        <TotalManpowerChart timeFrame={timeFrame} />
-    
+      <EfficiencyChart timeFrame={timeFrame} />
+      <TotalManpowerChart timeFrame={timeFrame} />
 
-        <FloorEfficiencySummary timeFrame={timeFrame} />
+      <FloorEfficiencySummary timeFrame={timeFrame} />
     </div>
   );
 };

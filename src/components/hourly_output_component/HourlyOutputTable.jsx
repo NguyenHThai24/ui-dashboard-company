@@ -1,6 +1,17 @@
 import { useEffect, useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Grid, CircularProgress, Box } from '@mui/material';
-import { req } from "@/utils/request";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Grid,
+  CircularProgress,
+  Box,
+} from '@mui/material';
+import { req } from '@/utils/request';
 
 const HourlyOutputTable = ({ date }) => {
   const [data, setData] = useState([]);
@@ -48,7 +59,12 @@ const HourlyOutputTable = ({ date }) => {
 
   if (loading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="100vh"
+      >
         <CircularProgress />
       </Box>
     );
@@ -61,46 +77,146 @@ const HourlyOutputTable = ({ date }) => {
           <Grid item xs={6} key={index}>
             <div>
               <h1 className="text-center font-bold text-2xl">{locKey}</h1>
-              <TableContainer  component={Paper}
-              sx={{
-                maxHeight: "full",
-                overflowY: "auto",
-                marginTop: "10px",
-                "&::-webkit-scrollbar": {
-                  width: "6px", // Độ rộng của thanh cuộn
-                  height: "6px", // Chiều cao của thanh cuộn (nếu là cuộn ngang)
-                },
-                "&::-webkit-scrollbar-thumb": {
-                  backgroundColor: "#888", // Màu thanh cuộn
-                  borderRadius: "10px", // Độ cong của thanh cuộn
-                },
-                "&::-webkit-scrollbar-thumb:hover": {
-                  backgroundColor: "#555", // Màu khi hover vào thanh cuộn
-                },
-                "&::-webkit-scrollbar-track": {
-                  backgroundColor: "#f1f1f1", // Màu nền của đường ray thanh cuộn
-                },
-              }}>
+              <TableContainer
+                component={Paper}
+                sx={{
+                  maxHeight: 'full',
+                  overflowY: 'auto',
+                  marginTop: '10px',
+                  '&::-webkit-scrollbar': {
+                    width: '6px', // Độ rộng của thanh cuộn
+                    height: '6px', // Chiều cao của thanh cuộn (nếu là cuộn ngang)
+                  },
+                  '&::-webkit-scrollbar-thumb': {
+                    backgroundColor: '#888', // Màu thanh cuộn
+                    borderRadius: '10px', // Độ cong của thanh cuộn
+                  },
+                  '&::-webkit-scrollbar-thumb:hover': {
+                    backgroundColor: '#555', // Màu khi hover vào thanh cuộn
+                  },
+                  '&::-webkit-scrollbar-track': {
+                    backgroundColor: '#f1f1f1', // Màu nền của đường ray thanh cuộn
+                  },
+                }}
+              >
                 <Table>
                   <TableHead sx={{ bgcolor: '#9aff7a' }}>
                     <TableRow>
-                      <TableCell sx={{ fontWeight: 900, padding: '2px 4px', width: '150px', fontSize: "11px" }}>Line</TableCell>
-                      <TableCell sx={{ fontWeight: 900, padding: '2px 4px', fontSize: "11px" }}>Daily Target</TableCell>
-                      <TableCell sx={{ fontWeight: 900, padding: '2px 4px', fontSize: "11px" }}>Daily Actual</TableCell>
-                      <TableCell sx={{ fontWeight: 900, padding: '2px 4px', fontSize: "11px" }}>Hourly Target</TableCell>
-                      {['07:30-08:30', '08:30-09:30', '09:30-10:30', '10:30-11:30', '11:30-12:30', '12:30-13:30', '13:30-14:30', '14:30-15:30', '15:30-16:30'].map((timeSlot, idx) => (
-                        <TableCell key={idx} sx={{ fontWeight: 900, padding: '2px 4px', fontSize: "11px" }}>{timeSlot}</TableCell>
+                      <TableCell
+                        sx={{
+                          fontWeight: 900,
+                          padding: '2px 4px',
+                          width: '150px',
+                          fontSize: '11px',
+                        }}
+                      >
+                        Line
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          fontWeight: 900,
+                          padding: '2px 4px',
+                          fontSize: '11px',
+                        }}
+                      >
+                        Daily Target
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          fontWeight: 900,
+                          padding: '2px 4px',
+                          fontSize: '11px',
+                        }}
+                      >
+                        Daily Actual
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          fontWeight: 900,
+                          padding: '2px 4px',
+                          fontSize: '11px',
+                        }}
+                      >
+                        Hourly Target
+                      </TableCell>
+                      {[
+                        '07:30-08:30',
+                        '08:30-09:30',
+                        '09:30-10:30',
+                        '10:30-11:30',
+                        '11:30-12:30',
+                        '12:30-13:30',
+                        '13:30-14:30',
+                        '14:30-15:30',
+                        '15:30-16:30',
+                      ].map((timeSlot, idx) => (
+                        <TableCell
+                          key={idx}
+                          sx={{
+                            fontWeight: 900,
+                            padding: '2px 4px',
+                            fontSize: '11px',
+                          }}
+                        >
+                          {timeSlot}
+                        </TableCell>
                       ))}
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {groupedData[locKey].map((lineData, rowIndex) => (
-                      <TableRow key={rowIndex} style={{ backgroundColor: getRowBackgroundColor(rowIndex) }}>
-                        <TableCell sx={{ padding: '2px 4px', fontWeight: 600, width: '150px', fontSize: "11px" }}>{lineData.line}</TableCell>
-                        <TableCell sx={{ padding: '2px 4px', fontWeight: 600, fontSize: "11px" }}>{lineData.TARGET * 8}</TableCell>
-                        <TableCell sx={{ padding: '2px 4px', fontWeight: 600, fontSize: "11px" }}></TableCell>
-                        <TableCell sx={{ padding: '2px 4px', fontWeight: 600, fontSize: "11px" }}>{lineData.TARGET}</TableCell>
-                        {['07:30-08:30', '08:30-09:30', '09:30-10:30', '10:30-11:30', '11:30-12:30', '12:30-13:30', '13:30-14:30', '14:30-15:30', '15:30-16:30'].map((timeSlot, idx) => {
+                      <TableRow
+                        key={rowIndex}
+                        style={{
+                          backgroundColor: getRowBackgroundColor(rowIndex),
+                        }}
+                      >
+                        <TableCell
+                          sx={{
+                            padding: '2px 4px',
+                            fontWeight: 600,
+                            width: '150px',
+                            fontSize: '11px',
+                          }}
+                        >
+                          {lineData.line}
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            padding: '2px 4px',
+                            fontWeight: 600,
+                            fontSize: '11px',
+                          }}
+                        >
+                          {lineData.TARGET * 8}
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            padding: '2px 4px',
+                            fontWeight: 600,
+                            fontSize: '11px',
+                          }}
+                        ></TableCell>
+                        <TableCell
+                          sx={{
+                            padding: '2px 4px',
+                            fontWeight: 600,
+                            fontSize: '11px',
+                          }}
+                        >
+                          {lineData.TARGET}
+                        </TableCell>
+                        {[
+                          '07:30-08:30',
+                          '08:30-09:30',
+                          '09:30-10:30',
+                          '10:30-11:30',
+                          '11:30-12:30',
+                          '12:30-13:30',
+                          '13:30-14:30',
+                          '14:30-15:30',
+                          '15:30-16:30',
+                        ].map((timeSlot, idx) => {
                           const value = lineData[timeSlot] || 0;
                           const target = lineData.TARGET;
                           const color = getColor(value, target);
@@ -110,9 +226,14 @@ const HourlyOutputTable = ({ date }) => {
                               key={idx}
                               sx={{
                                 padding: '2px 4px',
-                                fontSize: "11px",
+                                fontSize: '11px',
                                 fontWeight: 600,
-                                color: color === 'green' ? '#097709' : color === 'yellow' ? '#ffaa00' : '#FF0000',
+                                color:
+                                  color === 'green'
+                                    ? '#097709'
+                                    : color === 'yellow'
+                                      ? '#ffaa00'
+                                      : '#FF0000',
                               }}
                             >
                               {value}

@@ -1,9 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const sidebarSlice = createSlice({
-  name: "sidebar",
+  name: 'sidebar',
   initialState: {
-    selectedItem: "",
+    selectedItem: '',
   },
   reducers: {
     setSelectedItem: (state, action) => {

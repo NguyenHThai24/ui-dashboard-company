@@ -1,9 +1,15 @@
-import { useEffect, useState } from "react";
-import Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
-import { Box, Card, CardContent, CircularProgress, Typography } from "@mui/material";
-import { fetchFloorOutputDataS } from "@/apis/factory_kpi_api/FactoryAPI";
-import { fetchFloorOutputData } from "@/apis/factory_kpi_api/FactoryFloorAPI";
+import { useEffect, useState } from 'react';
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+import {
+  Box,
+  Card,
+  CardContent,
+  CircularProgress,
+  Typography,
+} from '@mui/material';
+import { fetchFloorOutputDataS } from '@/apis/factory_kpi_api/FactoryAPI';
+import { fetchFloorOutputData } from '@/apis/factory_kpi_api/FactoryFloorAPI';
 
 const OutputByFloor = ({ date, floor }) => {
   const [chartData, setChartData] = useState([]);
@@ -16,8 +22,8 @@ const OutputByFloor = ({ date, floor }) => {
       setError(null);
       try {
         const response = floor
-          ? await fetchFloorOutputData(date.format("YYYY/MM/DD"), floor)
-          : await fetchFloorOutputDataS(date.format("YYYY/MM/DD"), "LHG");
+          ? await fetchFloorOutputData(date.format('YYYY/MM/DD'), floor)
+          : await fetchFloorOutputDataS(date.format('YYYY/MM/DD'), 'LHG');
 
         setChartData(response); // Directly use the returned array
       } catch (err) {
@@ -32,23 +38,23 @@ const OutputByFloor = ({ date, floor }) => {
 
   const options = {
     chart: {
-      type: "column",
+      type: 'column',
       marginTop: 80,
       marginLeft: 0,
       marginRight: 0,
-      height: "300px",
+      height: '300px',
     },
     title: null,
     legend: {
-      layout: "horizontal",
-      align: "right",
-      verticalAlign: "top",
+      layout: 'horizontal',
+      align: 'right',
+      verticalAlign: 'top',
       itemStyle: {
-        fontSize: "10px",
+        fontSize: '10px',
         fontWeight: 900,
       },
       itemHoverStyle: {
-        color: "#f44336",
+        color: '#f44336',
       },
       itemDistance: 2,
       symbolWidth: 10,
@@ -59,40 +65,40 @@ const OutputByFloor = ({ date, floor }) => {
       categories: chartData.map((item) => item.lineAlias),
       labels: {
         style: {
-          fontSize: "10px",
+          fontSize: '10px',
         },
       },
     },
     yAxis: {
-      title: { text: "" },
+      title: { text: '' },
       stackLabels: {
         enabled: true,
-        style: { color: "black", fontSize: "10px", fontWeight: 600 },
+        style: { color: 'black', fontSize: '10px', fontWeight: 600 },
       },
       labels: { enabled: false },
     },
     plotOptions: {
       column: {
-        stacking: "normal",
+        stacking: 'normal',
         dataLabels: {
           enabled: true,
           style: {
-            fontSize: "10px",
-            fontWeight: "bold",
+            fontSize: '10px',
+            fontWeight: 'bold',
           },
         },
       },
     },
     series: [
       {
-        name: "Unachieved",
+        name: 'Unachieved',
         data: chartData.map((item) => item.unachieved),
-        color: "#D5B5FF",
+        color: '#D5B5FF',
       },
       {
-        name: "Actual",
+        name: 'Actual',
         data: chartData.map((item) => item.totalActualAssembly),
-        color: "#092698",
+        color: '#092698',
       },
       // {
       //   name: "Target",
@@ -101,10 +107,10 @@ const OutputByFloor = ({ date, floor }) => {
       //   visible: false
       // },
       {
-        name: "Target",
+        name: 'Target',
         data: [...(chartData?.target || [])],
-        color: "#000",
-       // visible: false
+        color: '#000',
+        // visible: false
       },
     ],
     credits: {
@@ -115,29 +121,37 @@ const OutputByFloor = ({ date, floor }) => {
   return (
     <Card sx={{ borderRadius: 2 }}>
       <CardContent>
-      <Typography
-           
-           sx={{
-             fontSize: "16px",
-       fontWeight: "bold",
-       fontFamily: "'Roboto', sans-serif",
-       color: "#239d85",
-       textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
-       letterSpacing: "0px",
-           }}
-         >
+        <Typography
+          sx={{
+            fontSize: '16px',
+            fontWeight: 'bold',
+            fontFamily: "'Roboto', sans-serif",
+            color: '#239d85',
+            textShadow: '1px 1px 2px rgba(0, 0, 0, 0.2)',
+            letterSpacing: '0px',
+          }}
+        >
           Output By Floor
-         </Typography>
+        </Typography>
         {loading ? (
-          <Box sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
             <CircularProgress />
           </Box>
         ) : error ? (
-          <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", color: "red" }}>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              color: 'red',
+            }}
+          >
             {error}
           </Box>
         ) : (

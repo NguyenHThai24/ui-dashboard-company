@@ -1,12 +1,12 @@
-import DigitalAndonCase from "../../components/daily_kpi_overview/DigitalAndonCase";
-import EfficiencyChart from "../../components/daily_kpi_overview/EfficiencyChart";
-import MaterialCallingKanban from "../../components/daily_kpi_overview/MaterialCallingKanban";
-import RFTChart from "../../components/daily_kpi_overview/RFTChart";
-import TotalActualOutput from "../../components/daily_kpi_overview/TotalActualOutput";
-import TotalAttendanceWorker from "../../components/daily_kpi_overview/TotalAttendanceWorker";
-import TotalOuputByArea from "../../components/daily_kpi_overview/TotalOuputByArea";
+import DigitalAndonCase from '../../components/daily_kpi_overview/DigitalAndonCase';
+import EfficiencyChart from '../../components/daily_kpi_overview/EfficiencyChart';
+import MaterialCallingKanban from '../../components/daily_kpi_overview/MaterialCallingKanban';
+import RFTChart from '../../components/daily_kpi_overview/RFTChart';
+import TotalActualOutput from '../../components/daily_kpi_overview/TotalActualOutput';
+import TotalAttendanceWorker from '../../components/daily_kpi_overview/TotalAttendanceWorker';
+import TotalOuputByArea from '../../components/daily_kpi_overview/TotalOuputByArea';
 
-import Calendar from "../../components/common/Calendar";
+import Calendar from '../../components/common/Calendar';
 
 const DailyKPIOverview = () => {
   return (

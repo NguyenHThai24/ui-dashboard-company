@@ -1,4 +1,4 @@
-import {req} from "@/utils/request"
+import { req } from '@/utils/request';
 
 // Gọi API factory
 
@@ -8,16 +8,14 @@ export const fetchDistinctFloor = async () => {
     if (response.data.status === 0) {
       return response.data.data;
     } else {
-      console.error("Error fetching data:", response.data);
+      console.error('Error fetching data:', response.data);
       return [];
     }
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error('Error fetching data:', error);
     return [];
   }
 };
-
-
 
 // goi API cho component Attendance By Floor
 
@@ -39,7 +37,6 @@ export const fetchFloorDataS = async (date, factory) => {
   }
 };
 
-
 // Gọi API cho Card Top Line data
 
 export const fetchStopLineDataS = async (date, factory) => {
@@ -60,7 +57,7 @@ export const fetchStopLineDataS = async (date, factory) => {
   }
 };
 
-// gọi api cho HourlyOutputByFloor 
+// gọi api cho HourlyOutputByFloor
 
 export const fetchHourlyFloorDataS = async (date, factory) => {
   try {
@@ -77,12 +74,11 @@ export const fetchHourlyFloorDataS = async (date, factory) => {
         times: timePeriods,
       };
     }
-    throw new Error("Failed to fetch data");
+    throw new Error('Failed to fetch data');
   } catch (error) {
     throw new Error(error.message);
   }
 };
-
 
 // Gọi API Output By Floor
 
@@ -103,15 +99,14 @@ export const fetchFloorOutputDataS = async (date, factory) => {
 
       return data;
     } else {
-      throw new Error("Failed to fetch data");
+      throw new Error('Failed to fetch data');
     }
   } catch (error) {
     throw new Error(error.message);
   }
 };
 
-
-// Gọi API RFT By Floor 
+// Gọi API RFT By Floor
 
 export const fetchRFTFloorDataS = async (date, factory) => {
   try {
@@ -124,9 +119,9 @@ export const fetchRFTFloorDataS = async (date, factory) => {
         baseline: response.data.data.baseline,
       };
     } else {
-      throw new Error("API response status is not 0");
+      throw new Error('API response status is not 0');
     }
   } catch (error) {
-    throw new Error("Error fetching data from API: " + error.message);
+    throw new Error('Error fetching data from API: ' + error.message);
   }
 };

@@ -1,4 +1,4 @@
-import { request } from "@/utils/request";
+import { request } from '@/utils/request';
 import {
   setLoading,
   setError,
@@ -6,7 +6,7 @@ import {
   setChartDataSAMP,
   setChartDataEfficiency,
   setChartDataRFT,
-} from "@/redux/data_factory_redux/ReportSlice";
+} from '@/redux/data_factory_redux/ReportSlice';
 
 export const fetchWeekTotalOutput = (year, month) => async (dispatch) => {
   dispatch(setLoading(true)); // Bắt đầu loading
@@ -14,11 +14,11 @@ export const fetchWeekTotalOutput = (year, month) => async (dispatch) => {
     const response = await request.post(
       `/Daily_Total_Output_Week`,
       { YEAR: year, MONTH: month },
-      { headers: { "Content-Type": "application/json" } }
+      { headers: { 'Content-Type': 'application/json' } }
     );
     const rawData = response.data;
     // const response = await fetch(`/data/week_total_output.json`, {
-    //   params: { year, month }, 
+    //   params: { year, month },
     // });
     // const rawData = await response.json();
     // Xử lý dữ liệu để tạo `categories`, `actual`, `unachieved`
@@ -52,7 +52,6 @@ export const fetchWeekTotalOutput = (year, month) => async (dispatch) => {
   }
 };
 
-
 export const fetchWeekStitchingAssemblyMP =
   (year, month) => async (dispatch) => {
     dispatch(setLoading(true));
@@ -60,7 +59,7 @@ export const fetchWeekStitchingAssemblyMP =
       const res = await request.post(
         `/Daily_Stitching_Assembly_MP_Week`,
         { YEAR: year, MONTH: month },
-        { headers: { "Content-Type": "application/json" } }
+        { headers: { 'Content-Type': 'application/json' } }
       );
 
       const rawData = res.data;
@@ -91,79 +90,76 @@ export const fetchWeekStitchingAssemblyMP =
     }
   };
 
+export const fetchWeekEfficiency = (year, month) => async (dispatch) => {
+  dispatch(setLoading(true));
+  try {
+    const res = await request.post(
+      `/Daily_EFFICIENCY_WEEK`,
+      { YEAR: year, MONTH: month },
+      { headers: { 'Content-Type': 'application/json' } }
+    );
 
+    const rawData = res.data;
 
-  export const fetchWeekEfficiency = (year, month) => async (dispatch) => {
-    dispatch(setLoading(true));
-    try {
-      const res = await request.post(
-        `/Daily_EFFICIENCY_WEEK`,
-        { YEAR: year, MONTH: month },
-        { headers: { "Content-Type": "application/json" } }
-      );
-  
-      const rawData = res.data;
-  
-      // const response = await fetch("/data/daily_efficiency_day.json");
-      // const rawData = await response.json();
-  
-      const Week = [];
-      const Factory_EFF = [];
-  
-      rawData.forEach((item) => {
-        const efficiencyValue = parseFloat(item.Factory_EFF);
-  
-        if (!isNaN(efficiencyValue)) {
-          Week.push(item.Week);
-          Factory_EFF.push(efficiencyValue);
-        }
-      });
-      const formatedData = { Factory_EFF, Week };
-      //console.log(formatedData);
-  
-      dispatch(setChartDataEfficiency(formatedData));
-      dispatch(setLoading(false));
-    } catch (error) {
-      dispatch(setLoading(false)); // Kết thúc loading khi lỗi xảy ra
-      dispatch(setError(error.toString())); // Lưu lỗi vào Redux
-      throw error; // Quăng lỗi cho component xử lý
-    }
-  };
+    // const response = await fetch("/data/daily_efficiency_day.json");
+    // const rawData = await response.json();
 
-  export const fetchWeekRFT = (year, month) => async (dispatch) => {
-    dispatch(setLoading(true));
-    try {
-      const res = await request.post(
-        `/Daily_RFT_WEEK`,
-        { YEAR: year, MONTH: month },
-        { headers: { "Content-Type": "application/json" } }
-      );
-  
-      const rawData = res.data;
-  
-      // const response = await fetch("/data/daily_rft_day.json");
-      // const rawData = await response.json();
-  
-      const week = [];
-      const RFT = [];
-  
-      rawData.forEach((item) => {
-        const rftValue = parseFloat(item.RFT);
-  
-        if (!isNaN(rftValue)) {
-          week.push(item.week);
-          RFT.push(rftValue);
-        }
-      });
-      const formatedData = { RFT, week };
-      //console.log(formatedData);
-  
-      dispatch(setChartDataRFT(formatedData));
-      dispatch(setLoading(false));
-    } catch (error) {
-      dispatch(setLoading(false)); // Kết thúc loading khi lỗi xảy ra
-      dispatch(setError(error.toString())); // Lưu lỗi vào Redux
-      throw error; // Quăng lỗi cho component xử lý
-    }
-  };
-  
+    const Week = [];
+    const Factory_EFF = [];
+
+    rawData.forEach((item) => {
+      const efficiencyValue = parseFloat(item.Factory_EFF);
+
+      if (!isNaN(efficiencyValue)) {
+        Week.push(item.Week);
+        Factory_EFF.push(efficiencyValue);
+      }
+    });
+    const formatedData = { Factory_EFF, Week };
+    //console.log(formatedData);
+
+    dispatch(setChartDataEfficiency(formatedData));
+    dispatch(setLoading(false));
+  } catch (error) {
+    dispatch(setLoading(false)); // Kết thúc loading khi lỗi xảy ra
+    dispatch(setError(error.toString())); // Lưu lỗi vào Redux
+    throw error; // Quăng lỗi cho component xử lý
+  }
+};
+
+export const fetchWeekRFT = (year, month) => async (dispatch) => {
+  dispatch(setLoading(true));
+  try {
+    const res = await request.post(
+      `/Daily_RFT_WEEK`,
+      { YEAR: year, MONTH: month },
+      { headers: { 'Content-Type': 'application/json' } }
+    );
+
+    const rawData = res.data;
+
+    // const response = await fetch("/data/daily_rft_day.json");
+    // const rawData = await response.json();
+
+    const week = [];
+    const RFT = [];
+
+    rawData.forEach((item) => {
+      const rftValue = parseFloat(item.RFT);
+
+      if (!isNaN(rftValue)) {
+        week.push(item.week);
+        RFT.push(rftValue);
+      }
+    });
+    const formatedData = { RFT, week };
+    //console.log(formatedData);
+
+    dispatch(setChartDataRFT(formatedData));
+    dispatch(setLoading(false));
+  } catch (error) {
+    dispatch(setLoading(false)); // Kết thúc loading khi lỗi xảy ra
+    dispatch(setError(error.toString())); // Lưu lỗi vào Redux
+    throw error; // Quăng lỗi cho component xử lý
+  }
+};

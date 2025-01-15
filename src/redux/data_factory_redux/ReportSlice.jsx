@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   loading: false,
   error: null,
@@ -9,7 +9,7 @@ const initialState = {
 };
 
 const reportSlice = createSlice({
-  name: "report",
+  name: 'report',
   initialState,
   reducers: {
     setLoading: (state, action) => {
@@ -31,31 +31,42 @@ const reportSlice = createSlice({
       ) {
         state.chartData = { categories, actual, unachieved, Target };
       } else {
-        state.error = "Invalid chart data format";
+        state.error = 'Invalid chart data format';
       }
     },
     setChartDataSAMP: (state, action) => {
       const { outputdate, worker, Week } = action.payload;
-      if (Array.isArray(outputdate) || Array.isArray(Week) && Array.isArray(worker)) {
+      if (
+        Array.isArray(outputdate) ||
+        (Array.isArray(Week) && Array.isArray(worker))
+      ) {
         state.chartDataSAMP = { outputdate, worker, Week };
       } else {
-        state.error = "Invalid chart data format";
+        state.error = 'Invalid chart data format';
       }
     },
     setChartDataEfficiency: (state, action) => {
       const { date, Week, Month, Factory_EFF } = action.payload;
-      if (Array.isArray(date) || Array.isArray(Week) || Array.isArray(Month) && Array.isArray(Factory_EFF)) {
-        state.chartDataEfficiency = { date,Week, Month, Factory_EFF };
+      if (
+        Array.isArray(date) ||
+        Array.isArray(Week) ||
+        (Array.isArray(Month) && Array.isArray(Factory_EFF))
+      ) {
+        state.chartDataEfficiency = { date, Week, Month, Factory_EFF };
       } else {
-        state.error = "Invalid chart data format";
+        state.error = 'Invalid chart data format';
       }
     },
     setChartDataRFT: (state, action) => {
       const { date, RFT, week, Month } = action.payload;
-      if (Array.isArray(date) || Array.isArray(week) || Array.isArray(Month) && Array.isArray(RFT)) {
+      if (
+        Array.isArray(date) ||
+        Array.isArray(week) ||
+        (Array.isArray(Month) && Array.isArray(RFT))
+      ) {
         state.chartDataRFT = { date, RFT, week, Month };
       } else {
-        state.error = "Invalid chart data format";
+        state.error = 'Invalid chart data format';
       }
     },
 

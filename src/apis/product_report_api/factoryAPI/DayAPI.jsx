@@ -1,4 +1,4 @@
-import { request } from "@/utils/request";
+import { request } from '@/utils/request';
 
 import {
   setLoading,
@@ -7,7 +7,7 @@ import {
   setChartDataSAMP,
   setChartDataEfficiency,
   setChartDataRFT,
-} from "@/redux/data_factory_redux/ReportSlice";
+} from '@/redux/data_factory_redux/ReportSlice';
 
 export const fetchDailyTotalOutput = (year, month) => async (dispatch) => {
   dispatch(setLoading(true)); // Bắt đầu loading
@@ -15,10 +15,10 @@ export const fetchDailyTotalOutput = (year, month) => async (dispatch) => {
     const response = await request.post(
       `/Daily_Total_Output`,
       { YEAR: year, MONTH: month },
-      { headers: { "Content-Type": "application/json" } }
+      { headers: { 'Content-Type': 'application/json' } }
     );
     const rawData = response.data;
- 
+
     // Xử lý dữ liệu để tạo `categories`, `actual`, `unachieved`
     const categories = [];
     const actual = [];
@@ -59,7 +59,7 @@ export const fetchDailyStitchingAssemblyMP =
       const res = await request.post(
         `/Daily_Stitching_Assembly_MP`,
         { YEAR: year, MONTH: month },
-        { headers: { "Content-Type": "application/json" } }
+        { headers: { 'Content-Type': 'application/json' } }
       );
 
       const rawData = res.data;
@@ -96,7 +96,7 @@ export const fetchDailyEfficiency = (year, month) => async (dispatch) => {
     const res = await request.post(
       `/Daily_EFFICIENCY_Day`,
       { YEAR: year, MONTH: month },
-      { headers: { "Content-Type": "application/json" } }
+      { headers: { 'Content-Type': 'application/json' } }
     );
 
     const rawData = res.data;
@@ -133,7 +133,7 @@ export const fetchDailyRFT = (year, month) => async (dispatch) => {
     const res = await request.post(
       `/Daily_RFT_Day`,
       { YEAR: year, MONTH: month },
-      { headers: { "Content-Type": "application/json" } }
+      { headers: { 'Content-Type': 'application/json' } }
     );
 
     const rawData = res.data;

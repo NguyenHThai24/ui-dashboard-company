@@ -1,8 +1,15 @@
-import { Box, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
-import { useState } from "react";
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+} from '@mui/material';
+import { useState } from 'react';
 
 const SelectModel = () => {
-  const [name, setName] = useState("all"); // Default to "All"
+  const [name, setName] = useState('all'); // Default to "All"
 
   const handleChange = (event) => {
     setName(event.target.value);
@@ -10,7 +17,7 @@ const SelectModel = () => {
 
   return (
     <div className="flex item-center my-4">
-      <Typography variant="h6" sx={{ mr: 2, fontWeight: "bold" }}>
+      <Typography variant="h6" sx={{ mr: 2, fontWeight: 'bold' }}>
         Model Name:
       </Typography>
       <Box sx={{ minWidth: 320 }}>
@@ -26,7 +33,7 @@ const SelectModel = () => {
               width: 320, // Width
             }}
           >
-            <MenuItem value="all">All</MenuItem> 
+            <MenuItem value="all">All</MenuItem>
             <MenuItem value={10}>Model 1</MenuItem>
             <MenuItem value={20}>Model 2</MenuItem>
             <MenuItem value={30}>Model 3</MenuItem>

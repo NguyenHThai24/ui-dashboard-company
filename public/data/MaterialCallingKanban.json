@@ -1,26 +1,11 @@
 {
-    "categories": [
-        "auto cutting",
-        "centralize cutting",
-        "stock fitting",
-        "inline cutting"
-    ],
-    "request": [
-        40,
-        44,
-        88,
-        90
-    ],
-    "ongoing": [
-        25,
-        66,
-        96,
-        50
-    ],
-    "deliver": [
-        40,
-        66,
-        88,
-        50
-    ]
+  "categories": [
+    "auto cutting",
+    "centralize cutting",
+    "stock fitting",
+    "inline cutting"
+  ],
+  "request": [40, 44, 88, 90],
+  "ongoing": [25, 66, 96, 50],
+  "deliver": [40, 66, 88, 50]
 }

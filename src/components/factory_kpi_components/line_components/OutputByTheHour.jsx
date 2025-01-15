@@ -1,8 +1,14 @@
-import  { useEffect, useState } from "react";
-import Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
-import { Card, CardContent, Box, CircularProgress, Typography } from "@mui/material";
-import { fetchOuputLineData } from "@/apis/factory_kpi_api/FactoryLineAssemblyAPI";
+import { useEffect, useState } from 'react';
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+import {
+  Card,
+  CardContent,
+  Box,
+  CircularProgress,
+  Typography,
+} from '@mui/material';
+import { fetchOuputLineData } from '@/apis/factory_kpi_api/FactoryLineAssemblyAPI';
 
 const OutputByTheHour = ({ date, floor, line, mode }) => {
   const [chartData, setChartData] = useState(null);
@@ -23,7 +29,8 @@ const OutputByTheHour = ({ date, floor, line, mode }) => {
 
         if (floorData) {
           // Chọn dữ liệu dựa vào `mode`
-          const key = mode === "assembly" ? "actualAssembly" : "actualStitching";
+          const key =
+            mode === 'assembly' ? 'actualAssembly' : 'actualStitching';
           const actualData = floorData[key];
 
           if (actualData) {
@@ -36,10 +43,10 @@ const OutputByTheHour = ({ date, floor, line, mode }) => {
             setError(`No data found for ${mode} mode.`);
           }
         } else {
-          setError("No data found for the selected line");
+          setError('No data found for the selected line');
         }
       } catch (error) {
-        setError("Error fetching data: " + error.message);
+        setError('Error fetching data: ' + error.message);
       } finally {
         setLoading(false);
       }
@@ -52,26 +59,26 @@ const OutputByTheHour = ({ date, floor, line, mode }) => {
 
   const options = {
     chart: {
-      type: "column",
+      type: 'column',
       marginTop: 80,
       marginLeft: 45,
       marginRight: 0,
-      height: "300px",
+      height: '300px',
     },
     title: null,
     legend: {
-      layout: "horizontal",
-      align: "right",
-      verticalAlign: "top",
+      layout: 'horizontal',
+      align: 'right',
+      verticalAlign: 'top',
       y: 20,
       floating: true,
-      backgroundColor: "white",
+      backgroundColor: 'white',
       itemStyle: {
-        fontSize: "10px",
+        fontSize: '10px',
         fontWeight: 900,
       },
       itemHoverStyle: {
-        color: "#f44336",
+        color: '#f44336',
       },
       itemDistance: 2,
     },
@@ -79,36 +86,36 @@ const OutputByTheHour = ({ date, floor, line, mode }) => {
       categories: chartData ? chartData.map((data) => data.time) : [],
       labels: {
         style: {
-          fontSize: "10px",
+          fontSize: '10px',
         },
       },
     },
     yAxis: {
       visible: true,
-      title: "",
+      title: '',
       labels: {
         style: {
-          fontSize: "10px",
+          fontSize: '10px',
         },
       },
     },
     series: [
       {
-        name: mode === "assembly" ? "Actual" : "Actual",
+        name: mode === 'assembly' ? 'Actual' : 'Actual',
         data: chartData
           ? chartData.map((data) => ({
               y: data.value,
-              color: data.value < baseline ? "#fc0905" : "#003566",
+              color: data.value < baseline ? '#fc0905' : '#003566',
             }))
           : [],
-        color: "#003566",
-        lineColor: "#00688B",
+        color: '#003566',
+        lineColor: '#00688B',
         dataLabels: {
           enabled: true,
           style: {
-            color: "#000",
-            fontWeight: "bold",
-            fontSize: "10px",
+            color: '#000',
+            fontWeight: 'bold',
+            fontSize: '10px',
           },
           formatter: function () {
             return this.y;
@@ -116,20 +123,20 @@ const OutputByTheHour = ({ date, floor, line, mode }) => {
         },
       },
       {
-        name: "Base Line",
-        type: "line",
+        name: 'Base Line',
+        type: 'line',
         data: Array(chartData ? chartData.length : 0).fill(baseline),
         marker: {
           enabled: false,
         },
-        lineColor: "#17a589",
+        lineColor: '#17a589',
         lineWidth: 3,
-        dashStyle: "ShortDash",
+        dashStyle: 'ShortDash',
         enableMouseTracking: false,
         dataLabels: {
           enabled: false,
         },
-        fillColor: "none",
+        fillColor: 'none',
       },
     ],
     credits: {
@@ -141,25 +148,27 @@ const OutputByTheHour = ({ date, floor, line, mode }) => {
     <div>
       <Card sx={{ borderRadius: 2 }}>
         <CardContent>
-        <Typography
+          <Typography
             sx={{
-             fontSize: "16px",
-        fontWeight: "bold",
-        fontFamily: "'Roboto', sans-serif",
-        color: "#239d85",
-        textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
-        letterSpacing: "0px",
+              fontSize: '16px',
+              fontWeight: 'bold',
+              fontFamily: "'Roboto', sans-serif",
+              color: '#239d85',
+              textShadow: '1px 1px 2px rgba(0, 0, 0, 0.2)',
+              letterSpacing: '0px',
             }}
           >
-            {mode === "assembly" ? "Assembly Output By The Hour" : "Stitching Output By The Hour"}
+            {mode === 'assembly'
+              ? 'Assembly Output By The Hour'
+              : 'Stitching Output By The Hour'}
           </Typography>
           {loading ? (
             <Box
               sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                minHeight: "100px",
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                minHeight: '100px',
               }}
             >
               <CircularProgress />

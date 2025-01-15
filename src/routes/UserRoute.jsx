@@ -1,41 +1,34 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route } from 'react-router-dom';
 
-import DefaultLayout from "@/layouts/DefaultLayout";
+import DefaultLayout from '@/layouts/DefaultLayout';
 
-import LoginPage from "@/pages/LoginPage";
-import RegisterPage from "@/pages/RegisterPage";
-import NotFoundPage from "@/pages/NotFoundPage";
-import ProductionPage from "@/pages/ProductionPage";
-import HomePage from "@/pages/HomePage";
+import LoginPage from '@/pages/LoginPage';
+import RegisterPage from '@/pages/RegisterPage';
+import NotFoundPage from '@/pages/NotFoundPage';
+import ProductionPage from '@/pages/ProductionPage';
+import HomePage from '@/pages/HomePage';
 
+import Daily_Factory_KPI from '@/pages/factory_production/daily_factory_kpi/Daily_Factory_KPI';
+import Building from '@/pages/factory_production/production_report/building/Building';
 
-import Daily_Factory_KPI from "@/pages/factory_production/daily_factory_kpi/Daily_Factory_KPI"
-import Building from "@/pages/factory_production/production_report/building/Building"
+import DailyEfficiencyReport from '@/pages/factory_production/DailyEfficiencyReport';
+import DailyKPIOverview from '@/pages/factory_production/DailyKPIOverview';
+import ProdHourlyOutput from '@/pages/factory_production/ProductionHourlyOutput';
 
-import DailyEfficiencyReport from "@/pages/factory_production/DailyEfficiencyReport";
-import DailyKPIOverview from "@/pages/factory_production/DailyKPIOverview"
-import ProdHourlyOutput from "@/pages/factory_production/ProductionHourlyOutput";
-
-import KaizenPage from "@/pages/KaizenPage";
-import ProductionReport from "../pages/factory_production/production_report/factory/ProductionReport";
-import DownTimePage from "../pages/DownTimePage";
-import DowntimeTableExcel from "../components/down_time_component/floor_data/DowntimeTableExcel";
-import AutoCuttingPage from "../pages/AutoCuttingPage";
+import KaizenPage from '@/pages/KaizenPage';
+import ProductionReport from '../pages/factory_production/production_report/factory/ProductionReport';
+import DownTimePage from '../pages/DownTimePage';
+import DowntimeTableExcel from '../components/down_time_component/floor_data/DowntimeTableExcel';
+import AutoCuttingPage from '../pages/AutoCuttingPage';
 
 const UserRoute = () => (
   <Routes>
     <Route path="/login" element={<LoginPage />} />
     <Route path="/register" element={<RegisterPage />} />
     <Route element={<DefaultLayout />}>
-     
-    <Route
-        path="/"
-        element={
-            <HomePage />
-        }
-      />
+      <Route path="/" element={<HomePage />} />
 
-    <Route
+      <Route
         path="/factory-kpi"
         element={
           <HomePage>
@@ -44,7 +37,7 @@ const UserRoute = () => (
         }
       />
 
-       <Route
+      <Route
         path="/daily-efficiency"
         element={
           <HomePage>
@@ -62,7 +55,7 @@ const UserRoute = () => (
         }
       />
 
-    <Route
+      <Route
         path="/production-hourly-output"
         element={
           <HomePage>
@@ -71,7 +64,7 @@ const UserRoute = () => (
         }
       />
 
-<Route
+      <Route
         path="/kaizen"
         element={
           <HomePage>
@@ -80,37 +73,16 @@ const UserRoute = () => (
         }
       />
 
-      <Route
-        path="/production-report"
-        element={
-            <ProductionReport />
-        }
-      />
+      <Route path="/production-report" element={<ProductionReport />} />
 
-      <Route
-        path="/down-time"
-        element={
-            <DownTimePage />
-        }
-      />
+      <Route path="/down-time" element={<DownTimePage />} />
 
-      <Route
-        path="/report-downtime"
-        element={
-            <DowntimeTableExcel />
-        }
-      />
+      <Route path="/report-downtime" element={<DowntimeTableExcel />} />
 
-      <Route
-        path="/auto-cutting"
-        element={
-            <AutoCuttingPage />
-        }
-      />
-   
-      <Route  path="/production-report/building" element={<Building/>}/>
+      <Route path="/auto-cutting" element={<AutoCuttingPage />} />
+
+      <Route path="/production-report/building" element={<Building />} />
       <Route path="/production" element={<ProductionPage />} />
-      
     </Route>
     <Route path="*" element={<NotFoundPage />} />
   </Routes>
