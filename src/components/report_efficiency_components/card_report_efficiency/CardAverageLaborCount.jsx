@@ -1,6 +1,8 @@
 import { Card, Typography } from '@mui/material';
+import { useTranslations } from '@/config/useTranslations';
 
 const CardAverageLaborCount = () => {
+  const t = useTranslations();
   return (
     <Card
       sx={{
@@ -26,7 +28,7 @@ const CardAverageLaborCount = () => {
         color="text.secondary"
         sx={{ fontWeight: 900, fontSize: 12, textAlign: 'left' }}
       >
-        AVERAGE LABOR COUNT
+        {t['AVERAGE LABOR COUNT']}
       </Typography>
       <Typography
         sx={{

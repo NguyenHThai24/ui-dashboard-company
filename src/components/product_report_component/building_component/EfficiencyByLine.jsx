@@ -11,9 +11,11 @@ import {
   CircularProgress,
   Typography,
 } from '@mui/material';
+import { useTranslations } from '@/config/useTranslations';
 
 const EfficiencyByLine = ({ selectedDate, selectedBuilding }) => {
   const dispatch = useDispatch();
+  const t = useTranslations();
   const { chartDataEfficiency, loading, error } = useSelector((state) => ({
     chartDataEfficiency: state.building.chartDataEfficiency,
     loading: state.building.loading,
@@ -139,7 +141,7 @@ const EfficiencyByLine = ({ selectedDate, selectedBuilding }) => {
             textAlign: 'center',
           }}
         >
-          Building {selectedBuilding}: Efficiency By Line
+          {t['Building']} {selectedBuilding}: {t['Efficiency By Line']}
         </Typography>
         {loading ? (
           <Box
@@ -153,7 +155,7 @@ const EfficiencyByLine = ({ selectedDate, selectedBuilding }) => {
           </Box>
         ) : error ? (
           <Typography color="error" align="center">
-            Error: {error}
+            {t['Error']}: {error}
           </Typography>
         ) : (
           <HighchartsReact highcharts={Highcharts} options={options} />

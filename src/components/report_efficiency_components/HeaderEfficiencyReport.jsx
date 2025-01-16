@@ -1,7 +1,9 @@
 import Calendar from '@/components/common/Calendar';
 import { Button, Grid } from '@mui/material';
+import { useTranslations } from '@/config/useTranslations';
 
 const HeaderEfficiencyReport = ({ onSelectTimeFrame, selectedTimeFrame }) => {
+  const t = useTranslations();
   return (
     <>
       <Grid container spacing={1} alignItems="center">
@@ -25,7 +27,7 @@ const HeaderEfficiencyReport = ({ onSelectTimeFrame, selectedTimeFrame }) => {
             }}
             onClick={() => onSelectTimeFrame('DAILY')}
           >
-            DAILY
+            {t['DAY']}
           </Button>
         </Grid>
 
@@ -47,7 +49,7 @@ const HeaderEfficiencyReport = ({ onSelectTimeFrame, selectedTimeFrame }) => {
             }}
             onClick={() => onSelectTimeFrame('WEEKLY')}
           >
-            WEEKLY
+            {t['WEEK']}
           </Button>
         </Grid>
 
@@ -69,7 +71,7 @@ const HeaderEfficiencyReport = ({ onSelectTimeFrame, selectedTimeFrame }) => {
             }}
             onClick={() => onSelectTimeFrame('MONTHLY')}
           >
-            MONTHLY
+            {t['MONTH']}
           </Button>
         </Grid>
       </Grid>

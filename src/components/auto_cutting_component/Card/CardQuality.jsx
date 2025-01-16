@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Typography, CircularProgress, Box, Grid } from '@mui/material';
 import { getAutoCuttingUrl } from '../../../apis/auto_cutting_api/AutoCuttingAPI';
+import { useTranslations } from '@/config/useTranslations';
 
 const CardQuality = ({ date }) => {
   const [data, setData] = useState([]);
@@ -9,6 +10,7 @@ const CardQuality = ({ date }) => {
   const [error, setError] = useState('');
   const [totalActualOutput, setTotalActualOutput] = useState(0);
   const [totalTheoreticalOutput, setTotalTheoreticalOutput] = useState(0);
+  const t = useTranslations();
 
   const formatNumber = (value) =>
     Number.isInteger(value) ? value : value.toFixed(0);
@@ -67,7 +69,7 @@ const CardQuality = ({ date }) => {
           borderBottom: '2px solid green',
         }}
       >
-        QUALITY
+        {t['QUALITY']}
       </Typography>
       {loading ? (
         <Box
@@ -100,7 +102,7 @@ const CardQuality = ({ date }) => {
                 fontSize: '14px',
               }}
             >
-              GOOD PAIRS
+              {t['GOOD PAIRS']}
             </Typography>
             <Typography
               variant="h5"
@@ -130,7 +132,7 @@ const CardQuality = ({ date }) => {
                 fontSize: '14px',
               }}
             >
-              TOTAL PAIRS
+              {t['TOTAL PAIRS']}
             </Typography>
             <Typography
               variant="h5"

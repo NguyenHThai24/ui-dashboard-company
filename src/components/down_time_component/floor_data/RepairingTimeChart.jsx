@@ -20,6 +20,7 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslations } from '@/config/useTranslations';
 
 ChartJS.register(
   CategoryScale,
@@ -37,6 +38,7 @@ const RepairingTimeChart = ({ floor, line, date }) => {
     (state) => state.downtime
   );
   const dispatch = useDispatch();
+  const t = useTranslations();
 
   useEffect(() => {
     dispatch(
@@ -129,7 +131,7 @@ const RepairingTimeChart = ({ floor, line, date }) => {
       <Typography
         sx={{ fontWeight: 'bold', color: 'gray', fontSize: '15px', p: 1 }}
       >
-        Mechanic Repairing Time (Min)
+        {t['Mechanic Repairing Time (Min)']}
       </Typography>
       <CardContent
         sx={{

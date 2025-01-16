@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Typography, Box } from '@mui/material';
 import tableData from '../../../../public/data/testTableCallingKanban.json'; // Import dữ liệu bảng
+import { useTranslations } from '@/config/useTranslations';
 
 const CardRequest = () => {
   const [totalReq, setTotalReq] = useState(0);
-
+  const t = useTranslations();
   useEffect(() => {
     // Tính tổng giá trị cột "TOTAL QTY"
     const calculateTotalQty = () => {
@@ -30,7 +31,7 @@ const CardRequest = () => {
           borderBottom: '4px solid #f50000',
         }}
       >
-        REQUEST
+        {t['REQUEST']}
       </Typography>
       <Box
         display="flex"
@@ -46,7 +47,8 @@ const CardRequest = () => {
             textAlign: 'center',
           }}
         >
-          {totalReq.toLocaleString()} {/* Hiển thị dạng số với dấu phân cách */}
+          {totalReq?.toLocaleString()}{' '}
+          {/* Hiển thị dạng số với dấu phân cách */}
         </Typography>
       </Box>
     </div>

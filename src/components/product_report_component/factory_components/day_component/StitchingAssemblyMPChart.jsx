@@ -14,10 +14,11 @@ import { fetchMonthStitchingAssemblyMP } from '@/apis/product_report_api/factory
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoading, setError } from '@/redux/data_factory_redux/ReportSlice';
+import { useTranslations } from '@/config/useTranslations';
 
 const StitchingAssemblyMPChart = ({ selectedDate, timePeriod }) => {
   const dispatch = useDispatch();
-
+  const t = useTranslations();
   const { chartDataSAMP, loading, error } = useSelector((state) => ({
     chartDataSAMP: state.report.chartDataSAMP, // Lấy chartData từ state của Redux
     loading: state.report.loading,
@@ -52,13 +53,13 @@ const StitchingAssemblyMPChart = ({ selectedDate, timePeriod }) => {
   const getTitle = () => {
     switch (timePeriod) {
       case 'day':
-        return 'DAILY STITCHING & ASSEMBLY MP';
+        return t['DAILY STITCHING & ASSEMBLY MP'];
       case 'week':
-        return 'WEEKLY STITCHING & ASSEMBLY MP';
+        return t['WEEKLY STITCHING & ASSEMBLY MP'];
       case 'month':
-        return 'MONTHLY STITCHING & ASSEMBLY MP';
+        return t['MONTHLY STITCHING & ASSEMBLY MP'];
       default:
-        return 'TOTAL OUTPUT';
+        return t['TOTAL OUTPUT'];
     }
   };
 

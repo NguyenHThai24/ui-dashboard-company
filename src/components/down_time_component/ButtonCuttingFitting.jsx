@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Button, ButtonGroup } from '@mui/material';
+import { useTranslations } from '@/config/useTranslations';
 
 const ButtonCuttingFitting = ({ onSelectionChange }) => {
   const [selectedCutting, setSelectedCutting] = useState('');
-
+  const t = useTranslations();
   const handleSelectionChange = (selection) => {
     setSelectedCutting(selection);
     onSelectionChange(selection); // Truyền trạng thái mới lên cha
@@ -31,7 +32,7 @@ const ButtonCuttingFitting = ({ onSelectionChange }) => {
           }}
           onClick={() => handleSelectionChange('cutting')}
         >
-          Auto Cutting
+          {t['Auto Cutting']}
         </Button>
         <Button
           sx={{
@@ -42,7 +43,7 @@ const ButtonCuttingFitting = ({ onSelectionChange }) => {
           }}
           onClick={() => handleSelectionChange('fitting')}
         >
-          Stock Fitting
+          {t['Stock Fitting']}
         </Button>
       </ButtonGroup>
     </>

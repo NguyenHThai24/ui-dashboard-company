@@ -8,12 +8,13 @@ import {
 } from '@mui/material';
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts';
+import { useTranslations } from '@/config/useTranslations';
 
 const EfficiencyChart = ({ selectedDate, timeFrame }) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const t = useTranslations();
   useEffect(() => {
     setLoading(true);
 
@@ -158,7 +159,9 @@ const EfficiencyChart = ({ selectedDate, timeFrame }) => {
 
   return (
     <div className="mt-4 bg-white rounded-xl">
-      <h1 className="pl-3 pt-3 font-bold text-xl">Factory Efficiency Chart</h1>
+      <h1 className="pl-3 pt-3 font-bold text-xl">
+        {t['Factory Efficiency Chart']}
+      </h1>
       <Card>
         <CardContent>
           {loading ? (
@@ -174,7 +177,7 @@ const EfficiencyChart = ({ selectedDate, timeFrame }) => {
             </Box>
           ) : error ? (
             <Typography color="error" align="center">
-              Error: {error}
+              {t['Error']}: {error}
             </Typography>
           ) : (
             <HighchartsReact highcharts={Highcharts} options={options} />

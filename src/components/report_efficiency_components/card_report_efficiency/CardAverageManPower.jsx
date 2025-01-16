@@ -1,6 +1,8 @@
 import { Card, Typography } from '@mui/material';
+import { useTranslations } from '@/config/useTranslations';
 
 const CardAverageManPower = () => {
+  const t = useTranslations();
   return (
     <Card
       sx={{
@@ -26,7 +28,7 @@ const CardAverageManPower = () => {
         color="text.secondary"
         sx={{ fontWeight: 900, fontSize: 12, textAlign: 'left' }}
       >
-        AVERAGE C2B MANPOWER
+        {t['AVERAGE C2B MANPOWER']}
       </Typography>
       <Typography
         sx={{

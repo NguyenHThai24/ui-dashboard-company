@@ -1,9 +1,10 @@
 import { Button, Grid } from '@mui/material';
 import { useState } from 'react';
+import { useTranslations } from '@/config/useTranslations';
 
 const ButtonTime = ({ onTimePeriodChange }) => {
   const [selectedButton, setSelectedButton] = useState('day'); // Mặc định là "day"
-
+  const t = useTranslations();
   const handleButtonClick = (timePeriod) => {
     setSelectedButton(timePeriod); // Cập nhật trạng thái được chọn
     onTimePeriodChange(timePeriod); // Gửi trạng thái về cha
@@ -28,7 +29,7 @@ const ButtonTime = ({ onTimePeriodChange }) => {
           }}
           onClick={() => handleButtonClick('month')}
         >
-          MONTH
+          {t['MONTH']}
         </Button>
       </Grid>
       <Grid item>
@@ -48,7 +49,7 @@ const ButtonTime = ({ onTimePeriodChange }) => {
           }}
           onClick={() => handleButtonClick('week')}
         >
-          WEEK
+          {t['WEEK']}
         </Button>
       </Grid>
       <Grid item>
@@ -66,7 +67,7 @@ const ButtonTime = ({ onTimePeriodChange }) => {
           }}
           onClick={() => handleButtonClick('day')}
         >
-          DAY
+          {t['DAY']}
         </Button>
       </Grid>
     </Grid>

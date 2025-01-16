@@ -12,11 +12,12 @@ import {
   Box,
 } from '@mui/material';
 import { req } from '@/utils/request';
+import { useTranslations } from '@/config/useTranslations';
 
 const HourlyOutputTable = ({ date }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const t = useTranslations();
   useEffect(() => {
     // Fetch data from the API
     req
@@ -110,7 +111,7 @@ const HourlyOutputTable = ({ date }) => {
                           fontSize: '11px',
                         }}
                       >
-                        Line
+                        {t['Line']}
                       </TableCell>
                       <TableCell
                         sx={{
@@ -119,7 +120,7 @@ const HourlyOutputTable = ({ date }) => {
                           fontSize: '11px',
                         }}
                       >
-                        Daily Target
+                        {t['Daily Target']}
                       </TableCell>
                       <TableCell
                         sx={{
@@ -128,7 +129,7 @@ const HourlyOutputTable = ({ date }) => {
                           fontSize: '11px',
                         }}
                       >
-                        Daily Actual
+                        {t['Daily Actual']}
                       </TableCell>
                       <TableCell
                         sx={{
@@ -137,7 +138,7 @@ const HourlyOutputTable = ({ date }) => {
                           fontSize: '11px',
                         }}
                       >
-                        Hourly Target
+                        {t['Hourly Target']}
                       </TableCell>
                       {[
                         '07:30-08:30',

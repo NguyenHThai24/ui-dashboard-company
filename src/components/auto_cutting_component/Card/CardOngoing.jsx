@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Typography, Box } from '@mui/material';
 import tableData from '../../../../public/data/testTableCallingKanban.json'; // Import dữ liệu bảng
+import { useTranslations } from '@/config/useTranslations';
 
 const CardOngoing = () => {
   const [totalOngoing, setTotalOngoing] = useState(0);
+  const t = useTranslations();
 
   useEffect(() => {
     // Tính tổng giá trị cột "TOTAL QTY"
@@ -30,7 +32,7 @@ const CardOngoing = () => {
           borderBottom: '4px solid #0098f5',
         }}
       >
-        ONGOING
+        {t['ONGOING']}
       </Typography>
       <Box
         display="flex"
@@ -46,7 +48,7 @@ const CardOngoing = () => {
             textAlign: 'center',
           }}
         >
-          {totalOngoing.toLocaleString()}{' '}
+          {totalOngoing?.toLocaleString()}{' '}
           {/* Hiển thị dạng số với dấu phân cách */}
         </Typography>
       </Box>

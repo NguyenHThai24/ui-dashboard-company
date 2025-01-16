@@ -8,11 +8,13 @@ import {
   CircularProgress,
   Typography,
 } from '@mui/material';
+import { useTranslations } from '@/config/useTranslations';
 
 const TotalActualOutput = () => {
   const [chartData, setChartData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const t = useTranslations();
 
   useEffect(() => {
     const fetchMockData = async () => {
@@ -116,12 +118,12 @@ const TotalActualOutput = () => {
 
   return (
     <div className="bg-white p-2 rounded-lg shadow-md ">
-      <h1 className="font-bold text-gray-500">TOTAL ACTUAL OUTPUT</h1>
+      <h1 className="font-bold text-gray-500">{t['TOTAL ACTUAL OUTPUT']}</h1>
       <div>
         <span className="font-bold text-3xl">53,577</span>
-        <span className="text-xs font-bold">PAIRS</span>
+        <span className="text-xs font-bold">{t['PAIRS']}</span>
       </div>
-      <p className="font-bold text-right">Taget: 66,800</p>
+      <p className="font-bold text-right">{t['TARGET']}: 66,800</p>
       <Card>
         <CardContent
           sx={{
@@ -142,7 +144,7 @@ const TotalActualOutput = () => {
             </Box>
           ) : error ? (
             <Typography color="error" align="center">
-              Error: {error}
+              {t['Error']}: {error}
             </Typography>
           ) : (
             <HighchartsReact highcharts={Highcharts} options={options} />

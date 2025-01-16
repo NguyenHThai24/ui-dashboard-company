@@ -13,9 +13,11 @@ import { fetchDailyRFT } from '@/apis/product_report_api/factoryAPI/DayAPI';
 import { fetchWeekRFT } from '@/apis/product_report_api/factoryAPI/WeekAPI';
 import { fetchMonthRFT } from '@/apis/product_report_api/factoryAPI/MonthAPI';
 import { setLoading, setError } from '@/redux/data_factory_redux/ReportSlice';
+import { useTranslations } from '@/config/useTranslations';
 
 const RFTChart = ({ selectedDate, timePeriod }) => {
   const dispatch = useDispatch();
+  const t = useTranslations();
   const { chartDataRFT, loading, error } = useSelector((state) => ({
     chartDataRFT: state.report.chartDataRFT,
     loading: state.report.loading,
@@ -49,13 +51,13 @@ const RFTChart = ({ selectedDate, timePeriod }) => {
   const getTitle = () => {
     switch (timePeriod) {
       case 'day':
-        return 'DAILY RFT';
+        return t['DAILY RFT'];
       case 'week':
-        return 'WEEKLY RFT';
+        return t['WEEKLY RFT'];
       case 'month':
-        return 'MONTHLY RFT';
+        return t['MONTHLY RFT'];
       default:
-        return 'TOTAL OUTPUT';
+        return t['TOTAL OUTPUT'];
     }
   };
 

@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Typography, Box } from '@mui/material';
 import tableData from '../../../../public/data/testTableCallingKanban.json'; // Import dữ liệu bảng
+import { useTranslations } from '@/config/useTranslations';
 
 const CardDone = () => {
   const [totalDone, setTotalDone] = useState(0);
-
+  const t = useTranslations();
   useEffect(() => {
     // Tính tổng giá trị cột "TOTAL QTY"
     const calculateTotalQty = () => {
-      const total = tableData.reduce((sum, row) => sum + (row.DONE || 0), 0);
+      const total = tableData?.reduce((sum, row) => sum + (row.DONE || 0), 0);
       setTotalDone(total);
     };
 
@@ -30,7 +31,7 @@ const CardDone = () => {
           borderBottom: '4px solid green',
         }}
       >
-        DONE
+        {t['DONE']}
       </Typography>
       <Box
         display="flex"
@@ -46,7 +47,7 @@ const CardDone = () => {
             textAlign: 'center',
           }}
         >
-          {totalDone.toLocaleString()}{' '}
+          {totalDone?.toLocaleString()}{' '}
           {/* Hiển thị dạng số với dấu phân cách */}
         </Typography>
       </Box>

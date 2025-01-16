@@ -21,6 +21,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import * as XLSX from 'xlsx';
+import { useTranslations } from '@/config/useTranslations';
 
 const useStyles = makeStyles({
   datePicker: {
@@ -39,6 +40,7 @@ const useStyles = makeStyles({
 });
 
 const DowntimeTableExcel = () => {
+  const t = useTranslations();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [startDate, setStartDate] = useState(dayjs().startOf('day'));
@@ -161,23 +163,23 @@ const DowntimeTableExcel = () => {
               <TableHead>
                 <TableRow>
                   {[
-                    'Breakdown Date',
-                    'Department',
-                    'Machine Asset Code',
-                    'Machine Specification',
-                    'Machine Name',
-                    'Mechanic',
-                    'Request Time',
-                    'Repairing Accept Time',
-                    'Repairing Start Time',
-                    'Repairing End Time',
-                    'Waiting Time (min)',
-                    'Repairing Time (min)',
-                    'Downtime (min)',
-                    'Issue',
-                    'Method',
-                    'Replaced Machine',
-                    'Accumulated Breakdown',
+                    t['Breakdown Date'],
+                    t['Department'],
+                    t['Machine Asset Code'],
+                    t['Machine Specification'],
+                    t['Machine Name'],
+                    t['Mechanic'],
+                    t['Request Time'],
+                    t['Repairing Accept Time'],
+                    t['Repairing Start Time'],
+                    t['Repairing End Time'],
+                    t['Waiting Time (min)'],
+                    t['Repairing Time (min)'],
+                    t['Downtime (min)'],
+                    t['Issue'],
+                    t['Method'],
+                    t['Replaced Machine'],
+                    t['Accumulated Breakdown'],
                   ].map((header) => (
                     <TableCell
                       key={header}

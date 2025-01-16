@@ -11,13 +11,14 @@ import { fetchDistinctFloor } from '@/apis/factory_kpi_api/FactoryAPI';
 
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ButtonCuttingFitting from '@/components/down_time_component/ButtonCuttingFitting';
+import { useTranslations } from '@/config/useTranslations';
 
 const FloorLineList = ({ onFloorChange, onLineChange }) => {
   const [data, setData] = useState([]);
   const [selectedFloor, setSelectedFloor] = useState(null);
   const [selectedLine, setSelectedLine] = useState(null);
   const [lines, setLines] = useState([]);
-
+  const t = useTranslations();
   useEffect(() => {
     const fetchData = async () => {
       const floors = await fetchDistinctFloor();
@@ -77,7 +78,7 @@ const FloorLineList = ({ onFloorChange, onLineChange }) => {
               fontSize: '13px',
             }}
           >
-            <p style={{ color: 'white' }}>Factory</p>
+            <p style={{ color: 'white' }}>{t['FACTORY']}</p>
             <ArrowForwardIosIcon sx={{ color: 'white', fontSize: '15px' }} />
           </Grid2>
           <Grid2 item sx={{ width: '70px', height: '42px' }}>
@@ -90,7 +91,7 @@ const FloorLineList = ({ onFloorChange, onLineChange }) => {
                 borderRadius: '5px',
               }}
             >
-              LHG
+              {t['LHG']}
             </Button>
           </Grid2>
         </Grid2>
@@ -113,7 +114,7 @@ const FloorLineList = ({ onFloorChange, onLineChange }) => {
             fontSize: '13px',
           }}
         >
-          <p style={{ color: 'white' }}>Floor</p>
+          <p style={{ color: 'white' }}>{t['Floor']}</p>
           <ArrowForwardIosIcon sx={{ color: 'white', fontSize: '15px' }} />
         </Grid2>
         <Grid2
@@ -186,7 +187,7 @@ const FloorLineList = ({ onFloorChange, onLineChange }) => {
             fontSize: '13px',
           }}
         >
-          <p style={{ color: 'white' }}>Line</p>
+          <p style={{ color: 'white' }}>{t['Line']}</p>
           <ArrowForwardIosIcon sx={{ color: 'white', fontSize: '15px' }} />
         </Grid2>
         <Grid2

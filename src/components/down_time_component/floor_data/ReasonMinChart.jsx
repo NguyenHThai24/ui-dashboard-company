@@ -18,6 +18,7 @@ import {
   Legend,
 } from 'chart.js';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslations } from '@/config/useTranslations';
 
 ChartJS.register(
   CategoryScale,
@@ -33,7 +34,7 @@ const ReasonMinChart = ({ floor, line, date }) => {
     (state) => state.downtime
   );
   const dispatch = useDispatch();
-
+  const t = useTranslations();
   useEffect(() => {
     dispatch(
       fetchChartReasonMin(
@@ -117,7 +118,7 @@ const ReasonMinChart = ({ floor, line, date }) => {
       <Typography
         sx={{ fontWeight: 'bold', color: 'gray', fontSize: '15px', p: 1 }}
       >
-        Most Downtime By Reason (Min)
+        {t['Most Downtime By Reason (Min)']}
       </Typography>
       <CardContent
         sx={{

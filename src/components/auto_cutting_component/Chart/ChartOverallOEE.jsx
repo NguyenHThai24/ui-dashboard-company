@@ -8,6 +8,28 @@ import {
 } from 'recharts';
 import { Box, Card, Typography, CircularProgress } from '@mui/material';
 import { getAutoCuttingUrl } from '../../../apis/auto_cutting_api/AutoCuttingAPI';
+import { useTranslations } from '@/config/useTranslations';
+
+// Đảm bảo đăng ký các thành phần của Chart.js
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  RadialLinearScale,
+  ArcElement,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+
+// Đăng ký các thành phần cần thiết
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  RadialLinearScale,
+  ArcElement,
+  Tooltip,
+  Legend
+);
 
 const OverallOEE = ({ date }) => {
   const [loading, setLoading] = useState(false);
@@ -17,6 +39,7 @@ const OverallOEE = ({ date }) => {
   const [newPerformance, setNewPerformance] = useState(0);
   const [newQuality, setNewQuality] = useState(0);
   const [chartData, setChartData] = useState([]);
+  const t = useTranslations();
 
   useEffect(() => {
     if (!date) return; // If no date, skip fetching data
@@ -125,7 +148,7 @@ const OverallOEE = ({ date }) => {
           borderBottom: '2px solid green',
         }}
       >
-        OVERALL OEE
+        {t['OVERALL OEE']}
       </Typography>
       {loading ? (
         <Box
@@ -149,14 +172,15 @@ const OverallOEE = ({ date }) => {
           </Box>
           <Box display="" justifyContent="space-around" marginTop="30px">
             <Typography>
-              Availability:{' '}
+              {t['Availability']}:{' '}
               <span className="font-bold">{newAvailability}%</span>
             </Typography>
             <Typography>
-              Performance: <span className="font-bold">{newPerformance}%</span>
+              {t['Performance']}:{' '}
+              <span className="font-bold">{newPerformance}%</span>
             </Typography>
             <Typography>
-              Quality: <span className="font-bold">{newQuality}%</span>
+              {t['Quality']}: <span className="font-bold">{newQuality}%</span>
             </Typography>
           </Box>
           <Box width="100%" height="50%">

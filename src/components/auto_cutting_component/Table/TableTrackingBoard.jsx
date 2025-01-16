@@ -22,9 +22,11 @@ import CardOngoingQuality from '../Card/CardOngoingQuality';
 import CardFinishedQuality from '../Card/CardFinishedQuality';
 import tableData from '../../../../public/data/testTableData.json';
 
+import { useTranslations } from '@/config/useTranslations';
 const TableTrackingBoard = () => {
   // section 1
   const [name, setName] = useState('all'); // Default to "All"
+  const t = useTranslations();
 
   const handleChange = (event) => {
     setName(event.target.value);
@@ -46,13 +48,13 @@ const TableTrackingBoard = () => {
           borderBottom: '2px solid green',
         }}
       >
-        DAILY PO TRACKING BOARD
+        {t['DAILY PO TRACKING BOARD']}
       </Typography>
       <section className="flex gap-4">
         <div className="">
           <div className="flex item-center my-4">
             <Typography sx={{ mr: 0.5, fontWeight: 'bold', fontSize: '15px' }}>
-              Machine:
+              {t['MACHINE']}:
             </Typography>
             <Box sx={{}}>
               <FormControl fullWidth>
@@ -67,7 +69,7 @@ const TableTrackingBoard = () => {
                     width: 180, // Width
                   }}
                 >
-                  <MenuItem value="all">All</MenuItem>
+                  <MenuItem value="all">{t['All']}</MenuItem>
                   <MenuItem value={10}>Machine 1</MenuItem>
                   <MenuItem value={20}>Machine 2</MenuItem>
                   <MenuItem value={30}>Machine 3</MenuItem>
@@ -77,7 +79,7 @@ const TableTrackingBoard = () => {
           </div>
           <div className="flex item-center my-4">
             <Typography sx={{ mr: 0.5, fontWeight: 'bold', fontSize: '15px' }}>
-              Article:
+              {t['ARTICLE']}:
             </Typography>
             <TextField
               id="outlined-basic"
@@ -107,7 +109,7 @@ const TableTrackingBoard = () => {
         <div>
           <div className="flex item-center my-4">
             <Typography sx={{ mr: 0.5, fontWeight: 'bold', fontSize: '15px' }}>
-              RY:
+              {t['RY']}:
             </Typography>
             <TextField
               id="outlined-basic"
@@ -134,7 +136,7 @@ const TableTrackingBoard = () => {
           </div>
 
           <Button variant="contained" sx={{ height: 30 }}>
-            Search
+            {t['SEARCH']}
           </Button>
         </div>
       </section>
@@ -175,16 +177,16 @@ const TableTrackingBoard = () => {
                 }}
               >
                 {[
-                  'MACHINE',
-                  'ARTICLE',
-                  'MODEL NAME',
-                  'COMPONENT',
-                  'RY',
-                  'STITCHING DATE',
-                  'TOTAL QTY',
-                  'ONGOING QTY',
-                  'FINISHED QTY',
-                ].map((header) => (
+                  t['MACHINE'],
+                  t['ARTICLE'],
+                  t['MODEL NAME'],
+                  t['COMPONENT'],
+                  t['RY'],
+                  t['STITCHING DATE'],
+                  t['TOTAL QTY'],
+                  t['ONGOING QTY'],
+                  t['FINISHED QTY'],
+                ]?.map((header) => (
                   <TableCell
                     key={header}
                     style={{

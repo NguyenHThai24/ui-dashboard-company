@@ -13,13 +13,14 @@ import ChartDataLabels from 'chartjs-plugin-datalabels'; // Import plugin
 import { useDispatch, useSelector } from 'react-redux';
 
 ChartJS.register(ArcElement, Tooltip, Title, Legend, ChartDataLabels); // Register plugin
+import { useTranslations } from '@/config/useTranslations';
 
 const TotalReasonChart = ({ floor, line, date }) => {
   const { chartTotalReason, loading, error } = useSelector(
     (state) => state.downtime
   );
   const dispatch = useDispatch();
-
+  const t = useTranslations();
   useEffect(() => {
     dispatch(
       fetchChartTotalReason(
@@ -108,7 +109,7 @@ const TotalReasonChart = ({ floor, line, date }) => {
       <Typography
         sx={{ fontWeight: 'bold', color: 'gray', fontSize: '15px', p: 1 }}
       >
-        Most Breakdown By Reason
+        {t['Most Breakdown By Reason']}
       </Typography>
       <CardContent
         sx={{

@@ -7,11 +7,13 @@ import {
   CircularProgress,
   Alert,
 } from '@mui/material';
+import { useTranslations } from '@/config/useTranslations';
 
 const CardMachineDown = ({ floor, date, line }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [total, setTotal] = useState(0);
+  const t = useTranslations();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,7 +57,7 @@ const CardMachineDown = ({ floor, date, line }) => {
         component="div"
         sx={{ fontWeight: 'bold', color: 'gray', fontSize: '15px' }}
       >
-        Total Machine Downtime (Min)
+        {t['TOTAL MACHINE DOWNTIME']}
       </Typography>
       <CardContent
         sx={{
@@ -86,7 +88,7 @@ const CardMachineDown = ({ floor, date, line }) => {
                   paddingBottom: 1.5,
                 }}
               >
-                TOTAL
+                {t['TOTAL']}
               </Typography>
               <Typography
                 variant="h4"
@@ -114,7 +116,7 @@ const CardMachineDown = ({ floor, date, line }) => {
                   paddingBottom: 1.5,
                 }}
               >
-                AVERAGE
+                {t['AVERAGE']}
               </Typography>
               <Typography
                 variant="h4"

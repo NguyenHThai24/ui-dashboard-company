@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import HomeWorkIcon from '@mui/icons-material/HomeWork';
+import { useTranslations } from '@/config/useTranslations';
 
 const BuildingSelector = ({ onBuildingChange }) => {
   const [selectedBuilding, setSelectedBuilding] = useState('A');
-
+  const t = useTranslations();
   const buildings = ['A', 'B', 'C', 'G'];
 
   const handleBuildingClick = (building) => {
@@ -32,7 +33,9 @@ const BuildingSelector = ({ onBuildingChange }) => {
               color: selectedBuilding === building ? 'white' : '#1a5c1d',
             }}
           />
-          <span>Building {building}</span>
+          <span>
+            {t['Building']} {building}
+          </span>
         </button>
       ))}
     </div>

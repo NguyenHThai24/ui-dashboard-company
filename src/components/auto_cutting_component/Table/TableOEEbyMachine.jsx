@@ -13,11 +13,13 @@ import {
   Box,
 } from '@mui/material';
 import { getAutoCuttingUrl } from '../../../apis/auto_cutting_api/AutoCuttingAPI';
+import { useTranslations } from '@/config/useTranslations';
 
 const TableOEEbyMachine = ({ date }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const t = useTranslations();
 
   const fetchData = async () => {
     if (!date) return; // Chỉ tải nếu có giá trị `date`
@@ -90,7 +92,7 @@ const TableOEEbyMachine = ({ date }) => {
           marginBottom: '2px',
         }}
       >
-        OEE BY MACHINE
+        {t['OEE BY MACHINE']}
       </Typography>
       {loading ? (
         <Box
@@ -130,16 +132,16 @@ const TableOEEbyMachine = ({ date }) => {
             <TableHead>
               <TableRow sx={{ textTransform: 'uppercase' }}>
                 {[
-                  'MACHINE',
-                  'UP TIME',
-                  'TOTAL DOWNTIME',
-                  'AVAILABLE TIME',
-                  'AVAILABILITY (%)',
-                  'Theoretical Output',
-                  'ActualOutput',
-                  'Performance Factor (%)',
-                  'Defect',
-                  'OEE (%)',
+                  t['MACHINE'],
+                  t['UP TIME'],
+                  t['TOTAL DOWNTIME'],
+                  t['AVAILABLE TIME'],
+                  t['AVAILABILITY (%)'],
+                  t['Theoretical Output'],
+                  t['ActualOutput'],
+                  t['Performance Factor (%)'],
+                  t['Defect'],
+                  t['OEE (%)'],
                 ].map((header) => (
                   <TableCell
                     key={header}

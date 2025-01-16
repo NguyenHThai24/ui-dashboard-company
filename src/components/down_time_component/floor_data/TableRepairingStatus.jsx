@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTableRepairingStatus } from '../../../apis/down_time_api/FloorAPI';
+import { useTranslations } from '@/config/useTranslations';
 
 const MechanicTable = ({ floor, date, line }) => {
   const { tableRepairing, loading, error } = useSelector(
@@ -18,7 +19,7 @@ const MechanicTable = ({ floor, date, line }) => {
   );
 
   const dispatch = useDispatch();
-
+  const t = useTranslations();
   useEffect(() => {
     dispatch(
       fetchTableRepairingStatus(
@@ -64,20 +65,20 @@ const MechanicTable = ({ floor, date, line }) => {
           textAlign: 'center',
         }}
       >
-        REPAIRING QUEUE
+        {t['REPAIRING QUEUE']}
       </Typography>
 
       <div className="grid grid-cols-3 border-4 text-center text-lg p-1 my-2">
         <div className="grid grid-rows-2 bg-red-500">
-          <div className="border-b-4">WAITING</div>
+          <div className="border-b-4">{t['WAITING']}</div>
           <div>{counts.waiting}</div>
         </div>
         <div className="grid grid-rows-2 bg-yellow-500">
-          <div className="border-b-4">REPAIRING</div>
+          <div className="border-b-4">{t['REPAIRING']}</div>
           <div>{counts.repairing}</div>
         </div>
         <div className="grid grid-rows-2 bg-green-500">
-          <div className="border-b-4">DONE</div>
+          <div className="border-b-4">{t['DONE']}</div>
           <div>{counts.done}</div>
         </div>
       </div>
@@ -120,14 +121,14 @@ const MechanicTable = ({ floor, date, line }) => {
             color="error"
             sx={{ textAlign: 'center', padding: '20px' }}
           >
-            Error: {error}
+            {t['Error']}: {error}
           </Typography>
         ) : !tableRepairing || tableRepairing.Name_en.length === 0 ? (
           <Typography
             variant="body1"
             sx={{ textAlign: 'center', padding: '20px' }}
           >
-            No data available
+            {t['No data available']}
           </Typography>
         ) : (
           <Table
@@ -154,22 +155,22 @@ const MechanicTable = ({ floor, date, line }) => {
             >
               <TableRow>
                 <TableCell sx={{ fontSize: '13px', width: '150px' }}>
-                  Line
+                  {t['Line']}
                 </TableCell>
                 <TableCell sx={{ fontSize: '13px', width: '500px' }}>
-                  Machine Name
+                  {t['Machine Name']}
                 </TableCell>
                 <TableCell sx={{ fontSize: '13px', width: '150px' }}>
-                  Request Time
+                  {t['Request Time']}
                 </TableCell>
                 <TableCell sx={{ fontSize: '13px', width: '150px' }}>
-                  Waiting
+                  {t['Waiting']}
                 </TableCell>
                 <TableCell sx={{ fontSize: '13px', width: '150px' }}>
-                  Repairing
+                  {t['Repairing']}
                 </TableCell>
                 <TableCell sx={{ fontSize: '13px', width: '150px' }}>
-                  Done
+                  {t['Done']}
                 </TableCell>
               </TableRow>
             </TableHead>

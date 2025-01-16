@@ -8,12 +8,13 @@ import {
   CircularProgress,
   Typography,
 } from '@mui/material';
+import { useTranslations } from '@/config/useTranslations';
 
 const TotalManpowerChart = ({ selectedDate, timeFrame }) => {
   const [chartData, setChartData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const t = useTranslations();
   useEffect(() => {
     setLoading(true);
 
@@ -139,7 +140,7 @@ const TotalManpowerChart = ({ selectedDate, timeFrame }) => {
             </Box>
           ) : error ? (
             <Typography color="error" align="center">
-              Error: {error}
+              {t['Error']}: {error}
             </Typography>
           ) : (
             <HighchartsReact highcharts={Highcharts} options={options} />

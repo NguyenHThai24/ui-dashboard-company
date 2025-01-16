@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Typography, CircularProgress, Box, Grid } from '@mui/material';
 import { getAutoCuttingUrl } from '../../../apis/auto_cutting_api/AutoCuttingAPI';
+import { useTranslations } from '@/config/useTranslations';
 
 const CardPerformance = ({ date }) => {
   const [data, setData] = useState([]);
@@ -9,6 +10,7 @@ const CardPerformance = ({ date }) => {
   const [error, setError] = useState('');
   const [totalActualOutput, setTotalActualOutput] = useState(0);
   const [totalTheoreticalOutput, setTotalTheoreticalOutput] = useState(0);
+  const t = useTranslations();
 
   const formatNumber = (value) =>
     Number.isInteger(value) ? value : value.toFixed(0);
@@ -67,7 +69,7 @@ const CardPerformance = ({ date }) => {
           borderBottom: '2px solid green',
         }}
       >
-        PERFORMANCE
+        {t['PERFORMANCE']}
       </Typography>
       {loading ? (
         <Box
@@ -100,7 +102,7 @@ const CardPerformance = ({ date }) => {
                 fontSize: '14px',
               }}
             >
-              TOTAL ACTUAL OUTPUT
+              {t['TOTAL ACTUAL OUTPUT']}
             </Typography>
             <Typography
               variant="h5"
@@ -130,7 +132,7 @@ const CardPerformance = ({ date }) => {
                 fontSize: '14px',
               }}
             >
-              TOTAL THEORETICAL OUTPUT
+              {t['TOTAL THEORETICAL OUTPUT']}
             </Typography>
             <Typography
               variant="h5"

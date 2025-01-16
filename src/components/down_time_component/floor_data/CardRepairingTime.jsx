@@ -7,11 +7,13 @@ import {
   CircularProgress,
   Alert,
 } from '@mui/material';
+import { useTranslations } from '@/config/useTranslations';
 
 const CardRepairingTime = ({ floor, date, line }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [total, setTotal] = useState(0);
+  const t = useTranslations();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,7 +64,7 @@ const CardRepairingTime = ({ floor, date, line }) => {
           component="div"
           sx={{ fontWeight: 'bold', color: 'gray', fontSize: '15px' }}
         >
-          Total Repairing Time (Min)
+          {t['TOTAL REPAIRING TIME']}
         </Typography>
 
         {loading ? (

@@ -18,6 +18,7 @@ import {
   Legend,
 } from 'chart.js';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslations } from '@/config/useTranslations';
 
 ChartJS.register(
   CategoryScale,
@@ -33,7 +34,7 @@ const MostRepairingChart = ({ floor, line, date }) => {
     (state) => state.downtime
   );
   const dispatch = useDispatch();
-
+  const t = useTranslations();
   useEffect(() => {
     dispatch(
       fetchChartMostRepairing(
@@ -117,7 +118,7 @@ const MostRepairingChart = ({ floor, line, date }) => {
       <Typography
         sx={{ fontWeight: 'bold', color: 'gray', fontSize: '15px', p: 1 }}
       >
-        Most Repairing Time By Machine Type (Min)
+        {t['Most Repairing Time By Machine Type (Min)']}
       </Typography>
       <CardContent
         sx={{

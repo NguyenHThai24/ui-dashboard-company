@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts';
-import { useTranslations } from '../../config/useTranslations';
+import { useTranslations } from '@/config/useTranslations';
 
 const EfficiencyByFloor = () => {
   const [data, setData] = useState(null);

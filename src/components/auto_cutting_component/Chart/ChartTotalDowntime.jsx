@@ -1,13 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
 import { CircularProgress, Typography, Box } from '@mui/material';
 import { getAutoCuttingUrl } from '../../../apis/auto_cutting_api/AutoCuttingAPI';
+import { useTranslations } from '@/config/useTranslations';
+
+// Đảm bảo đăng ký các phần tử của Chart.js
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+
+// Đăng ký các phần tử cần thiết của Chart.js
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const ChartTotalDowntime = ({ date }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const t = useTranslations();
 
   const fetchData = async () => {
     if (!date) return;
@@ -63,9 +86,13 @@ const ChartTotalDowntime = ({ date }) => {
     plugins: {
       legend: false,
     },
-
     scales: {
-      x: false,
+      x: {
+        title: {
+          display: true,
+          text: 'Layer', // Tên cho trục x
+        },
+      },
       y: {
         title: {
           display: true,
@@ -98,14 +125,14 @@ const ChartTotalDowntime = ({ date }) => {
           borderBottom: '2px solid green',
         }}
       >
-        TOTAL DOWNTIME BY MACHINE
+        {t['TOTAL DOWNTIME BY MACHINE']}
       </Typography>
       {loading ? (
         <Box
           display="flex"
           justifyContent="center"
           alignItems="center"
-          minHeight="100vh"
+          height="100%"
         >
           <CircularProgress />
         </Box>

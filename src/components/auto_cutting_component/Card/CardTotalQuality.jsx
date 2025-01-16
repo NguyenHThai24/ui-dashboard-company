@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Typography, Box } from '@mui/material';
 import tableData from '../../../../public/data/testTableData.json'; // Import dữ liệu bảng
+import { useTranslations } from '@/config/useTranslations';
 
 const CardTotalQuality = () => {
   const [totalQty, setTotalQty] = useState(0);
-
+  const t = useTranslations();
   useEffect(() => {
     // Tính tổng giá trị cột "TOTAL QTY"
     const calculateTotalQty = () => {
@@ -33,7 +34,7 @@ const CardTotalQuality = () => {
           borderBottom: '2px solid green',
         }}
       >
-        Total Qty (PO)
+        {t['Total Qty (PO)']}
       </Typography>
       <Box
         display="flex"
@@ -49,7 +50,8 @@ const CardTotalQuality = () => {
             textAlign: 'center',
           }}
         >
-          {totalQty.toLocaleString()} {/* Hiển thị dạng số với dấu phân cách */}
+          {totalQty?.toLocaleString()}{' '}
+          {/* Hiển thị dạng số với dấu phân cách */}
         </Typography>
       </Box>
     </div>

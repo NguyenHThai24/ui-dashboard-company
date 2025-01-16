@@ -3,13 +3,14 @@ import Calendar from '@/components/product_report_component/common_product_repor
 import { Button, Grid } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import dayjs from 'dayjs';
+import { useTranslations } from '@/config/useTranslations';
 
 const HeaderProductReport = ({ selectedDate, setSelectedDate }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [tempDate, setTempDate] = useState(selectedDate || dayjs()); // Trạng thái tạm cho Calendar
   const [selectedButton, setSelectedButton] = useState('factory'); // Mặc định là "factory"
-
+  const t = useTranslations();
   // Đồng bộ trạng thái từ URL khi component được render
   useEffect(() => {
     const path = location.pathname;
@@ -53,7 +54,7 @@ const HeaderProductReport = ({ selectedDate, setSelectedDate }) => {
             }}
             onClick={handleFactoryClick}
           >
-            FACTORY
+            {t['FACTORY']}
           </Button>
         </Grid>
         <Grid item>
@@ -68,7 +69,7 @@ const HeaderProductReport = ({ selectedDate, setSelectedDate }) => {
             }}
             onClick={handleBuildingClick}
           >
-            BUILDING
+            {t['BUILDING']}
           </Button>
         </Grid>
         <Grid item>
@@ -89,7 +90,7 @@ const HeaderProductReport = ({ selectedDate, setSelectedDate }) => {
             }}
             onClick={handleSearchClick}
           >
-            SEARCH
+            {t['SEARCH']}
           </Button>
         </Grid>
       </Grid>

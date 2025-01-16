@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { fetchFloorDataS } from '@/apis/factory_kpi_api/FactoryAPI';
 import { fetchFloorData } from '@/apis/factory_kpi_api/FactoryFloorAPI';
-import { useTranslations } from '../../config/useTranslations';
+import { useTranslations } from '@/config/useTranslations';
 
 const AttendanceByFloor = ({ date, floor }) => {
   const [chartData, setChartData] = useState([]);

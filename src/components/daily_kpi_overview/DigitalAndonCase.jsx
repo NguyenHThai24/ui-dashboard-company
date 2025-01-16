@@ -9,10 +9,13 @@ import {
   Typography,
 } from '@mui/material';
 
+import { useTranslations } from '@/config/useTranslations';
+
 const DigitalAndonCase = () => {
   const [chartData, setChartData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const t = useTranslations();
 
   useEffect(() => {
     const fetchMockData = async () => {
@@ -108,7 +111,7 @@ const DigitalAndonCase = () => {
 
   return (
     <div className="bg-white p-2 rounded-lg shadow-md ">
-      <h1 className="font-bold text-gray-500">DIGITAL ANDON CASES</h1>
+      <h1 className="font-bold text-gray-500">{t['DIGITAL ANDON CASES']}</h1>
       <div>
         <span className="font-bold text-3xl">19 TIMES</span>
       </div>
@@ -132,7 +135,7 @@ const DigitalAndonCase = () => {
             </Box>
           ) : error ? (
             <Typography color="error" align="center">
-              Error: {error}
+              {t['Error']}: {error}
             </Typography>
           ) : (
             <HighchartsReact highcharts={Highcharts} options={options} />

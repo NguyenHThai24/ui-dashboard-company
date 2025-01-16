@@ -7,11 +7,15 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
+import { useTranslations } from '@/config/useTranslations';
 
 const FloorEfficiencySummary = () => {
+  const t = useTranslations();
   return (
     <div className="rounded-md p-2 bg-white my-4">
-      <h1 className="pb-6 pl-3 font-bold text-xl">Floor Efficiency Summary</h1>
+      <h1 className="pb-6 pl-3 font-bold text-xl">
+        {t['Floor Efficiency Summary']}
+      </h1>
       <TableContainer
         sx={{
           maxHeight: '400px', // Giới hạn chiều cao
@@ -75,7 +79,7 @@ const FloorEfficiencySummary = () => {
                   padding: '6px', // Giảm padding
                 }}
               >
-                Floor
+                {t['Floor']}
               </TableCell>
               <TableCell
                 rowSpan={2}
@@ -87,7 +91,7 @@ const FloorEfficiencySummary = () => {
                   padding: '6px', // Giảm padding
                 }}
               >
-                Baseline
+                {t['Baseline']}
               </TableCell>
               {Array.from({ length: 26 }, () => (
                 <>
@@ -100,7 +104,7 @@ const FloorEfficiencySummary = () => {
                       padding: '6px', // Giảm padding
                     }}
                   >
-                    EFF
+                    {t['EFF']}
                   </TableCell>
                   <TableCell
                     align="center"
@@ -111,7 +115,7 @@ const FloorEfficiencySummary = () => {
                       padding: '6px', // Giảm padding
                     }}
                   >
-                    RFT
+                    {t['RFT']}
                   </TableCell>
                 </>
               ))}

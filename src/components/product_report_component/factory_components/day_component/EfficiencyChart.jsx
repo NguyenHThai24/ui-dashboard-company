@@ -14,9 +14,11 @@ import { fetchWeekEfficiency } from '@/apis/product_report_api/factoryAPI/WeekAP
 import { fetchMonthEfficiency } from '@/apis/product_report_api/factoryAPI/MonthAPI';
 
 import { setLoading, setError } from '@/redux/data_factory_redux/ReportSlice';
+import { useTranslations } from '@/config/useTranslations';
 
 const EfficiencyChart = ({ selectedDate, timePeriod }) => {
   const dispatch = useDispatch();
+  const t = useTranslations();
 
   const { chartDataEfficiency, loading, error } = useSelector((state) => ({
     chartDataEfficiency: state.report.chartDataEfficiency, // Lấy chartDataDailyEfficiency từ state của Redux
@@ -50,13 +52,13 @@ const EfficiencyChart = ({ selectedDate, timePeriod }) => {
   const getTitle = () => {
     switch (timePeriod) {
       case 'day':
-        return 'DAILY EFFICIENCY';
+        return t['DAILY EFFICIENCY'];
       case 'week':
-        return 'WEEKLY EFFICIENCY';
+        return t['WEEKLY EFFICIENCY'];
       case 'month':
-        return 'MONTHLY EFFICIENCY';
+        return t['MONTHLY EFFICIENCY'];
       default:
-        return 'TOTAL OUTPUT';
+        return t['TOTAL OUTPUT'];
     }
   };
 

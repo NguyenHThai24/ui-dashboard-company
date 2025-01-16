@@ -1,9 +1,11 @@
-import { Typography, CircularProgress, Box } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 import tableData from '../../../../public/data/testTableData.json'; // Import dữ liệu bảng
+import { useTranslations } from '@/config/useTranslations';
 
 const CardOngoingQuality = ({ date }) => {
   const [totalOngoing, setTotalOngoing] = useState(0);
+  const t = useTranslations();
 
   useEffect(() => {
     const calculateTotalOngoing = () => {
@@ -31,7 +33,7 @@ const CardOngoingQuality = ({ date }) => {
           borderBottom: '2px solid green',
         }}
       >
-        Total Qty (PO)
+        {t['Total Qty (PO)']}
       </Typography>
       <Box
         display="flex"
@@ -47,7 +49,7 @@ const CardOngoingQuality = ({ date }) => {
             textAlign: 'center',
           }}
         >
-          {totalOngoing.toLocaleString()}{' '}
+          {totalOngoing?.toLocaleString()}{' '}
           {/* Hiển thị dạng số với dấu phân cách */}
         </Typography>
       </Box>

@@ -6,6 +6,7 @@ import LanguageIcon from '@mui/icons-material/Language';
 import enFlag from '@public/images/English.png';
 import viFlag from '@public/images/VN.png';
 import myanmarFlag from '@public/images/flag-myanmar.png';
+import taiwanFlag from '../../../public/images/flag-taiwan.png';
 
 const LanguageSelector = () => {
   const language = useSelector((state) => state.language.language); // Lấy ngôn ngữ từ Redux
@@ -34,6 +35,8 @@ const LanguageSelector = () => {
         return 'Việt Nam';
       case 'myanmar':
         return 'Myanmar';
+      case 'taiwan':
+        return 'Taiwan';
       default:
         return 'Language';
     }
@@ -47,6 +50,8 @@ const LanguageSelector = () => {
         return <img src={viFlag} alt="Vietnam Flag" className="w-5" />;
       case 'myanmar':
         return <img src={myanmarFlag} alt="Myanmar Flag" className="w-5" />;
+      case 'taiwan':
+        return <img src={taiwanFlag} alt="Taiwan Flag" className="w-5" />;
       default:
         return <LanguageIcon />;
     }
@@ -81,9 +86,17 @@ const LanguageSelector = () => {
             className="w-5"
             style={{ marginRight: 8 }}
           />
-          Việt Nam
+          Vietnamese
         </MenuItem>
-
+        <MenuItem onClick={() => handleLanguageChange('taiwan')}>
+          <img
+            src={taiwanFlag}
+            alt="Taiwal Flag"
+            className="w-5"
+            style={{ marginRight: 8 }}
+          />
+          Taiwan
+        </MenuItem>
         <MenuItem onClick={() => handleLanguageChange('en')}>
           <img
             src={enFlag}

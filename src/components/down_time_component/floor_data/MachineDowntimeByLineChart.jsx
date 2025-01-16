@@ -18,6 +18,7 @@ import {
   Legend,
 } from 'chart.js';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslations } from '@/config/useTranslations';
 
 ChartJS.register(
   CategoryScale,
@@ -33,7 +34,7 @@ const MachineDowntimeByLineChart = ({ floor, line, date }) => {
     (state) => state.downtime
   );
   const dispatch = useDispatch();
-
+  const t = useTranslations();
   useEffect(() => {
     dispatch(
       fetchChartDataFixed(
@@ -98,7 +99,7 @@ const MachineDowntimeByLineChart = ({ floor, line, date }) => {
       <Typography
         sx={{ fontWeight: 'bold', color: 'gray', fontSize: '15px', p: 1 }}
       >
-        Machine Downtime By Line (Min)
+        {t['Machine Downtime By Line (Min)']}
       </Typography>
       <CardContent
         sx={{

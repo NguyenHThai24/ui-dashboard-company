@@ -1,6 +1,8 @@
 import { Card, Typography } from '@mui/material';
+import { useTranslations } from '@/config/useTranslations';
 
 const CardAverageRFT = () => {
+  const t = useTranslations();
   return (
     <Card
       sx={{
@@ -26,7 +28,7 @@ const CardAverageRFT = () => {
         color="text.secondary"
         sx={{ fontWeight: 900, fontSize: 12, textAlign: 'left' }}
       >
-        AVERAGE RFT
+        {t['AVERAGE RFT']}
       </Typography>
       <Typography
         sx={{

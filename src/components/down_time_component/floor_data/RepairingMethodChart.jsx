@@ -11,6 +11,7 @@ import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Title, Legend } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels'; // Import plugin
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslations } from '@/config/useTranslations';
 
 ChartJS.register(ArcElement, Tooltip, Title, Legend, ChartDataLabels); // Register plugin
 
@@ -19,7 +20,7 @@ const RepairingMethodChart = ({ floor, line, date }) => {
     (state) => state.downtime
   );
   const dispatch = useDispatch();
-
+  const t = useTranslations();
   useEffect(() => {
     dispatch(
       fetchChartRepairingMethod(
@@ -108,7 +109,7 @@ const RepairingMethodChart = ({ floor, line, date }) => {
       <Typography
         sx={{ fontWeight: 'bold', color: 'gray', fontSize: '15px', p: 1 }}
       >
-        Most Repairing Time By Method (Min)
+        {t['Most Repairing Time By Method (Min)']}
       </Typography>
       <CardContent
         sx={{

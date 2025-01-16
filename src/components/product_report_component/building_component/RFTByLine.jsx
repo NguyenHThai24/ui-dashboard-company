@@ -11,9 +11,12 @@ import {
 } from '@mui/material';
 import { fetchRFTByLine } from '@/apis/product_report_api/buildingAPI/BuildingAPI';
 import { setLoading, setError } from '@/redux/loading/loadingSlice';
+import { useTranslations } from '@/config/useTranslations';
 
 const RFTByLine = ({ selectedDate, selectedBuilding }) => {
   const dispatch = useDispatch();
+  const t = useTranslations();
+
   const { chartDataRFT, loading, error } = useSelector((state) => ({
     chartDataRFT: state.building.chartDataRFT,
     loading: state.building.loading,
@@ -144,7 +147,7 @@ const RFTByLine = ({ selectedDate, selectedBuilding }) => {
             textAlign: 'center',
           }}
         >
-          Building {selectedBuilding}: RFT By Line
+          {t['Building']} {selectedBuilding}: {t['RFT By Line']}
         </Typography>
         {loading ? (
           <Box
@@ -158,7 +161,7 @@ const RFTByLine = ({ selectedDate, selectedBuilding }) => {
           </Box>
         ) : error ? (
           <Typography color="error" align="center">
-            Error: {error}
+            {t['Error']}: {error}
           </Typography>
         ) : (
           <HighchartsReact highcharts={Highcharts} options={options} />

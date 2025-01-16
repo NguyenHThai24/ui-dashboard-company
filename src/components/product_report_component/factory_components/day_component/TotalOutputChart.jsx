@@ -15,10 +15,11 @@ import { fetchWeekTotalOutput } from '@/apis/product_report_api/factoryAPI/WeekA
 import { fetchMonthTotalOutput } from '@/apis/product_report_api/factoryAPI/MonthAPI';
 
 import { setLoading, setError } from '@/redux/data_factory_redux/ReportSlice';
+import { useTranslations } from '@/config/useTranslations';
 
 const TotalOutputChart = ({ selectedDate, timePeriod }) => {
   const dispatch = useDispatch();
-
+  const t = useTranslations();
   const { chartData, loading, error } = useSelector((state) => ({
     chartData: state.report.chartData,
     loading: state.report.loading,
@@ -56,13 +57,13 @@ const TotalOutputChart = ({ selectedDate, timePeriod }) => {
   const getTitle = () => {
     switch (timePeriod) {
       case 'day':
-        return 'DAILY TOTAL OUTPUT';
+        return t['DAILY TOTAL OUTPUT'];
       case 'week':
-        return 'WEEKLY TOTAL OUTPUT';
+        return t['WEEKLY TOTAL OUTPUT'];
       case 'month':
-        return 'MONTHLY TOTAL OUTPUT';
+        return t['MONTHLY TOTAL OUTPUT'];
       default:
-        return 'TOTAL OUTPUT';
+        return t['TOTAL OUTPUT'];
     }
   };
 

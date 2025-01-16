@@ -10,25 +10,16 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
 
-import CardTotalQuality from '../Card/CardTotalQuality';
-import CardOngoingQuality from '../Card/CardOngoingQuality';
-import CardFinishedQuality from '../Card/CardFinishedQuality';
 import testTableCallingKanban from '../../../../public/data/testTableCallingKanban.json';
 import CardRequest from '../Card/CardRequest';
 import CardOngoing from '../Card/CardOngoing';
 import CardDone from '../Card/CardDone';
+import { useTranslations } from '@/config/useTranslations';
 
 const TableCallingKanban = () => {
-  // section 1
-  const [name, setName] = useState('all'); // Default to "All"
+  const t = useTranslations();
 
-  const handleChange = (event) => {
-    setName(event.target.value);
-  };
-
-  // section 2
   return (
     <section className="bg-white rounded-lg p-4">
       <Typography
@@ -44,13 +35,13 @@ const TableCallingKanban = () => {
           borderBottom: '2px solid green',
         }}
       >
-        MATERIAL CALLING KANBAN
+        {t['MATERIAL CALLING KANBAN']}
       </Typography>
       <section className="flex gap-4 items-center my-4">
         <div className="flex gap-4 items-center">
           <div className="flex items-center">
             <Typography sx={{ mr: 0.5, fontWeight: 'bold', fontSize: '15px' }}>
-              RY:
+              {t['RY']}:
             </Typography>
             <TextField
               id="ry-input"
@@ -77,7 +68,7 @@ const TableCallingKanban = () => {
 
           <div className="flex items-center">
             <Typography sx={{ mr: 0.5, fontWeight: 'bold', fontSize: '15px' }}>
-              Material ID:
+              {t['MATERIAL ID']}:
             </Typography>
             <TextField
               id="material-id-input"
@@ -103,7 +94,7 @@ const TableCallingKanban = () => {
           </div>
 
           <Button variant="contained" sx={{ height: 30 }}>
-            Search
+            {t['SEARCH']}
           </Button>
         </div>
       </section>
@@ -145,16 +136,16 @@ const TableCallingKanban = () => {
                 }}
               >
                 {[
-                  'DATE',
-                  'RY',
-                  'COMPONENT',
-                  'MATERIAL ID',
-                  'MATERIAL NAME',
-                  'UNIT',
-                  'USAGE',
-                  'REQUEST',
-                  'ONGOING',
-                  'DONE',
+                  t['DATE'],
+                  t['RY'],
+                  t['COMPONENT'],
+                  t['MATERIAL ID'],
+                  t['MATERIAL NAME'],
+                  t['UNIT'],
+                  t['USAGE'],
+                  t['REQUEST'],
+                  t['ONGOING'],
+                  t['DONE'],
                 ].map((header) => (
                   <TableCell
                     key={header}

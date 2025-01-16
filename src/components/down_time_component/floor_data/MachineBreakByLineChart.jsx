@@ -18,6 +18,7 @@ import {
   Legend,
 } from 'chart.js';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslations } from '@/config/useTranslations';
 
 // Register the components for Chart.js
 ChartJS.register(
@@ -33,6 +34,7 @@ const MachineBreakByLineChart = ({ floor, line, date }) => {
   // Use Redux state for chartData, loading, and error
   const { chartData, loading, error } = useSelector((state) => state.downtime);
   const dispatch = useDispatch();
+  const t = useTranslations();
 
   useEffect(() => {
     dispatch(
@@ -98,7 +100,7 @@ const MachineBreakByLineChart = ({ floor, line, date }) => {
       <Typography
         sx={{ fontWeight: 'bold', color: 'gray', fontSize: '15px', p: 1 }}
       >
-        Machine Breakdown By Line (Count)
+        {t['Machine Breakdown By Line (Count)']}
       </Typography>
       <CardContent
         sx={{

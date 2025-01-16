@@ -1,22 +1,50 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
 import { CircularProgress, Typography, Box } from '@mui/material';
 import { getAutoCuttingUrl } from '../../../apis/auto_cutting_api/AutoCuttingAPI';
+import { useTranslations } from '@/config/useTranslations';
+
+// Đảm bảo đăng ký các phần tử của Chart.js
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const ChartDowntimeReason = ({ date }) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({
+    ShutDownData: 0,
+    ChangeOver: 0,
+    IdleTime: 0,
+    StartUp: 0,
+    Equip: 0,
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const t = useTranslations();
 
   const fetchData = async () => {
-    if (!date) return;
+    if (!date) return; // If no date, don't fetch
+
     setLoading(true);
     setError('');
-
     try {
       const response = await axios.get(
-        getAutoCuttingUrl(date.format('YYYY-MM-DD'))
+        getAutoCuttingUrl(date?.toISOString().split('T')[0])
       );
 
       if (response.status === 200) {
@@ -46,7 +74,7 @@ const ChartDowntimeReason = ({ date }) => {
         setError('Failed to fetch data');
       }
     } catch (err) {
-      setError('Error fetching data');
+      setError(`Error fetching data: ${err.message}`);
     } finally {
       setLoading(false);
     }
@@ -124,14 +152,14 @@ const ChartDowntimeReason = ({ date }) => {
           borderBottom: '2px solid green',
         }}
       >
-        DOWNTIME REASON
+        {t['DOWNTIME REASON']}
       </Typography>
       {loading ? (
         <Box
           display="flex"
           justifyContent="center"
           alignItems="center"
-          minHeight="100vh"
+          height="100%"
         >
           <CircularProgress />
         </Box>

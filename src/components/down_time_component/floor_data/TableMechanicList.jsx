@@ -12,13 +12,14 @@ import {
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTableMechanic } from '../../../apis/down_time_api/FloorAPI';
+import { useTranslations } from '@/config/useTranslations';
 
 const MechanicTable = ({ floor, date, line }) => {
   const { tableMechanic, loading, error } = useSelector(
     (state) => state.downtime
   );
   const dispatch = useDispatch();
-
+  const t = useTranslations();
   useEffect(() => {
     dispatch(
       fetchTableMechanic(
@@ -50,7 +51,7 @@ const MechanicTable = ({ floor, date, line }) => {
           textAlign: 'center',
         }}
       >
-        Mechanic List
+        {t['Mechanic List']}
       </Typography>
 
       {/* Bảng dữ liệu */}
@@ -90,7 +91,7 @@ const MechanicTable = ({ floor, date, line }) => {
             color="error"
             sx={{ textAlign: 'center', padding: '20px' }}
           >
-            Error: {error}
+            {t['Error']}: {error}
           </Typography>
         ) : !tableMechanic || tableMechanic.mechanic.length === 0 ? (
           // Hiển thị thông báo không có dữ liệu
@@ -98,7 +99,7 @@ const MechanicTable = ({ floor, date, line }) => {
             variant="body1"
             sx={{ textAlign: 'center', padding: '20px' }}
           >
-            No data available
+            {t['No data available']}
           </Typography>
         ) : (
           // Hiển thị dữ liệu bảng
@@ -127,19 +128,19 @@ const MechanicTable = ({ floor, date, line }) => {
             >
               <TableRow>
                 <TableCell sx={{ fontSize: '13px', width: '150px' }}>
-                  Mechanic
+                  {t['Mechanic']}
                 </TableCell>
                 <TableCell sx={{ fontSize: '13px', width: '150px' }}>
-                  Type
+                  {t['Type']}
                 </TableCell>
                 <TableCell sx={{ fontSize: '13px', width: '150px' }}>
-                  Current Task
+                  {t['Current Task']}
                 </TableCell>
                 <TableCell sx={{ fontSize: '13px', width: '150px' }}>
-                  Status
+                  {t['Status']}
                 </TableCell>
                 <TableCell sx={{ fontSize: '13px', width: '150px' }}>
-                  Counts
+                  {t['Counts']}
                 </TableCell>
               </TableRow>
             </TableHead>

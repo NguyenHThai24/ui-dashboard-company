@@ -8,11 +8,13 @@ import {
   CircularProgress,
   Typography,
 } from '@mui/material';
+import { useTranslations } from '@/config/useTranslations';
 
 const EfficiencyChart = () => {
   const [chartData, setChartData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const t = useTranslations();
 
   useEffect(() => {
     const fetchMockData = async () => {
@@ -116,11 +118,11 @@ const EfficiencyChart = () => {
 
   return (
     <div className="bg-white p-2 rounded-lg shadow-md ">
-      <h1 className="font-bold text-gray-500">EFFICIENCY</h1>
+      <h1 className="font-bold text-gray-500">{t['EFFICIENCY']}</h1>
       <div>
         <span className="font-bold text-3xl">75,3%</span>
       </div>
-      <p className="font-bold text-right">Baseline: 62%</p>
+      <p className="font-bold text-right">{t['BASELINE']}: 62%</p>
       <Card>
         <CardContent
           sx={{
@@ -141,7 +143,7 @@ const EfficiencyChart = () => {
             </Box>
           ) : error ? (
             <Typography color="error" align="center">
-              Error: {error}
+              {t['Error']}: {error}
             </Typography>
           ) : (
             <HighchartsReact highcharts={Highcharts} options={options} />

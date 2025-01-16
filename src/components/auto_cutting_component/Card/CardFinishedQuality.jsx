@@ -1,14 +1,16 @@
 import { Typography, Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 import tableData from '../../../../public/data/testTableData.json'; // Import dữ liệu bảng
+import { useTranslations } from '@/config/useTranslations';
 
 const CardFinishedQuality = ({ date }) => {
   const [totalFinished, setTotalFinished] = useState(0);
+  const t = useTranslations();
 
   useEffect(() => {
     const calculateTotalOngoing = () => {
       const total = tableData.reduce(
-        (sum, row) => sum + (row.FinishedQty || 0),
+        (sum, row) => sum + (row?.FinishedQty || 0),
         0
       );
       setTotalFinished(total);
@@ -31,7 +33,7 @@ const CardFinishedQuality = ({ date }) => {
           borderBottom: '2px solid green',
         }}
       >
-        Finished Qty (PO)
+        {t['Finished Qty (PO)']}
       </Typography>
       <Box
         display="flex"
@@ -47,7 +49,7 @@ const CardFinishedQuality = ({ date }) => {
             textAlign: 'center',
           }}
         >
-          {totalFinished.toLocaleString()}{' '}
+          {totalFinished?.toLocaleString()}{' '}
           {/* Hiển thị dạng số với dấu phân cách */}
         </Typography>
       </Box>

@@ -2,13 +2,15 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Typography, CircularProgress, Box, Grid } from '@mui/material';
 import { getAutoCuttingUrl } from '../../../apis/auto_cutting_api/AutoCuttingAPI';
-//
+import { useTranslations } from '@/config/useTranslations';
 const CardAvailability = ({ date }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [totalOperating, setTotalOperating] = useState(0);
   const [totalAvailableTime, setTotalAvailableTime] = useState(0);
+
+  const t = useTranslations();
 
   const fetchData = async () => {
     if (!date) return;
@@ -17,17 +19,17 @@ const CardAvailability = ({ date }) => {
 
     try {
       const response = await axios.get(
-        getAutoCuttingUrl(date.format('YYYY-MM-DD'))
+        getAutoCuttingUrl(date?.format('YYYY-MM-DD'))
       );
 
       if (response.status === 200) {
         const rawData = response.data.data || [];
 
-        const totalOperatingValue = rawData.reduce(
+        const totalOperatingValue = rawData?.reduce(
           (sum, row) => sum + (row.Operating || 0),
           0
         );
-        const totalAvailableTimeValue = rawData.reduce(
+        const totalAvailableTimeValue = rawData?.reduce(
           (sum, row) => sum + (row.AvailableTime || 0),
           0
         );
@@ -64,7 +66,7 @@ const CardAvailability = ({ date }) => {
           borderBottom: '2px solid green',
         }}
       >
-        AVAILABILITY
+        {t['AVAILABILITY']}
       </Typography>
       {loading ? (
         <Box
@@ -97,7 +99,7 @@ const CardAvailability = ({ date }) => {
                 fontSize: '14px',
               }}
             >
-              UPTIME
+              {t['UPTIME']}
             </Typography>
             <Typography
               variant="h5"
@@ -127,7 +129,7 @@ const CardAvailability = ({ date }) => {
                 fontSize: '14px',
               }}
             >
-              AVAILABLE TIME
+              {t['AVAILABLE TIME']}
             </Typography>
             <Typography
               variant="h5"
