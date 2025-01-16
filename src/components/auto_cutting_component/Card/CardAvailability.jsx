@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Typography, CircularProgress, Box, Grid } from '@mui/material';
 import { getAutoCuttingUrl } from '../../../apis/auto_cutting_api/AutoCuttingAPI';
-
+//
 const CardAvailability = ({ date }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
