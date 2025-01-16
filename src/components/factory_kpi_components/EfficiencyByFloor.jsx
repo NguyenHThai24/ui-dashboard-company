@@ -5,15 +5,16 @@ import {
   Box,
   CircularProgress,
   Typography,
-  styled,
 } from '@mui/material';
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts';
+import { useTranslations } from '../../config/useTranslations';
 
 const EfficiencyByFloor = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const translation = useTranslations();
 
   useEffect(() => {
     fetch('/data/testData1.json')
@@ -154,7 +155,7 @@ const EfficiencyByFloor = () => {
               letterSpacing: '0px',
             }}
           >
-            Efficiency By Floor
+            {translation['EFFICIENCY BY FLOOR']}
           </Typography>
           {loading ? (
             <Box

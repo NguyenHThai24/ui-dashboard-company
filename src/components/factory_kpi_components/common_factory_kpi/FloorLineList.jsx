@@ -10,8 +10,11 @@ import { useEffect, useState } from 'react';
 import { fetchDistinctFloor } from '@/apis/factory_kpi_api/FactoryAPI';
 
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { useTranslations } from '@/config/useTranslations';
 
 const FloorLineList = ({ onFloorChange, onLineChange }) => {
+  const translations = useTranslations(); // Tự động lấy ngôn ngữ từ Redux
+
   const [data, setData] = useState([]);
   const [selectedFloor, setSelectedFloor] = useState(null);
   const [selectedLine, setSelectedLine] = useState(null);
@@ -76,7 +79,7 @@ const FloorLineList = ({ onFloorChange, onLineChange }) => {
               fontSize: '13px',
             }}
           >
-            <p style={{ color: 'white' }}>Factory</p>
+            <p style={{ color: 'white' }}>{translations['FACTORY']}</p>
             <ArrowForwardIosIcon sx={{ color: 'white', fontSize: '15px' }} />
           </Grid2>
           <Grid2 item sx={{ width: '70px', height: '42px' }}>
@@ -112,7 +115,7 @@ const FloorLineList = ({ onFloorChange, onLineChange }) => {
             fontSize: '13px',
           }}
         >
-          <p style={{ color: 'white' }}>Floor</p>
+          <p style={{ color: 'white' }}>{translations['FLOOR']}</p>
           <ArrowForwardIosIcon sx={{ color: 'white', fontSize: '15px' }} />
         </Grid2>
         <Grid2
@@ -184,7 +187,7 @@ const FloorLineList = ({ onFloorChange, onLineChange }) => {
             fontSize: '13px',
           }}
         >
-          <p style={{ color: 'white' }}>Line</p>
+          <p style={{ color: 'white' }}>{translations['LINE']}</p>
           <ArrowForwardIosIcon sx={{ color: 'white', fontSize: '15px' }} />
         </Grid2>
         <Grid2

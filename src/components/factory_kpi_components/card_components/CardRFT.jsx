@@ -1,4 +1,7 @@
+import { useTranslations } from '@/config/useTranslations';
+
 const CardRFT = () => {
+  const translation = useTranslations(); // Tự động lấy ngôn ngữ từ Redux
   return (
     <div className="bg-white p-4 rounded-xl shadow-md w-full flex flex-col justify-between">
       <h1
@@ -11,11 +14,13 @@ const CardRFT = () => {
           letterSpacing: '0px',
         }}
       >
-        RFT
+        {translation['RFT']}
       </h1>
       <div className="text-right text-4xl font-bold">68%</div>
       <div>
-        <h1 className="text-base text-gray-600 font-bold">TARGET 85%</h1>
+        <h1 className="text-base text-gray-600 font-bold">
+          {translation['TARGET']} 85%
+        </h1>
       </div>
     </div>
   );

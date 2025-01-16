@@ -9,11 +9,13 @@ import {
   Typography,
 } from '@mui/material';
 import { fetchRFTLineData } from '@/apis/factory_kpi_api/FactoryLineAssemblyAPI';
+import { useTranslations } from '@/config/useTranslations';
 
 const AssemblyRFTChart = ({ date, floor, line, mode }) => {
   const [chartData, setChartData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const translations = useTranslations(); // Tự động lấy ngôn ngữ từ Redux
 
   useEffect(() => {
     const fetchData = async () => {
@@ -151,9 +153,7 @@ const AssemblyRFTChart = ({ date, floor, line, mode }) => {
             letterSpacing: '0px',
           }}
         >
-          {mode === 'assembly'
-            ? 'Assembly RFT By The Hour'
-            : 'Stitching RFT By The Hour'}
+          {translations['RFT BY THE HOUR']}
         </Typography>
 
         {loading ? (

@@ -7,6 +7,10 @@ const Navbar = () => {
   const selectedItem = useSelector((state) => state.sidebar.selectedItem);
   const translations = useTranslations(); // Tự động lấy ngôn ngữ từ Redux
 
+  // Lấy giá trị dịch của selectedItem từ translations
+  const translatedSelectedItem = selectedItem
+    ? translations[selectedItem]
+    : selectedItem;
   return (
     <Grid
       container
@@ -21,7 +25,7 @@ const Navbar = () => {
           sx={{ fontSize: '36px', color: '#239d85', fontWeight: 600 }}
         >
           {translations && translations['LHG']} {''}
-          {selectedItem && `- ${selectedItem}`}
+          {translatedSelectedItem && `- ${translatedSelectedItem}`}
         </Typography>
       </Grid>
 

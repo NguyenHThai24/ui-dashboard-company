@@ -10,12 +10,14 @@ import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts';
 import { fetchRFTFloorDataS } from '@/apis/factory_kpi_api/FactoryAPI';
 import { fetchRFTFloorData } from '@/apis/factory_kpi_api/FactoryFloorAPI';
+import { useTranslations } from '../../config/useTranslations';
 
 const RFTByFloor = ({ date, floor }) => {
   const [chartData, setChartData] = useState([]);
   const [baseline, setBaseline] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const translation = useTranslations();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -144,7 +146,7 @@ const RFTByFloor = ({ date, floor }) => {
               letterSpacing: '0px',
             }}
           >
-            RFT By Floor
+            {translation['RFT BY FLOOR']}
           </Typography>
 
           {loading ? (

@@ -5,15 +5,16 @@ import {
   Box,
   CircularProgress,
   Typography,
-  styled,
 } from '@mui/material';
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts';
+import { useTranslations } from '@/config/useTranslations';
 
 const EfficiencyByHour = ({ mode }) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const translations = useTranslations(); // Tự động lấy ngôn ngữ từ Redux
 
   useEffect(() => {
     fetch('/data/AssemblyByTheHour.json')
@@ -155,9 +156,7 @@ const EfficiencyByHour = ({ mode }) => {
               letterSpacing: '0px',
             }}
           >
-            {mode === 'assembly'
-              ? 'Assembly Efficiency By The Hour'
-              : 'Stitching Efficiency By The Hour'}
+            {translations['EFFICIENCY BY THE HOUR']}
           </Typography>
           {loading ? (
             <Box

@@ -7,11 +7,13 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from '@mui/material';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-
+import { useTranslations } from '@/config/useTranslations';
 const StopLine = () => {
+  const translations = useTranslations();
   const chartData = [
     { name: 'LEM KEO HOAC LEM XU LY', y: 24, color: '#f44336' },
     { name: 'HO KEO', y: 19, color: '#ffeb3b' },
@@ -31,17 +33,7 @@ const StopLine = () => {
       plotShadow: false,
       width: 300, // Kích thước cố định của biểu đồ
     },
-    title: {
-      text: 'STOP LINE TOP 3 DEFECT',
-      style: {
-        fontSize: '16px',
-        fontWeight: 'bold',
-        fontFamily: "'Roboto', sans-serif",
-        color: '#239d85',
-        textShadow: '1px 1px 2px rgba(0, 0, 0, 0.2)',
-        letterSpacing: '0px',
-      },
-    },
+    title: null,
     legend: {
       layout: 'vertical',
       align: 'left',
@@ -99,6 +91,18 @@ const StopLine = () => {
         gap: 2,
       }}
     >
+      <Typography
+        sx={{
+          fontSize: '16px',
+          fontWeight: 'bold',
+          fontFamily: "'Roboto', sans-serif",
+          color: '#239d85',
+          textShadow: '1px 1px 2px rgba(0, 0, 0, 0.2)',
+          letterSpacing: '0px',
+        }}
+      >
+        {translations['TOP 3 LINE DEFECT']}
+      </Typography>
       {/* Biểu đồ tròn */}
       <div style={{ flexShrink: 0 }}>
         <HighchartsReact highcharts={Highcharts} options={options} />

@@ -27,11 +27,13 @@ import iconTierMeeting from '@public/images/Icon-Tier-Meeting.png';
 import iconDownTime from '@public/images/Icon-Down-Time.png';
 import { useDispatch } from 'react-redux';
 import { setSelectedItem } from '@/redux/SidebarSlice';
+import { useTranslations } from '@/config/useTranslations';
 
 const Sidebar = ({ setCollapsed, collapsed }) => {
   const [expanded, setExpanded] = useState({});
   const [selectedKey, setSelectedKey] = useState('');
   const dispatch = useDispatch();
+  const translations = useTranslations();
 
   const handleItemClick = (item) => {
     setSelectedKey(item.key);
@@ -45,50 +47,79 @@ const Sidebar = ({ setCollapsed, collapsed }) => {
   const items = [
     {
       key: '1',
-      label: 'Productions',
+      label: translations['PRODUCTION'],
       icon: iconProduction,
       children: [
         {
           key: '1.1',
-          label: 'FACTORY',
+          label: translations['FACTORY'],
           children: [
             {
               key: '1.1.1',
-              label: 'Daily KPI Overview',
+              label: translations['Daily KPI Overview'],
               link: '/daily-kpi-overview',
             },
-            { key: '1.1.2', label: 'Daily Factory KPI', link: '/factory-kpi' },
+            {
+              key: '1.1.2',
+              label: translations['Daily Factory KPI'],
+              link: '/factory-kpi',
+            },
             {
               key: '1.1.3',
-              label: 'Daily Efficiency Report',
+              label: translations['Daily Efficiency Report'],
               link: '/daily-efficiency',
             },
             {
               key: '1.1.4',
-              label: 'Prod.Hourly Output',
+              label: translations['Production Hourly Output'],
               link: '/production-hourly-output',
             },
             {
               key: '1.1.5',
-              label: 'Production Report',
+              label: translations['Production Report'],
               link: '/production-report',
             },
           ],
         },
       ],
     },
-    { key: '2', label: 'Material W/H', icon: iconMaterial, link: '/' },
+    {
+      key: '2',
+      label: translations['Material W/H'],
+      icon: iconMaterial,
+      link: '/',
+    },
     {
       key: '3',
-      label: 'Auto Cutting',
+      label: translations['Auto Cutting'],
       icon: iconAutoCutting,
       link: '/auto-cutting',
     },
-    { key: '4', label: 'Stock Fitting', icon: iconStockFitting, link: '/' },
-    { key: '5', label: 'FG W/H', icon: iconFG, link: '/' },
-    { key: '6', label: 'Kaizen', icon: iconKaizen, link: '/kaizen' },
-    { key: '7', label: 'Tier Meeting', icon: iconTierMeeting, link: '/' },
-    { key: '8', label: 'Down Time', icon: iconDownTime, link: '/down-time' },
+    {
+      key: '4',
+      label: translations['Stock Fitting'],
+      icon: iconStockFitting,
+      link: '/',
+    },
+    { key: '5', label: translations['FG W/H'], icon: iconFG, link: '/' },
+    {
+      key: '6',
+      label: translations['Kaizen'],
+      icon: iconKaizen,
+      link: '/kaizen',
+    },
+    {
+      key: '7',
+      label: translations['Tier Meeting'],
+      icon: iconTierMeeting,
+      link: '/',
+    },
+    {
+      key: '8',
+      label: translations['Down Time'],
+      icon: iconDownTime,
+      link: '/down-time',
+    },
   ];
 
   const renderMenuItems = (menuItems, level = 0) =>

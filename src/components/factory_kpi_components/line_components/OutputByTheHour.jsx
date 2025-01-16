@@ -9,11 +9,13 @@ import {
   Typography,
 } from '@mui/material';
 import { fetchOuputLineData } from '@/apis/factory_kpi_api/FactoryLineAssemblyAPI';
+import { useTranslations } from '@/config/useTranslations';
 
 const OutputByTheHour = ({ date, floor, line, mode }) => {
   const [chartData, setChartData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const translations = useTranslations();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -158,9 +160,7 @@ const OutputByTheHour = ({ date, floor, line, mode }) => {
               letterSpacing: '0px',
             }}
           >
-            {mode === 'assembly'
-              ? 'Assembly Output By The Hour'
-              : 'Stitching Output By The Hour'}
+            {translations['OUTPUT BY THE HOUR']}
           </Typography>
           {loading ? (
             <Box

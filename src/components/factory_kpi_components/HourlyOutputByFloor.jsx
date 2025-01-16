@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import { fetchHourlyFloorDataS } from '@/apis/factory_kpi_api/FactoryAPI';
 import { fetchHourlyFloorData } from '@/apis/factory_kpi_api/FactoryFloorAPI';
+import { useTranslations } from '../../config/useTranslations';
 
 const HourlyOutputByFloor = ({ date, floor }) => {
   // console.log(floor);
@@ -21,6 +22,7 @@ const HourlyOutputByFloor = ({ date, floor }) => {
   const [error, setError] = useState(null);
   const [timePeriods, setTimePeriods] = useState([]);
 
+  const translation = useTranslations();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -64,7 +66,7 @@ const HourlyOutputByFloor = ({ date, floor }) => {
           paddingTop: '10px',
         }}
       >
-        HOURLY OUTPUT BY FLOOR
+        {translation['HOURLY OUTPUT BY FLOOR']}
       </p>
 
       {loading ? (

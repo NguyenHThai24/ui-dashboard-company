@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { Button, ButtonGroup } from '@mui/material';
+import { useTranslations } from '@/config/useTranslations';
 
 const ButtonAssemblyStitching = ({ onSelectionChange }) => {
   const [selectedAssembly, setSelectedAssembly] = useState('assembly');
+  const translations = useTranslations(); // Tự động lấy ngôn ngữ từ Redux
 
   const handleSelectionChange = (selection) => {
     setSelectedAssembly(selection);
@@ -31,7 +33,7 @@ const ButtonAssemblyStitching = ({ onSelectionChange }) => {
           }}
           onClick={() => handleSelectionChange('assembly')}
         >
-          Assembly
+          {translations['ASSEMBLY']}
         </Button>
         <Button
           sx={{
@@ -42,7 +44,7 @@ const ButtonAssemblyStitching = ({ onSelectionChange }) => {
           }}
           onClick={() => handleSelectionChange('stitching')}
         >
-          Stitching
+          {translations['STITCHING']}
         </Button>
       </ButtonGroup>
     </>

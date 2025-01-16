@@ -9,13 +9,13 @@ import {
   Box,
   CircularProgress,
 } from '@mui/material';
-
+import { useTranslations } from '@/config/useTranslations';
 const ModelRunByLine = ({ date, floor, line }) => {
   const [shoeData, setShoeData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
-
+  const translations = useTranslations();
   useEffect(() => {
     const fetchData = async () => {
       if (!date || !floor || !line) return;
@@ -69,7 +69,7 @@ const ModelRunByLine = ({ date, floor, line }) => {
           marginBottom: 2,
         }}
       >
-        Model Run By Line
+        {translations['MODEL RUN BY LINE']}
       </Typography>
 
       {loading ? (

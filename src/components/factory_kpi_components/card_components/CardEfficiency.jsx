@@ -1,4 +1,7 @@
+import { useTranslations } from '@/config/useTranslations';
 const CardEfficiency = () => {
+  const translations = useTranslations(); // Tự động lấy ngôn ngữ từ Redux
+
   return (
     <div className="bg-white p-4 rounded-xl shadow-md w-full flex flex-col justify-between">
       <h1
@@ -11,7 +14,7 @@ const CardEfficiency = () => {
           letterSpacing: '0px',
         }}
       >
-        Efficiency
+        {translations['EFFICIENCY']}
       </h1>
       <div className="text-right text-4xl font-bold">72%</div>
       <div>

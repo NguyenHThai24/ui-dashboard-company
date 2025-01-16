@@ -10,11 +10,13 @@ import {
 } from '@mui/material';
 import { fetchFloorOutputDataS } from '@/apis/factory_kpi_api/FactoryAPI';
 import { fetchFloorOutputData } from '@/apis/factory_kpi_api/FactoryFloorAPI';
+import { useTranslations } from '../../config/useTranslations';
 
 const OutputByFloor = ({ date, floor }) => {
   const [chartData, setChartData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const translation = useTranslations();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -131,7 +133,7 @@ const OutputByFloor = ({ date, floor }) => {
             letterSpacing: '0px',
           }}
         >
-          Output By Floor
+          {translation['OUTPUT BY FLOOR']}
         </Typography>
         {loading ? (
           <Box

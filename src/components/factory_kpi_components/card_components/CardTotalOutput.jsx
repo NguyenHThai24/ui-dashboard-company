@@ -1,4 +1,7 @@
+import { useTranslations } from '@/config/useTranslations';
 const CardTotalOutput = () => {
+  const translations = useTranslations(); // Tự động lấy ngôn ngữ từ Redux
+
   return (
     <div className="bg-white p-4 rounded-xl shadow-md w-full">
       <p
@@ -11,15 +14,15 @@ const CardTotalOutput = () => {
           letterSpacing: '0px',
         }}
       >
-        TOTAL OUTPUT
+        {translations['TOTAL OUTPUT']}
       </p>
-      <div className="grid grid-cols-2 text-center font-bold">
+      <div className="grid grid-cols-2 gap-2 text-center font-bold">
         <div className="py-4">
-          <p>ACTUAL</p>
+          <p>{translations['ACTUAL']}</p>
           <p>49294</p>
         </div>
         <div className="border-l-4 py-4 border-stone-950">
-          <p>TARGET</p>
+          <p>{translations['TARGET']}</p>
           <p>90171</p>
         </div>
       </div>

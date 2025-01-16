@@ -1,4 +1,51 @@
 {
-  "Production": "Sản xuất",
-  "LHG": "LHG"
+  "Sidebar": "Sidebar",
+  "PRODUCTION": "Sản xuất",
+  "LHG": "LHG",
+  "FACTORY":"Nhà máy",
+  "Daily KPI Overview":"Tổng Quan KPI Hàng Ngày",
+  "Daily Factory KPI":"KPI Nhà Máy Hàng Ngày",
+  "Daily Efficiency Report":"Báo Cáo Hiệu Suất Hàng Ngày",
+  "Production Hourly Output":"Sản Lượng Sản Xuất Theo Giờ",
+  "Production Report":"Báo Cáo Sản Xuất",
+  "Material W/H":"Kho Vật Liệu",
+  "Auto Cutting":"Cắt Tự Động",
+  "Stock Fitting":"Gia Công Đế",
+  "FG W/H":"Kho Thành Phẩm",
+  "Kaizen":"Kaizen",
+  "Tier Meeting":"Cuộc Họp Cấp Bậc",
+  "Down Time":"Theo Dõi Ngừng Máy",
+
+
+  "TRANG DAILY FACTORY KPI": "TRANG DAILY FACTORY KPI",
+  "FLOOR": "TẦNG",
+  "LINE": "CHUYỀN",
+  "EFFICIENCY BY FLOOR": "HIỆU SUẤT THEO TỪNG XƯỞNG",
+  "RFT BY FLOOR": "RFT THEO TỪNG XƯỞNG",
+  "EFFICIENCY": "HIỆU SUẤT",
+  "RFT": "RFT",
+  "TOTAL OUTPUT": "TỔNG SẢN LƯỢNG",
+  "DIGITAL ANDON CASES": "ANDON KỸ THUẬT SỐ",
+  "OUTPUT BY FLOOR": "SẢN LƯỢNG THEO TỪNG XƯỞNG",
+  "HOURLY OUTPUT BY FLOOR": "SẢN LƯỢNG HÀNG GIỜ THEO TỪNG XƯỞNG",
+  "ATTENDANCE BY FLOOR": "SỐ NGƯỜI THEO TỪNG XƯỞNG",
+  "EFFICIENCY BY LINE": "HIỆU SUẤT THEO TỪNG CHUYỀN",
+  "RFT BY LINE": "RFT TỪNG CHUYỀN",
+  "OUTPUT BY LINE": "SẢN LƯỢNG THEO TỪNG CHUYỀN",
+  "HOURLY OUTPUT BY LINE": "SẢN LƯỢNG HÀNG GIỜ THEO TỪNG CHUYỀN",
+  "ATTENDANCE BY LINE": "SỐ NGƯỜI THEO TỪNG CHUYỀN",
+  "EFFICIENCY BY THE HOUR": "HIỆU SUẤT HÀNG GIỜ",
+  "RFT BY THE HOUR": "RFT HÀNG GIỜ",
+  "MODEL RUN BY LINE": "DẠNG GIÀY ĐANG SẢN XUẤT",
+  "OUTPUT BY THE HOUR": "SẢN LƯỢNG HÀNG GIỜ",
+  "PPH BY THE HOUR": "PPH HÀNG GIỜ",
+  "TOP LINE TOP 3 DEFECT": "TOP 3 LÝ DO NGƯNG CHUYỀN",
+  "ASSEMBLY": "GÒ",
+  "STITCHING": "MAY",
+  "BASE LINE":"BASE LINE",
+  "TARGET":"MỤC TIÊU",
+  "ACTUAL":"THỰC TẾ"
+
+
+
 }

@@ -6,7 +6,6 @@ import {
   CircularProgress,
   Alert,
   Typography,
-  styled,
 } from '@mui/material';
 import { Bar } from 'react-chartjs-2'; // Đổi từ Line sang Bar
 import {
