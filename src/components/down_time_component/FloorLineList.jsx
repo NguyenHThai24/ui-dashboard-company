@@ -30,22 +30,17 @@ const FloorLineList = ({ onFloorChange, onLineChange, onModeChange }) => {
   }, []);
 
   const handleFloorClick = (floorAlias) => {
-    if (!selectedButton) {
-      // Allow floor selection only if no button is selected
-      setSelectedFloor(floorAlias);
-      const floor = data.find((item) => item.floorAlias === floorAlias);
-      setLines(floor ? floor.lineList : []);
-    }
+    setSelectedFloor(floorAlias);
+    const floor = data.find((item) => item.floorAlias === floorAlias);
+    setLines(floor ? floor.lineList : []);
   };
 
   const handleSelect = (floorAlias) => {
-    if (!selectedButton) {
-      // Allow floor selection only if no button is selected
-      setSelectedFloor(floorAlias);
-      handleFloorClick(floorAlias);
-      if (onFloorChange) {
-        onFloorChange({ floorAlias, selectedButton: null });
-      }
+    setSelectedFloor(floorAlias);
+    setSelectedButton(); // Clear selected button
+    handleFloorClick(floorAlias);
+    if (onFloorChange) {
+      onFloorChange({ floorAlias, selectedButton: {} });
     }
   };
 
@@ -58,7 +53,7 @@ const FloorLineList = ({ onFloorChange, onLineChange, onModeChange }) => {
 
   const handleButtonSelect = (button) => {
     setSelectedButton(button);
-    setSelectedFloor(null); // Clear selected floor
+    setSelectedFloor({}); // Clear selected floor
     setLines([]); // Clear lines
     if (onModeChange) {
       onModeChange(button); // Notify parent component about mode change

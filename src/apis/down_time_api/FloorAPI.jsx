@@ -294,6 +294,7 @@ export const fetchChartMostDowntime =
       // Check if response contains the expected data format
       if (response.data && Array.isArray(response.data.data)) {
         const rawData = response.data.data;
+        //console.log(rawData);
 
         const Name_en = [];
         const total = [];
