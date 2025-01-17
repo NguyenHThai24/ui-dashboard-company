@@ -20,7 +20,13 @@ const CardTotalQuality = () => {
   }, []);
 
   return (
-    <div className="bg-[#eaf9e9] rounded-md shadow-xl shadow-slate-500 p-2">
+    <div
+      className="bg-[#eaf9e9] p-2"
+      style={{
+        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)', // Hiệu ứng bóng
+        borderRadius: '8px',
+      }}
+    >
       <Typography
         sx={{
           fontSize: '16px',

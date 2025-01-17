@@ -18,7 +18,13 @@ const CardOngoing = () => {
   }, []);
 
   return (
-    <div className="bg-[#fff] rounded-md border-4 border-[#0098f5] p-2">
+    <div
+      className="bg-[#fff] border-4 border-[#0098f5] p-2"
+      style={{
+        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)', // Hiệu ứng bóng
+        borderRadius: '8px',
+      }}
+    >
       <Typography
         sx={{
           fontSize: '16px',

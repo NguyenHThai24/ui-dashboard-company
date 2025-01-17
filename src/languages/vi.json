@@ -185,5 +185,7 @@
   "TOTAL QTY": "Tổng Số Lượng",
   "ONGOING QTY": "Số Lượng Đang Tiến Hành",
   "FINISHED QTY": "Số Lượng Hoàn Thành",
-  "Mechanic List":"Danh sách thợ cơ khí"
+  "Mechanic List":"Danh sách thợ cơ khí",
+  "UPTIME":"Thời gian hoạt động",
+    "AVAILABLE TIME":"Thời gian khả dụng"
 }

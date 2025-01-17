@@ -55,7 +55,13 @@ const CardPerformance = ({ date }) => {
   }, [date]);
 
   return (
-    <div className="bg-[#d0eedb] rounded-md shadow-xl shadow-slate-500 p-4">
+    <div
+      className="bg-[#d0eedb] p-4"
+      style={{
+        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)', // Hiệu ứng bóng
+        borderRadius: '8px',
+      }}
+    >
       <Typography
         sx={{
           fontSize: '16px',

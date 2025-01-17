@@ -17,7 +17,13 @@ const CardDone = () => {
   }, []);
 
   return (
-    <div className="bg-[#fff] border-4 border-green-700 rounded-md p-2">
+    <div
+      className="bg-[#fff] border-4 border-green-700 p-2"
+      style={{
+        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)', // Hiệu ứng bóng
+        borderRadius: '8px',
+      }}
+    >
       <Typography
         sx={{
           fontSize: '16px',

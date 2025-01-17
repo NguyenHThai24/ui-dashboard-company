@@ -79,7 +79,13 @@ const TableOEEbyMachine = ({ date }) => {
   }, [date]); // Gọi lại `fetchData` khi `date` thay đổi
 
   return (
-    <div className="bg-white rounded-md shadow-xl shadow-slate-500 p-4">
+    <div
+      className="bg-white p-4"
+      style={{
+        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)', // Hiệu ứng bóng
+        borderRadius: '8px',
+      }}
+    >
       <Typography
         sx={{
           fontSize: '16px',

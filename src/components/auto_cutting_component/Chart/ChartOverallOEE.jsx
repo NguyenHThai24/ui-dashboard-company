@@ -132,7 +132,8 @@ const OverallOEE = ({ date }) => {
       style={{
         padding: '16px',
         height: '560px',
-        boxShadow: '0px 4px 12px rgba(0,0,0,0.8)',
+        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)', // Hiệu ứng bóng
+        borderRadius: '8px',
       }}
     >
       <Typography
