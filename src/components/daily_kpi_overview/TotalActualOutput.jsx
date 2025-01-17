@@ -117,7 +117,13 @@ const TotalActualOutput = () => {
   };
 
   return (
-    <div className="bg-white p-2 rounded-lg shadow-md ">
+    <div
+      className="p-2 rounded-lg shadow-md"
+      style={{
+        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)', // Hiệu ứng bóng
+        background: '#fff', // Nền trắng
+      }}
+    >
       <h1 className="font-bold text-gray-500">{t['TOTAL ACTUAL OUTPUT']}</h1>
       <div>
         <span className="font-bold text-3xl">53,577</span>

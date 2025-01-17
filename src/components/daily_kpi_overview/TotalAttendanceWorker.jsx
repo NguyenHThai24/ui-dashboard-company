@@ -3,7 +3,13 @@ import { useTranslations } from '@/config/useTranslations';
 const TotalAttendanceWorker = () => {
   const t = useTranslations();
   return (
-    <div className="bg-white p-2 rounded-lg shadow-md">
+    <div
+      className="p-2 rounded-lg"
+      style={{
+        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)', // Hiệu ứng bóng
+        background: '#fff', // Nền trắng
+      }}
+    >
       <h1 className="font-bold text-gray-500">
         {t['TOTAL ATTENDANCE WORKER']}
       </h1>
@@ -20,7 +26,7 @@ const TotalAttendanceWorker = () => {
           </div>
           <div className="border-l-4 border-gray-500">
             <p className="font-semibold text-gray-500 text-sm pl-2">
-              {t['STOCKFITTING WORKER']}
+              {t['STOCK FITTING WORKER']}
             </p>
             <p className="font-bold pl-2">1264</p>
           </div>

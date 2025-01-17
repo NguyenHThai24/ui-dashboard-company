@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import { useTranslations } from '@/config/useTranslations';
 
-const CardMachineDown = ({ floor, date, line }) => {
+const CardMachineDown = ({ floor, date, line, mode }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [total, setTotal] = useState(0);
@@ -19,6 +19,14 @@ const CardMachineDown = ({ floor, date, line }) => {
     const fetchData = async () => {
       setLoading(true);
       try {
+        if (mode === 'Auto Cutting') {
+          floor = 'Auto Cutting';
+        } else if (mode === 'Stock Fitting') {
+          floor = 'Stock Fitting';
+        } else {
+          // Reset to empty if neither mode is selected
+          floor = '';
+        }
         const totalBreakdown = await fetchTotalMachineDownTime(
           'LHG', // Factory
           floor, // Floor from props
@@ -37,7 +45,7 @@ const CardMachineDown = ({ floor, date, line }) => {
     };
 
     fetchData();
-  }, [floor, date, line]); // Run effect when floor, date, or line changes
+  }, [floor, date, line, mode]); // Run effect when floor, date, or line changes
 
   return (
     <Card
@@ -45,11 +53,13 @@ const CardMachineDown = ({ floor, date, line }) => {
         width: '100%',
         margin: 'auto',
         height: '150px',
-        boxShadow: 10,
-        borderRadius: 2,
         textAlign: 'left',
-        bgcolor: 'white',
         padding: '16px',
+        borderRadius: '8px',
+      }}
+      style={{
+        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)', // Hiệu ứng bóng
+        background: '#fff', // Nền trắng
       }}
     >
       <Typography

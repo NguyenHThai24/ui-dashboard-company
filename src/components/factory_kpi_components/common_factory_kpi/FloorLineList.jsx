@@ -76,7 +76,8 @@ const FloorLineList = ({ onFloorChange, onLineChange }) => {
               width: '102px',
               height: '42px',
               borderRadius: '5px',
-              fontSize: '13px',
+              fontSize: '14px',
+              fontWeight: '600',
             }}
           >
             <p style={{ color: 'white' }}>{translations['FACTORY']}</p>
@@ -112,7 +113,8 @@ const FloorLineList = ({ onFloorChange, onLineChange }) => {
             width: '102px',
             height: '42px',
             borderRadius: '5px',
-            fontSize: '13px',
+            fontSize: '14px',
+            fontWeight: '600',
           }}
         >
           <p style={{ color: 'white' }}>{translations['FLOOR']}</p>
@@ -184,7 +186,8 @@ const FloorLineList = ({ onFloorChange, onLineChange }) => {
             width: '102px',
             height: '42px',
             borderRadius: '5px',
-            fontSize: '13px',
+            fontSize: '14px',
+            fontWeight: '600',
           }}
         >
           <p style={{ color: 'white' }}>{translations['LINE']}</p>

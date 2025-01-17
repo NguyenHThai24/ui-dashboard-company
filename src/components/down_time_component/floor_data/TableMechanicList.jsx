@@ -14,13 +14,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchTableMechanic } from '../../../apis/down_time_api/FloorAPI';
 import { useTranslations } from '@/config/useTranslations';
 
-const MechanicTable = ({ floor, date, line }) => {
+const MechanicTable = ({ floor, date, line, mode }) => {
   const { tableMechanic, loading, error } = useSelector(
     (state) => state.downtime
   );
   const dispatch = useDispatch();
   const t = useTranslations();
   useEffect(() => {
+    if (mode === 'Auto Cutting') {
+      floor = 'Auto Cutting';
+    } else if (mode === 'Stock Fitting') {
+      floor = 'Stock Fitting';
+    } else {
+      // Reset to empty if neither mode is selected
+      floor = '';
+    }
     dispatch(
       fetchTableMechanic(
         'LHG', // Factory
@@ -31,13 +39,15 @@ const MechanicTable = ({ floor, date, line }) => {
         date // End date
       )
     );
-  }, [dispatch, floor, line, date]);
+  }, [dispatch, floor, line, date, mode]);
 
   return (
     <div
-      className="bg-white h-[350px] rounded-lg font-bold"
+      className=" h-[350px] font-bold"
       style={{
-        boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.5)', // Hiệu ứng đổ bóng
+        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)', // Hiệu ứng bóng
+        background: '#fff', // Nền trắng
+        borderRadius: '8px',
       }}
     >
       {/* Tiêu đề bảng */}

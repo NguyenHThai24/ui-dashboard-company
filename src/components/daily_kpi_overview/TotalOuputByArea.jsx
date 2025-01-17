@@ -2,7 +2,13 @@ import { useTranslations } from '@/config/useTranslations';
 const TotalOuputByArea = () => {
   const t = useTranslations();
   return (
-    <div className="bg-white p-2 rounded-lg shadow-md">
+    <div
+      className="p-2 rounded-lg"
+      style={{
+        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)', // Hiệu ứng bóng
+        background: '#fff', // Nền trắng
+      }}
+    >
       <h1 className="font-bold text-gray-500">{t['TOTAL OUTPUT BY AREA']}</h1>
       <div className="grid grid-cols-3 gap-4 text-center my-6">
         {/* Auto Cutting */}

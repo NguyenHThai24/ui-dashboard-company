@@ -12,12 +12,12 @@ const DefaultLayout = () => {
       <div className="flex flex-col h-full w-screen">
         <Navbar />
         <div
-          className="h-[100vh]  border-t-2 overflow-auto  px-4"
+          className="h-[100vh]  overflow-auto  px-4 bg-[#4bddc0] shadow-md"
           style={{
             width: !collapsed ? '81.5vw' : '94.6vw',
             maxHeight: 'full', // Giới hạn chiều cao
             overflow: 'auto', // Cho phép cuộn
-            backgroundColor: 'rgba(221, 255, 93, 0.2)',
+            backgroundColor: '',
           }}
         >
           <Outlet />

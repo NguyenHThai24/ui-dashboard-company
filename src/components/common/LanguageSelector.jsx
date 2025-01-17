@@ -59,12 +59,20 @@ const LanguageSelector = () => {
 
   return (
     <div
-      className="flex items-center justify-center text-center border-2 w-32 rounded-lg"
-      style={{ borderColor: '#239d85' }}
+      className="flex items-center justify-center text-center border-4 w-40 rounded-lg"
+      style={{ borderColor: '#fff', borderBottom: '10px' }}
     >
       <IconButton onClick={toggleMenu} color="primary">
         {getLanguageFlag(language)}
-        <Typography variant="body2" style={{ marginLeft: 8 }}>
+        <Typography
+          variant="body2"
+          style={{
+            marginLeft: 8,
+            color: '#fff',
+            fontWeight: 'bold',
+            fontSize: '18px',
+          }}
+        >
           {getLanguageLabel(language)}
         </Typography>
       </IconButton>
@@ -76,7 +84,7 @@ const LanguageSelector = () => {
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         transformOrigin={{ vertical: 'top', horizontal: 'center' }}
         sx={{
-          mt: 1,
+          mt: 0.5,
         }}
       >
         <MenuItem onClick={() => handleLanguageChange('vi')}>

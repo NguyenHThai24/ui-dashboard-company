@@ -117,7 +117,13 @@ const EfficiencyChart = () => {
   };
 
   return (
-    <div className="bg-white p-2 rounded-lg shadow-md ">
+    <div
+      className="p-2 rounded-lg"
+      style={{
+        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)', // Hiệu ứng bóng
+        background: '#fff', // Nền trắng
+      }}
+    >
       <h1 className="font-bold text-gray-500">{t['EFFICIENCY']}</h1>
       <div>
         <span className="font-bold text-3xl">75,3%</span>

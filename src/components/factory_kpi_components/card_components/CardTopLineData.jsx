@@ -35,7 +35,13 @@ const CardTopLineData = ({ date, floor }) => {
   }, [date, floor]);
 
   return (
-    <div className="bg-white p-1 rounded-xl shadow-md w-full border-4 border-red-600 ">
+    <div
+      className="p-1 rounded-xl shadow-md w-full border-4 border-red-600 "
+      style={{
+        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)', // Hiệu ứng bóng
+        background: '#fff', // Nền trắng
+      }}
+    >
       <p
         style={{
           fontSize: '14px',

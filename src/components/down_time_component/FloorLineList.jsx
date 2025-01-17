@@ -10,15 +10,16 @@ import { useEffect, useState } from 'react';
 import { fetchDistinctFloor } from '@/apis/factory_kpi_api/FactoryAPI';
 
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ButtonCuttingFitting from '@/components/down_time_component/ButtonCuttingFitting';
 import { useTranslations } from '@/config/useTranslations';
 
-const FloorLineList = ({ onFloorChange, onLineChange }) => {
+const FloorLineList = ({ onFloorChange, onLineChange, onModeChange }) => {
   const [data, setData] = useState([]);
   const [selectedFloor, setSelectedFloor] = useState(null);
   const [selectedLine, setSelectedLine] = useState(null);
   const [lines, setLines] = useState([]);
+  const [selectedButton, setSelectedButton] = useState(null); // Track selected button
   const t = useTranslations();
+
   useEffect(() => {
     const fetchData = async () => {
       const floors = await fetchDistinctFloor();
@@ -29,24 +30,38 @@ const FloorLineList = ({ onFloorChange, onLineChange }) => {
   }, []);
 
   const handleFloorClick = (floorAlias) => {
-    setSelectedFloor(floorAlias);
-    const floor = data.find((item) => item.floorAlias === floorAlias);
-    setLines(floor ? floor.lineList : []);
+    if (!selectedButton) {
+      // Allow floor selection only if no button is selected
+      setSelectedFloor(floorAlias);
+      const floor = data.find((item) => item.floorAlias === floorAlias);
+      setLines(floor ? floor.lineList : []);
+    }
   };
 
   const handleSelect = (floorAlias) => {
-    setSelectedFloor(floorAlias);
-    handleFloorClick(floorAlias);
-    if (onFloorChange) {
-      onFloorChange(floorAlias);
+    if (!selectedButton) {
+      // Allow floor selection only if no button is selected
+      setSelectedFloor(floorAlias);
+      handleFloorClick(floorAlias);
+      if (onFloorChange) {
+        onFloorChange({ floorAlias, selectedButton: null });
+      }
     }
   };
 
   const handleSelectLine = (lineAlias) => {
-    //console.log("Selected Line in FloorLineList:", lineAlias); // Debu
     setSelectedLine(lineAlias);
     if (onLineChange) {
       onLineChange(lineAlias);
+    }
+  };
+
+  const handleButtonSelect = (button) => {
+    setSelectedButton(button);
+    setSelectedFloor(null); // Clear selected floor
+    setLines([]); // Clear lines
+    if (onModeChange) {
+      onModeChange(button); // Notify parent component about mode change
     }
   };
 
@@ -96,6 +111,7 @@ const FloorLineList = ({ onFloorChange, onLineChange }) => {
           </Grid2>
         </Grid2>
       </Grid2>
+
       {/* Floor rendering */}
       <Grid2 container spacing={1} alignItems="center">
         <Grid2
@@ -121,7 +137,7 @@ const FloorLineList = ({ onFloorChange, onLineChange }) => {
           item
           sx={{
             display: 'flex',
-            alignItems: 'center', // Align items vertically in the center
+            alignItems: 'center',
             justifyContent: 'flex-start',
             py: '0px',
           }}
@@ -131,7 +147,7 @@ const FloorLineList = ({ onFloorChange, onLineChange }) => {
               display: 'flex',
               flexDirection: 'row',
               gap: '10px',
-              alignItems: 'center', // Align buttons vertically with the title
+              alignItems: 'center',
             }}
           >
             {data?.map((floor) => (
@@ -142,6 +158,7 @@ const FloorLineList = ({ onFloorChange, onLineChange }) => {
               >
                 <ListItemButton
                   onClick={() => handleSelect(floor.floorAlias)}
+                  disabled={!!selectedButton} // Disable if a button is selected
                   sx={{
                     bgcolor:
                       selectedFloor === floor.floorAlias ? '#239d85' : 'white',
@@ -154,9 +171,9 @@ const FloorLineList = ({ onFloorChange, onLineChange }) => {
                     border: 2,
                     borderColor: '#239d85',
                     '&:hover': {
-                      bgcolor: '#239d85', // Nền trắng
-                      color: 'black', // Chữ đen
-                      border: '2px solid white', // Viền màu xanh
+                      bgcolor: '#239d85',
+                      color: 'black',
+                      border: '2px solid white',
                     },
                   }}
                 >
@@ -165,7 +182,43 @@ const FloorLineList = ({ onFloorChange, onLineChange }) => {
               </ListItem>
             ))}
           </List>
-          <ButtonCuttingFitting />
+          {/* Auto Cutting and Stock Fitting buttons */}
+          <Button
+            sx={{
+              bgcolor:
+                selectedButton === 'Auto Cutting' ? '#1b7a67' : '#239d85',
+              color: 'white',
+              width: '100px',
+              height: '42px',
+              borderRadius: '5px',
+              textTransform: 'none',
+              mx: 1,
+              '&:hover': {
+                bgcolor: '#1b7a67',
+              },
+            }}
+            onClick={() => handleButtonSelect('Auto Cutting')}
+          >
+            {t['Auto Cutting']}
+          </Button>
+          <Button
+            sx={{
+              bgcolor:
+                selectedButton === 'Stock Fitting' ? '#1b7a67' : '#239d85',
+              color: 'white',
+              width: '100px',
+              height: '42px',
+              borderRadius: '5px',
+              textTransform: 'none',
+              mx: 1,
+              '&:hover': {
+                bgcolor: '#1b7a67',
+              },
+            }}
+            onClick={() => handleButtonSelect('Stock Fitting')}
+          >
+            {t['Stock Fitting']}
+          </Button>
         </Grid2>
       </Grid2>
 
@@ -194,7 +247,7 @@ const FloorLineList = ({ onFloorChange, onLineChange }) => {
           item
           sx={{
             display: 'flex',
-            alignItems: 'center', // Align items vertically in the center
+            alignItems: 'center',
             justifyContent: 'flex-start',
             gap: '10px',
           }}
@@ -204,7 +257,7 @@ const FloorLineList = ({ onFloorChange, onLineChange }) => {
               display: 'flex',
               flexDirection: 'row',
               gap: '10px',
-              alignItems: 'center', // Align buttons vertically with the title
+              alignItems: 'center',
             }}
           >
             {lines?.map((line, index) => (
@@ -222,9 +275,9 @@ const FloorLineList = ({ onFloorChange, onLineChange }) => {
                     border: 2,
                     borderColor: '#239d85',
                     '&:hover': {
-                      bgcolor: '#239d85', // Nền trắng
-                      color: 'black', // Chữ đen
-                      border: '2px solid white', // Viền màu xanh
+                      bgcolor: '#239d85',
+                      color: 'black',
+                      border: '2px solid white',
                     },
                   }}
                 >

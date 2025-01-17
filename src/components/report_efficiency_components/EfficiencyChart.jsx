@@ -158,7 +158,14 @@ const EfficiencyChart = ({ selectedDate, timeFrame }) => {
   };
 
   return (
-    <div className="mt-4 bg-white rounded-xl">
+    <div
+      className="mt-4 "
+      style={{
+        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)',
+        background: '#fff',
+        borderRadius: '8px',
+      }}
+    >
       <h1 className="pl-3 pt-3 font-bold text-xl">
         {t['Factory Efficiency Chart']}
       </h1>

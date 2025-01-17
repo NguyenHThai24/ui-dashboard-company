@@ -124,8 +124,15 @@ const TotalManpowerChart = ({ selectedDate, timeFrame }) => {
   };
 
   return (
-    <div className="mt-4 bg-white rounded-xl">
-      <Card sx={{ mb: 4, overflow: 'auto' }}>
+    <div
+      className="my-4"
+      style={{
+        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)',
+        background: '#fff',
+        borderRadius: '8px',
+      }}
+    >
+      <Card sx={{ overflow: 'auto' }}>
         <CardContent>
           {loading ? (
             <Box

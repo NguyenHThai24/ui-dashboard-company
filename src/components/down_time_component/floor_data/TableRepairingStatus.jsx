@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchTableRepairingStatus } from '../../../apis/down_time_api/FloorAPI';
 import { useTranslations } from '@/config/useTranslations';
 
-const MechanicTable = ({ floor, date, line }) => {
+const MechanicTable = ({ floor, date, line, mode }) => {
   const { tableRepairing, loading, error } = useSelector(
     (state) => state.downtime
   );
@@ -21,6 +21,14 @@ const MechanicTable = ({ floor, date, line }) => {
   const dispatch = useDispatch();
   const t = useTranslations();
   useEffect(() => {
+    if (mode === 'Auto Cutting') {
+      floor = 'Auto Cutting';
+    } else if (mode === 'Stock Fitting') {
+      floor = 'Stock Fitting';
+    } else {
+      // Reset to empty if neither mode is selected
+      floor = '';
+    }
     dispatch(
       fetchTableRepairingStatus(
         'LHG', // Factory
@@ -31,7 +39,7 @@ const MechanicTable = ({ floor, date, line }) => {
         date // End date
       )
     );
-  }, [dispatch, floor, line, date]);
+  }, [dispatch, floor, line, date, mode]);
 
   // Calculate the status counts
   const counts = {
@@ -53,13 +61,20 @@ const MechanicTable = ({ floor, date, line }) => {
   }
 
   return (
-    <div className="rounded-lg font-bold bg-white grid grid-cols-1">
+    <div
+      className="font-bold grid grid-cols-1"
+      style={{
+        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)', // Hiệu ứng bóng
+        background: '#fff', // Nền trắng
+        borderRadius: '8px',
+      }}
+    >
       {/* Header */}
       <Typography
         sx={{
           fontWeight: 'bold',
           color: 'gray',
-          fontSize: '13px',
+          fontSize: '14px',
           px: 1,
           pt: 1,
           textAlign: 'center',

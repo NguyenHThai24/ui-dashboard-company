@@ -29,13 +29,21 @@ ChartJS.register(
   Legend
 );
 
-const MachineDowntimeByLineChart = ({ floor, line, date }) => {
+const MachineDowntimeByLineChart = ({ floor, line, date, mode }) => {
   const { chartDataFixed, loading, error } = useSelector(
     (state) => state.downtime
   );
   const dispatch = useDispatch();
   const t = useTranslations();
   useEffect(() => {
+    if (mode === 'Auto Cutting') {
+      floor = 'Auto Cutting';
+    } else if (mode === 'Stock Fitting') {
+      floor = 'Stock Fitting';
+    } else {
+      // Reset to empty if neither mode is selected
+      floor = '';
+    }
     dispatch(
       fetchChartDataFixed(
         'LHG', // Factory (example value)
@@ -46,7 +54,7 @@ const MachineDowntimeByLineChart = ({ floor, line, date }) => {
         date // End date (if applicable)
       )
     );
-  }, [dispatch, floor, line, date]); // Run effect when floor, line, or date changes
+  }, [dispatch, floor, line, mode, date]); // Run effect when floor, line, or date changes
 
   const data = {
     labels: chartDataFixed.name || [], // X-axis labels (ensure it's not undefined)
@@ -91,9 +99,11 @@ const MachineDowntimeByLineChart = ({ floor, line, date }) => {
         width: '100%',
         margin: 'auto',
         height: '350px',
-        boxShadow: 10,
-        borderRadius: 2,
-        bgcolor: 'white',
+      }}
+      style={{
+        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)', // Hiệu ứng bóng
+        background: '#fff', // Nền trắng
+        borderRadius: '8px',
       }}
     >
       <Typography

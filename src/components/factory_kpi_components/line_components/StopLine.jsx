@@ -90,6 +90,10 @@ const StopLine = () => {
         p: 2,
         gap: 2,
       }}
+      style={{
+        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)', // Hiệu ứng bóng
+        background: '#fff', // Nền trắng
+      }}
     >
       <Typography
         sx={{

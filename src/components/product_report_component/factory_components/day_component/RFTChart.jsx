@@ -163,9 +163,11 @@ const RFTChart = ({ selectedDate, timePeriod }) => {
       sx={{
         height: 350,
         border: 1,
-        boxShadow: '2px 4px 10px rgba(255, 255, 255, 0.8)',
-        borderRadius: '10px',
         overflow: 'hidden',
+      }}
+      style={{
+        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)', // Hiệu ứng bóng
+        background: '#fff', // Nền trắng
       }}
     >
       <CardContent

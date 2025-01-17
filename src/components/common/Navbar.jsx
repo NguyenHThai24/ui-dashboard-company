@@ -16,14 +16,13 @@ const Navbar = () => {
       container
       sx={{
         px: 2,
-        backgroundColor: 'rgba(221, 255, 93, 0.08)',
-        border: 'none',
+        py: 1.25,
+        backgroundColor: '#239d85',
+        borderBottom: '2px solid white',
       }}
     >
       <Grid item xs={10}>
-        <Typography
-          sx={{ fontSize: '36px', color: '#239d85', fontWeight: 600 }}
-        >
+        <Typography sx={{ fontSize: '36px', color: '#fff', fontWeight: 600 }}>
           {translations && translations['LHG']} {''}
           {translatedSelectedItem && `- ${translatedSelectedItem}`}
         </Typography>

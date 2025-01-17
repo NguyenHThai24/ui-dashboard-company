@@ -53,7 +53,13 @@ const HourlyOutputByFloor = ({ date, floor }) => {
   }, [date, floor]);
 
   return (
-    <div className="bg-white rounded-xl shadow-md font-bold">
+    <div
+      style={{
+        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)', // Hiệu ứng bóng
+        background: '#fff', // Nền trắng
+      }}
+      className="bg-white rounded-xl shadow-md font-bold"
+    >
       <p
         style={{
           fontSize: '14px',

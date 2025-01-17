@@ -33,7 +33,7 @@ ChartJS.register(
   Legend
 );
 
-const RepairingTimeChart = ({ floor, line, date }) => {
+const RepairingTimeChart = ({ floor, line, date, mode }) => {
   const { chartRepairingTime, loading, error } = useSelector(
     (state) => state.downtime
   );
@@ -41,6 +41,14 @@ const RepairingTimeChart = ({ floor, line, date }) => {
   const t = useTranslations();
 
   useEffect(() => {
+    if (mode === 'Auto Cutting') {
+      floor = 'Auto Cutting';
+    } else if (mode === 'Stock Fitting') {
+      floor = 'Stock Fitting';
+    } else {
+      // Reset to empty if neither mode is selected
+      floor = '';
+    }
     dispatch(
       fetchChartRepairingTime(
         'LHG', // Factory (example value)
@@ -51,7 +59,7 @@ const RepairingTimeChart = ({ floor, line, date }) => {
         date // End date (if applicable)
       )
     );
-  }, [dispatch, floor, line, date]);
+  }, [dispatch, floor, line, date, mode]);
 
   const data = {
     labels: chartRepairingTime.name
@@ -123,9 +131,11 @@ const RepairingTimeChart = ({ floor, line, date }) => {
         width: '100%',
         margin: 'auto',
         height: '350px',
-        boxShadow: 10,
-        borderRadius: 2,
-        bgcolor: 'white',
+      }}
+      style={{
+        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)', // Hiệu ứng bóng
+        background: '#fff', // Nền trắng
+        borderRadius: '8px',
       }}
     >
       <Typography

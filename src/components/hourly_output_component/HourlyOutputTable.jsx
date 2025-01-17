@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   Table,
   TableBody,
@@ -18,45 +18,65 @@ const HourlyOutputTable = ({ date }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const t = useTranslations();
+
   useEffect(() => {
-    // Fetch data from the API
     req
       .get(`/getPphHourlyReport?date=${date}`)
       .then((response) => {
-        // Set the response data into state
         setData(response.data.data);
-        setLoading(false); // Done loading
+        setLoading(false);
       })
       .catch((error) => {
         console.error('There was an error fetching the data:', error);
-        setLoading(false); // Done loading
+        setLoading(false);
       });
   }, [date]);
 
-  // Group data by 'Loc'
-  const groupedData = data.reduce((acc, item) => {
-    if (!acc[item.Loc]) {
-      acc[item.Loc] = [];
-    }
-    acc[item.Loc].push(item);
-    return acc;
-  }, {});
+  const groupedData = useMemo(() => {
+    if (!Array.isArray(data) || data.length === 0) return [];
 
-  // Function to determine the color based on the value and target
+    const validData = data.filter((item) => item.Loc && item.QTY);
+    if (validData.length === 0) return [];
+
+    return validData.reduce((acc, item) => {
+      const loc = item.Loc?.trim() || 'Unknown';
+      const line = item.line || '';
+      const lineAfterDash = line.includes('-') ? line.split('-')[1].trim() : '';
+      const typeGroup = lineAfterDash.startsWith('G')
+        ? 'G'
+        : lineAfterDash.startsWith('M')
+          ? 'M'
+          : 'Unknown';
+
+      if (!acc[loc]) acc[loc] = { G: [], M: [] };
+      if (typeGroup !== 'Unknown') {
+        acc[loc][typeGroup].push(item);
+      }
+
+      return acc;
+    }, {});
+  }, [data]);
+
+  const calculateTotals = (group) => {
+    const total = {};
+    group.forEach((item) => {
+      Object.keys(item).forEach((key) => {
+        if (key.includes(':') || key === 'QTY' || key === 'TARGET') {
+          total[key] = (total[key] || 0) + (item[key] || 0);
+        }
+      });
+    });
+    return total;
+  };
+
   const getColor = (value, target) => {
-    if (value >= target) {
-      return 'green'; // If the value is equal to or greater than the target
-    }
-    if (value >= target - 20) {
-      return 'yellow'; // If the value is between target-20 and target-1
-    }
-    return 'red'; // If the value is much smaller than the target
+    if (value >= target) return 'green';
+    if (value >= target - 20) return 'yellow';
+    return 'red';
   };
 
-  // Alternating row background color
-  const getRowBackgroundColor = (index) => {
-    return index % 2 === 0 ? '#f2f2f2' : '#ffffff'; // Alternating between light gray and white
-  };
+  const getRowBackgroundColor = (index) =>
+    index % 2 === 0 ? '#f2f2f2' : '#ffffff';
 
   if (loading) {
     return (
@@ -72,11 +92,17 @@ const HourlyOutputTable = ({ date }) => {
   }
 
   return (
-    <div className="bg-white my-2 p-2 rounded-md">
+    <div className="my-2 p-2">
       <Grid container spacing={2}>
-        {Object.keys(groupedData).map((locKey, index) => (
+        {Object.entries(groupedData).map(([locKey, locData], index) => (
           <Grid item xs={6} key={index}>
-            <div>
+            <div
+              style={{
+                boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)',
+                background: '#fff',
+                borderRadius: '8px',
+              }}
+            >
               <h1 className="text-center font-bold text-2xl">{locKey}</h1>
               <TableContainer
                 component={Paper}
@@ -85,18 +111,17 @@ const HourlyOutputTable = ({ date }) => {
                   overflowY: 'auto',
                   marginTop: '10px',
                   '&::-webkit-scrollbar': {
-                    width: '6px', // Độ rộng của thanh cuộn
-                    height: '6px', // Chiều cao của thanh cuộn (nếu là cuộn ngang)
+                    width: '6px',
                   },
                   '&::-webkit-scrollbar-thumb': {
-                    backgroundColor: '#888', // Màu thanh cuộn
-                    borderRadius: '10px', // Độ cong của thanh cuộn
+                    backgroundColor: '#888',
+                    borderRadius: '10px',
                   },
                   '&::-webkit-scrollbar-thumb:hover': {
-                    backgroundColor: '#555', // Màu khi hover vào thanh cuộn
+                    backgroundColor: '#555',
                   },
                   '&::-webkit-scrollbar-track': {
-                    backgroundColor: '#f1f1f1', // Màu nền của đường ray thanh cuộn
+                    backgroundColor: '#f1f1f1',
                   },
                 }}
               >
@@ -106,8 +131,6 @@ const HourlyOutputTable = ({ date }) => {
                       <TableCell
                         sx={{
                           fontWeight: 900,
-                          padding: '2px 4px',
-                          width: '150px',
                           fontSize: '11px',
                         }}
                       >
@@ -116,133 +139,126 @@ const HourlyOutputTable = ({ date }) => {
                       <TableCell
                         sx={{
                           fontWeight: 900,
-                          padding: '2px 4px',
                           fontSize: '11px',
                         }}
                       >
                         {t['Daily Target']}
                       </TableCell>
-                      <TableCell
-                        sx={{
-                          fontWeight: 900,
-                          padding: '2px 4px',
-                          fontSize: '11px',
-                        }}
-                      >
+                      <TableCell sx={{ fontWeight: 900, fontSize: '11px' }}>
                         {t['Daily Actual']}
                       </TableCell>
-                      <TableCell
-                        sx={{
-                          fontWeight: 900,
-                          padding: '2px 4px',
-                          fontSize: '11px',
-                        }}
-                      >
+                      <TableCell sx={{ fontWeight: 900, fontSize: '11px' }}>
                         {t['Hourly Target']}
                       </TableCell>
-                      {[
-                        '07:30-08:30',
-                        '08:30-09:30',
-                        '09:30-10:30',
-                        '10:30-11:30',
-                        '11:30-12:30',
-                        '12:30-13:30',
-                        '13:30-14:30',
-                        '14:30-15:30',
-                        '15:30-16:30',
-                      ].map((timeSlot, idx) => (
+                      {[...Array(9).keys()].map((i) => (
                         <TableCell
-                          key={idx}
-                          sx={{
-                            fontWeight: 900,
-                            padding: '2px 4px',
-                            fontSize: '11px',
-                          }}
+                          key={i}
+                          sx={{ fontWeight: 900, fontSize: '11px' }}
                         >
-                          {timeSlot}
+                          {`${7 + i}:30-${8 + i}:30`}
                         </TableCell>
                       ))}
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {groupedData[locKey].map((lineData, rowIndex) => (
-                      <TableRow
-                        key={rowIndex}
-                        style={{
-                          backgroundColor: getRowBackgroundColor(rowIndex),
-                        }}
-                      >
-                        <TableCell
-                          sx={{
-                            padding: '2px 4px',
-                            fontWeight: 600,
-                            width: '150px',
-                            fontSize: '11px',
-                          }}
-                        >
-                          {lineData.line}
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            padding: '2px 4px',
-                            fontWeight: 600,
-                            fontSize: '11px',
-                          }}
-                        >
-                          {lineData.TARGET * 8}
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            padding: '2px 4px',
-                            fontWeight: 600,
-                            fontSize: '11px',
-                          }}
-                        ></TableCell>
-                        <TableCell
-                          sx={{
-                            padding: '2px 4px',
-                            fontWeight: 600,
-                            fontSize: '11px',
-                          }}
-                        >
-                          {lineData.TARGET}
-                        </TableCell>
-                        {[
-                          '07:30-08:30',
-                          '08:30-09:30',
-                          '09:30-10:30',
-                          '10:30-11:30',
-                          '11:30-12:30',
-                          '12:30-13:30',
-                          '13:30-14:30',
-                          '14:30-15:30',
-                          '15:30-16:30',
-                        ].map((timeSlot, idx) => {
-                          const value = lineData[timeSlot] || 0;
-                          const target = lineData.TARGET;
-                          const color = getColor(value, target);
+                    {['G', 'M'].map((lineType) => {
+                      const lineData = locData[lineType];
+                      const totalRow = calculateTotals(lineData);
 
-                          return (
-                            <TableCell
-                              key={idx}
-                              sx={{
-                                padding: '2px 4px',
-                                fontSize: '11px',
-                                fontWeight: 600,
-                                color:
-                                  color === 'green'
-                                    ? '#097709'
-                                    : color === 'yellow'
-                                      ? '#ffaa00'
-                                      : '#FF0000',
+                      return (
+                        <>
+                          {lineData.map((item, rowIndex) => (
+                            <TableRow
+                              key={rowIndex}
+                              style={{
+                                backgroundColor:
+                                  getRowBackgroundColor(rowIndex),
                               }}
                             >
-                              {value}
+                              <TableCell
+                                sx={{ fontWeight: 600, fontSize: '11px' }}
+                              >
+                                {item.line}
+                              </TableCell>
+                              <TableCell
+                                sx={{
+                                  fontWeight: 600,
+                                  fontSize: '11px',
+                                }}
+                              >
+                                {item.TARGET * 8}
+                              </TableCell>
+                              <TableCell
+                                sx={{ fontWeight: 600, fontSize: '11px' }}
+                              >
+                                {item.QTY}
+                              </TableCell>
+                              <TableCell
+                                sx={{ fontWeight: 600, fontSize: '11px' }}
+                              >
+                                {item.TARGET}
+                              </TableCell>
+                              {[...Array(9).keys()].map((i) => {
+                                const timeSlot = `${7 + i}:30-${8 + i}:30`;
+                                const value = item[timeSlot] || 0;
+                                const color = getColor(value, item.TARGET);
+                                return (
+                                  <TableCell
+                                    key={i}
+                                    sx={{
+                                      fontSize: '11px',
+                                      fontWeight: 600,
+                                      color:
+                                        color === 'green'
+                                          ? '#097709'
+                                          : color === 'yellow'
+                                            ? '#ffaa00'
+                                            : '#FF0000',
+                                    }}
+                                  >
+                                    {value}
+                                  </TableCell>
+                                );
+                              })}
+                            </TableRow>
+                          ))}
+
+                          <TableRow>
+                            <TableCell
+                              sx={{ fontWeight: 900, fontSize: '11px' }}
+                            >
+                              Total
                             </TableCell>
-                          );
-                        })}
-                      </TableRow>
-                    ))}
+                            <TableCell
+                              sx={{ fontWeight: 900, fontSize: '11px' }}
+                            >
+                              {totalRow.TARGET * 8 || 0}
+                            </TableCell>
+                            <TableCell
+                              sx={{ fontWeight: 900, fontSize: '11px' }}
+                            >
+                              {totalRow.QTY || 0}
+                            </TableCell>
+                            <TableCell
+                              sx={{ fontWeight: 900, fontSize: '11px' }}
+                            >
+                              {totalRow.TARGET || 0}
+                            </TableCell>
+                            {[...Array(9).keys()].map((i) => {
+                              const timeSlot = `${7 + i}:30-${8 + i}:30`;
+                              return (
+                                <TableCell
+                                  key={i}
+                                  sx={{ fontWeight: 900, fontSize: '11px' }}
+                                >
+                                  {totalRow[timeSlot] || 0}
+                                </TableCell>
+                              );
+                            })}
+                          </TableRow>
+                        </>
+                      );
+                    })}
                   </TableBody>
                 </Table>
               </TableContainer>

@@ -139,10 +139,14 @@ const EfficiencyByHour = ({ mode }) => {
   };
 
   return (
-    <div>
+    <>
       <Card
         sx={{
           borderRadius: 2,
+        }}
+        style={{
+          boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)', // Hiệu ứng bóng
+          background: '#fff', // Nền trắng
         }}
       >
         <CardContent>
@@ -177,7 +181,7 @@ const EfficiencyByHour = ({ mode }) => {
           )}
         </CardContent>
       </Card>
-    </div>
+    </>
   );
 };
 

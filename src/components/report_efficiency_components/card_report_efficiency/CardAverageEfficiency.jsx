@@ -11,22 +11,17 @@ const CardAverageEfficiency = () => {
         flexDirection: 'column',
         justifyContent: 'space-between',
         p: 2,
-        boxShadow:
-          '0 4px 6px rgb(255, 255, 255), 2px 1px 3px rgb(255, 250, 250)', // Hiệu ứng bóng
-        border: '1px solid rgba(0, 0, 0, 0.5)', // Đường viền nhấn mạnh
-        borderRadius: 2, // Góc bo tròn
-        backgroundColor: '#fff', // Màu nền
-        transition: 'transform 0.3s ease, box-shadow 0.3s ease', // Hiệu ứng hover mượt
-        // "&:hover": {
-        //   transform: "translateY(-2px)", // Nâng thẻ lên
-        //   boxShadow: "0 8px 15px rgba(1, 1, 1, 0.2)", // Tăng bóng
-        // },
+      }}
+      style={{
+        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)',
+        background: '#fff',
+        borderRadius: '8px',
       }}
     >
       <Typography
         component="div"
         color="text.secondary"
-        sx={{ fontWeight: 900, fontSize: 12, textAlign: 'left' }}
+        sx={{ fontWeight: 900, fontSize: 14, textAlign: 'left' }}
       >
         {t['AVERAGE EFFICIENCY']}
       </Typography>

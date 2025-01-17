@@ -12,7 +12,14 @@ import { useTranslations } from '@/config/useTranslations';
 const FloorEfficiencySummary = () => {
   const t = useTranslations();
   return (
-    <div className="rounded-md p-2 bg-white my-4">
+    <div
+      className="p-2 mb-4"
+      style={{
+        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)',
+        background: '#fff',
+        borderRadius: '8px',
+      }}
+    >
       <h1 className="pb-6 pl-3 font-bold text-xl">
         {t['Floor Efficiency Summary']}
       </h1>

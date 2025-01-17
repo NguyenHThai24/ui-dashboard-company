@@ -9,18 +9,29 @@ import {
 } from '@mui/material';
 import { useTranslations } from '@/config/useTranslations';
 
-const CardBreakdown = ({ floor, date, line }) => {
+const CardBreakdown = ({ floor, date, line, mode }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [total, setTotal] = useState(0);
+
   const t = useTranslations();
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
+        // Ensure the floor is set based on the mode
+        if (mode === 'Auto Cutting') {
+          floor = 'Auto Cutting';
+        } else if (mode === 'Stock Fitting') {
+          floor = 'Stock Fitting';
+        } else {
+          // Reset to empty if neither mode is selected
+          floor = '';
+        }
+
         const totalBreakdown = await fetchTotalBreakdown(
           'LHG', // Factory
-          floor, // Floor from props
+          floor, // Floor from props or mode
           '', // Line
           '', // Section
           date, // Start date
@@ -35,7 +46,7 @@ const CardBreakdown = ({ floor, date, line }) => {
     };
 
     fetchData();
-  }, [floor, date, line]); // Run effect when floor, date, or line changes
+  }, [floor, date, line, mode]); // Add mode to the dependency array
 
   return (
     <Card
@@ -43,10 +54,12 @@ const CardBreakdown = ({ floor, date, line }) => {
         width: '100%',
         margin: 'auto',
         height: '150px',
-        boxShadow: 10,
-        borderRadius: 2,
         textAlign: 'left',
-        bgcolor: 'white',
+        borderRadius: '8px',
+      }}
+      style={{
+        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)', // Hiệu ứng bóng
+        background: '#fff', // Nền trắng
       }}
     >
       <CardContent

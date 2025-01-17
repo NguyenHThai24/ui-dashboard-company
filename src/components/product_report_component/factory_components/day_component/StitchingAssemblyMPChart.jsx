@@ -123,10 +123,11 @@ const StitchingAssemblyMPChart = ({ selectedDate, timePeriod }) => {
       sx={{
         height: 350,
         border: 1,
-        // borderColor:"#c3f788",
-        boxShadow: '0px 4px 10px rgba(255, 255, 255, 0.8)', // Shadow để làm nổi Card
-        borderRadius: '10px', // Làm cho góc Card bo tròn một chút
-        overflow: 'hidden', // Đảm bảo không có phần tử nào bị tràn ra ngoài
+        overflow: 'hidden',
+      }}
+      style={{
+        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)', // Hiệu ứng bóng
+        background: '#fff', // Nền trắng
       }}
     >
       <CardContent>

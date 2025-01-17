@@ -3,7 +3,13 @@ const CardTotalOutput = () => {
   const translations = useTranslations(); // Tự động lấy ngôn ngữ từ Redux
 
   return (
-    <div className="bg-white p-4 rounded-xl shadow-md w-full">
+    <div
+      className="p-4 rounded-xl shadow-md w-full"
+      style={{
+        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)', // Hiệu ứng bóng
+        background: '#fff', // Nền trắng
+      }}
+    >
       <p
         style={{
           fontSize: '14px',

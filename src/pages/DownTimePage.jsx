@@ -68,6 +68,7 @@ const DownTimePage = () => {
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [selectedFloor, setSelectedFloor] = useState(null);
   const [selectedLine, setSelectedLine] = useState(null);
+  const [selectedMode, setSelectedMode] = useState(null);
 
   const handleFloorChange = (floorAlias) => {
     setSelectedFloor(floorAlias);
@@ -82,12 +83,19 @@ const DownTimePage = () => {
     setSelectedDate(date);
   };
 
+  const handleModeChange = (mode) => {
+    setSelectedMode(mode); // Update mode
+    setSelectedFloor(null); // Reset floor
+    setSelectedLine(null); // Reset line
+  };
+
   return (
     <div>
       <Suspense fallback={<div>Loading Floor and Line List...</div>}>
         <FloorLineList
           onFloorChange={handleFloorChange}
           onLineChange={handleFloorLineChange}
+          onModeChange={handleModeChange}
         />
       </Suspense>
 
@@ -117,6 +125,7 @@ const DownTimePage = () => {
                     date={selectedDate}
                     floor={selectedFloor}
                     line={selectedLine}
+                    mode={selectedMode}
                   />
                 </div>
                 <div className="grid col-span-4">
@@ -124,6 +133,7 @@ const DownTimePage = () => {
                     date={selectedDate}
                     floor={selectedFloor}
                     line={selectedLine}
+                    mode={selectedMode}
                   />
                 </div>
                 <div className="grid col-span-2">
@@ -131,6 +141,7 @@ const DownTimePage = () => {
                     date={selectedDate}
                     floor={selectedFloor}
                     line={selectedLine}
+                    mode={selectedMode}
                   />
                 </div>
               </div>
@@ -143,16 +154,19 @@ const DownTimePage = () => {
                 date={selectedDate}
                 floor={selectedFloor}
                 line={selectedLine}
+                mode={selectedMode}
               />
               <MachineDowntimeByLineChart
                 date={selectedDate}
                 floor={selectedFloor}
                 line={selectedLine}
+                mode={selectedMode}
               />
               <RepairingTimeChart
                 date={selectedDate}
                 floor={selectedFloor}
                 line={selectedLine}
+                mode={selectedMode}
               />
             </Suspense>
           </div>
@@ -169,6 +183,7 @@ const DownTimePage = () => {
               date={selectedDate}
               floor={selectedFloor}
               line={selectedLine}
+              mode={selectedMode}
             />
           </Suspense>
         </div>
@@ -180,21 +195,25 @@ const DownTimePage = () => {
             date={selectedDate}
             floor={selectedFloor}
             line={selectedLine}
+            mode={selectedMode}
           />
           <MostDowntimeChart
             date={selectedDate}
             floor={selectedFloor}
             line={selectedLine}
+            mode={selectedMode}
           />
           <MostRepairingChart
             date={selectedDate}
             floor={selectedFloor}
             line={selectedLine}
+            mode={selectedMode}
           />
           <TotalMachineChart
             date={selectedDate}
             floor={selectedFloor}
             line={selectedLine}
+            mode={selectedMode}
           />
         </Suspense>
       </section>
@@ -206,16 +225,19 @@ const DownTimePage = () => {
               date={selectedDate}
               floor={selectedFloor}
               line={selectedLine}
+              mode={selectedMode}
             />
             <ReasonMinChart
               date={selectedDate}
               floor={selectedFloor}
               line={selectedLine}
+              mode={selectedMode}
             />
             <RepairingMethodChart
               date={selectedDate}
               floor={selectedFloor}
               line={selectedLine}
+              mode={selectedMode}
             />
           </Suspense>
         </div>
@@ -230,6 +252,7 @@ const DownTimePage = () => {
               date={selectedDate}
               floor={selectedFloor}
               line={selectedLine}
+              mode={selectedMode}
             />
           </Suspense>
         </div>

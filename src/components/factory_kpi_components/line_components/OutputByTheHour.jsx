@@ -148,7 +148,13 @@ const OutputByTheHour = ({ date, floor, line, mode }) => {
 
   return (
     <div>
-      <Card sx={{ borderRadius: 2 }}>
+      <Card
+        sx={{ borderRadius: 2 }}
+        style={{
+          boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)', // Hiệu ứng bóng
+          background: '#fff', // Nền trắng
+        }}
+      >
         <CardContent>
           <Typography
             sx={{

@@ -15,7 +15,7 @@ const ButtonTime = ({ onTimePeriodChange }) => {
       <Grid item>
         <Button
           sx={{
-            bgcolor: selectedButton === 'month' ? '#239d85' : '#B7B7B7',
+            bgcolor: selectedButton === 'month' ? '#239d85' : '#979a9a',
             color: 'white',
             width: '100px',
             height: '40px',
@@ -35,7 +35,7 @@ const ButtonTime = ({ onTimePeriodChange }) => {
       <Grid item>
         <Button
           sx={{
-            bgcolor: selectedButton === 'week' ? '#239d85' : '#B7B7B7',
+            bgcolor: selectedButton === 'week' ? '#239d85' : '#979a9a',
             color: 'white',
             width: '100px',
             height: '40px',
@@ -55,7 +55,7 @@ const ButtonTime = ({ onTimePeriodChange }) => {
       <Grid item>
         <Button
           sx={{
-            bgcolor: selectedButton === 'day' ? '#239d85' : '#B7B7B7',
+            bgcolor: selectedButton === 'day' ? '#239d85' : '#979a9a',
             color: 'white',
             width: '100px',
             height: '40px',

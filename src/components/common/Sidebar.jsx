@@ -191,7 +191,11 @@ const Sidebar = ({ setCollapsed, collapsed }) => {
         },
       }}
     >
-      <Box sx={{ overflowY: collapsed ? 'hidden' : 'auto', height: '100%' }}>
+      <Box
+        sx={{
+          overflowY: collapsed ? 'hidden' : 'auto',
+        }}
+      >
         <Box
           display="flex"
           alignItems="center"
@@ -211,7 +215,15 @@ const Sidebar = ({ setCollapsed, collapsed }) => {
           </Typography>
         </Box>
         <Divider />
-        <List>{renderMenuItems(items)}</List>
+        <List
+          sx={{
+            height: '500px',
+            overflow: 'auto',
+            borderTop: '2px solid #e6e7f2',
+          }}
+        >
+          {renderMenuItems(items)}
+        </List>
       </Box>
       <Box py={1} sx={{ borderTop: '2px solid #e6e7f2', textAlign: 'center' }}>
         <IconButton

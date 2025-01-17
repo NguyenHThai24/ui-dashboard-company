@@ -97,7 +97,7 @@ const DowntimeTableExcel = () => {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <div style={{ padding: '10px' }}>
+      <div className="my-4">
         <Grid container alignItems="center" className="mb-2 flex gap-4">
           <Grid item sx={{}}>
             <DatePicker
@@ -157,6 +157,7 @@ const DowntimeTableExcel = () => {
               maxHeight: '500px',
               marginTop: '16px',
               overflow: 'auto',
+              boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)', // Hiệu ứng bóng
             }}
           >
             <Table stickyHeader>

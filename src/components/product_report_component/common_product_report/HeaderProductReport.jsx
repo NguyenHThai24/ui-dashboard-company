@@ -45,11 +45,11 @@ const HeaderProductReport = ({ selectedDate, setSelectedDate }) => {
         <Grid item>
           <Button
             sx={{
-              bgcolor: selectedButton === 'factory' ? '#239d85' : '#979a9a',
+              bgcolor: selectedButton === 'factory' ? '#239d85' : '#',
               color: 'white',
               width: '100px',
               height: '40px',
-              borderRadius: '5px',
+              borderRadius: '',
               fontWeight: 'bold',
             }}
             onClick={handleFactoryClick}
@@ -64,7 +64,7 @@ const HeaderProductReport = ({ selectedDate, setSelectedDate }) => {
               color: 'white',
               width: '100px',
               height: '40px',
-              borderRadius: '5px',
+              borderRadius: '',
               fontWeight: 'bold',
             }}
             onClick={handleBuildingClick}
@@ -81,7 +81,7 @@ const HeaderProductReport = ({ selectedDate, setSelectedDate }) => {
               borderColor: '#196f3d',
               width: '100px',
               height: '40px',
-              borderRadius: '5px',
+              borderRadius: '',
               fontWeight: 'bold',
               '&:hover': {
                 bgcolor: '#196f3d',
