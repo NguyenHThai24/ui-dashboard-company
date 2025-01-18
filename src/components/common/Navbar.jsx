@@ -7,10 +7,13 @@ const Navbar = () => {
   const selectedItem = useSelector((state) => state.sidebar.selectedItem);
   const translations = useTranslations(); // Tự động lấy ngôn ngữ từ Redux
 
+  const translatedSelectedItem =
+    translations?.[selectedItem] || selectedItem || '';
+
   // Lấy giá trị dịch của selectedItem từ translations
-  const translatedSelectedItem = selectedItem
-    ? translations[selectedItem]
-    : selectedItem;
+  // const translatedSelectedItem = selectedItem
+  //   ? translations[selectedItem]
+  //   : selectedItem;
   return (
     <Grid
       container
@@ -24,7 +27,7 @@ const Navbar = () => {
       <Grid item xs={10}>
         <Typography sx={{ fontSize: '36px', color: '#fff', fontWeight: 600 }}>
           {translations && translations['LHG']} {''}
-          {translatedSelectedItem && `- ${translatedSelectedItem}`}
+          {translatedSelectedItem ? `- ${translatedSelectedItem}` : '- Welcome'}
         </Typography>
       </Grid>
 

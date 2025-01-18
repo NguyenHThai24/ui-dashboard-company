@@ -20,12 +20,27 @@ const DigitalAndonCase = () => {
   useEffect(() => {
     const fetchMockData = async () => {
       try {
-        const response = await fetch('/data/mockChartData.json');
+        const response = await fetch(
+          'http://192.168.30.245:8989/kpi_overview/get_digital_andon?date=2025-01-18'
+        );
         if (!response.ok) {
           throw new Error('Failed to fetch mock data');
         }
-        const data = await response.json();
-        setChartData(data);
+        const result = await response.json();
+
+        if (result.status === 0 && result.data.getDigitalAndon) {
+          const categories = result.data.getDigitalAndon.map(
+            (item) => item.hourtime
+          );
+          const data = result.data.getDigitalAndon.map((item) => item.Lean);
+
+          setChartData({
+            categories,
+            data,
+          });
+        } else {
+          throw new Error('Invalid API response');
+        }
       } catch (err) {
         setError(err.message);
       } finally {
@@ -39,22 +54,15 @@ const DigitalAndonCase = () => {
   const options = {
     chart: {
       type: 'area',
-      marginTop: 0,
+      spacingTop: 0, // Loại bỏ khoảng cách trên
+      spacingRight: 0, // Loại bỏ khoảng cách phải
+      spacingBottom: 0,
       marginLeft: 0,
       marginRight: 0,
-      //height: 250,
+      height: 250,
     },
     title: {
       text: '',
-      align: 'center',
-      style: {
-        fontSize: '20px',
-        fontWeight: 'bold',
-        fontFamily: "'Roboto', sans-serif",
-        color: '#333',
-        textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)',
-        letterSpacing: '1.5px',
-      },
     },
     xAxis: {
       categories: chartData?.categories || [],
@@ -62,46 +70,33 @@ const DigitalAndonCase = () => {
     },
     yAxis: {
       title: { text: '' },
-      stackLabels: {
-        enabled: true,
-        style: { color: 'black', fontSize: '10px', fontWeight: 600 },
-      },
-      labels: { enabled: true },
+      labels: { style: { fontSize: '10px', fontWeight: 600 } },
     },
     legend: {
-      enabled: false, // Disables the legend
+      enabled: false, // Tắt chú thích
     },
     plotOptions: {
       series: {
-        marker: {
-          enabled: true,
-          radius: 1,
-          symbol: 'circle',
-        },
-        fillOpacity: 0.1,
         dataLabels: {
-          enabled: true, // Enables data labels
+          enabled: true,
           style: {
             fontSize: '10px',
             fontWeight: 600,
-            color: '#333', // Label text color
-          },
-          formatter: function () {
-            return `${this.y}`; // Displays the value of the data point
           },
         },
+        fillOpacity: 0.1,
       },
     },
     series: [
       {
-        name: 'Actual',
-        data: chartData?.actual || [],
+        name: 'Lean',
+        data: chartData?.data || [],
         color: '#b81f89',
         fillColor: {
           linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
           stops: [
-            [0, 'rgba(249, 47, 188, 0.5)'], // Top color
-            [1, 'rgba(249, 47, 188, 0.1)'], // Bottom color
+            [0, 'rgba(249, 47, 188, 0.5)'], // Màu trên cùng
+            [1, 'rgba(249, 47, 188, 0.1)'], // Màu dưới cùng
           ],
         },
       },
@@ -113,8 +108,8 @@ const DigitalAndonCase = () => {
     <div
       className="p-2 rounded-lg"
       style={{
-        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)', // Hiệu ứng bóng
-        background: '#fff', // Nền trắng
+        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)',
+        background: '#fff',
       }}
     >
       <h1 className="font-bold text-gray-500">{t['DIGITAL ANDON CASES']}</h1>
@@ -122,12 +117,7 @@ const DigitalAndonCase = () => {
         <span className="font-bold text-3xl">19 TIMES</span>
       </div>
       <Card>
-        <CardContent
-          sx={{
-            paddingBottom: '0 !important', // Removes bottom padding
-            padding: '16px', // Optional: Adjust overall padding
-          }}
-        >
+        <CardContent>
           {loading ? (
             <Box
               sx={{

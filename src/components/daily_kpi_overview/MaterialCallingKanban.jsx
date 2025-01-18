@@ -38,10 +38,12 @@ const MaterialCallingKanban = () => {
   const options = {
     chart: {
       type: 'column',
-      marginTop: 100,
+      spacingTop: 0, // Loại bỏ khoảng cách trên
+      spacingRight: 0, // Loại bỏ khoảng cách phải
+      spacingBottom: 0,
       marginLeft: 0,
       marginRight: 0,
-      // height: 250,
+      height: 250,
     },
     title: {
       text: '',
@@ -127,12 +129,7 @@ const MaterialCallingKanban = () => {
         </h1>
       </div>
       <Card>
-        <CardContent
-          sx={{
-            paddingBottom: '0 !important', // Removes bottom padding
-            padding: '16px', // Optional: Adjust overall padding
-          }}
-        >
+        <CardContent>
           {loading ? (
             <Box
               sx={{

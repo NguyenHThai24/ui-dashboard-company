@@ -88,15 +88,15 @@ const MechanicTable = ({ floor, date, line, cuttingFitting }) => {
       <div className="grid grid-cols-3 border-4 text-center text-lg p-1 my-2">
         <div className="grid grid-rows-2 bg-red-500">
           <div className="border-b-4">{t['WAITING']}</div>
-          <div>{counts.waiting}</div>
+          <div className="pt-3 text-2xl">{counts.waiting}</div>
         </div>
         <div className="grid grid-rows-2 bg-yellow-500">
           <div className="border-b-4">{t['REPAIRING']}</div>
-          <div>{counts.repairing}</div>
+          <div className="pt-3 text-2xl">{counts.repairing}</div>
         </div>
         <div className="grid grid-rows-2 bg-green-500">
           <div className="border-b-4">{t['DONE']}</div>
-          <div>{counts.done}</div>
+          <div className="pt-3 text-2xl">{counts.done}</div>
         </div>
       </div>
 

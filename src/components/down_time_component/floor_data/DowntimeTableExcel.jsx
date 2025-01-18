@@ -129,11 +129,19 @@ const DowntimeTableExcel = () => {
               )}
             />
           </Grid>
-          <Grid item sx={{}}>
-            <img
-              src="../../../../public/images/excel.png"
-              style={{ height: '40px', width: '40px' }}
-            />
+          <Grid item>
+            <Button
+              onClick={exportToExcel}
+              startIcon={
+                <img
+                  src="/images/excel.png"
+                  alt="Export Excel"
+                  style={{ height: '40px', width: '40px' }}
+                />
+              }
+            >
+              {t['Export to Excel']}
+            </Button>
           </Grid>
         </Grid>
 

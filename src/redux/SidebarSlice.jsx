@@ -1,13 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const initialState = {
+  selectedItem: localStorage.getItem('selectedItem') || '',
+};
+
 const sidebarSlice = createSlice({
   name: 'sidebar',
-  initialState: {
-    selectedItem: '',
-  },
+  initialState,
   reducers: {
     setSelectedItem: (state, action) => {
       state.selectedItem = action.payload;
+      localStorage.setItem('selectedItem', action.payload);
     },
   },
 });

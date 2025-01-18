@@ -12,6 +12,8 @@ import { useTranslations } from '@/config/useTranslations';
 
 const TotalActualOutput = () => {
   const [chartData, setChartData] = useState(null);
+  const [totalOutput, setTotalOutput] = useState(null); // Thêm state cho totalOutput
+  const [target, setTarget] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const t = useTranslations();
@@ -19,12 +21,32 @@ const TotalActualOutput = () => {
   useEffect(() => {
     const fetchMockData = async () => {
       try {
-        const response = await fetch('/data/mockChartData.json');
-        if (!response.ok) {
-          throw new Error('Failed to fetch mock data');
+        const response = await fetch(
+          'http://192.168.30.245:8989/kpi_overview/total_actual_output?date=2025-01-18'
+        );
+        const result = await response.json();
+
+        if (result.status === 0 && result.data.outputActual) {
+          const categories = result.data.outputActual.map(
+            (item) => item.outputtime
+          );
+          const target = result.data.outputActual.map((item) => item.target);
+          const actual = result.data.outputActual.map((item) => item.actual);
+
+          setChartData({
+            categories, // Trục X
+            target, // Dữ liệu "Target"
+            actual, // Dữ liệu "Actual"
+          });
+
+          // Lấy giá trị từ totalOutput
+          if (result.data.totalOutput && result.data.totalOutput[0]) {
+            setTotalOutput(result.data.totalOutput[0].Actual_Quantity_LHG);
+            setTarget(result.data.totalOutput[0].SCBZCL_Quantity); // Lấy target từ totalOutput
+          }
+        } else {
+          throw new Error('Invalid API response structure');
         }
-        const data = await response.json();
-        setChartData(data);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -38,78 +60,53 @@ const TotalActualOutput = () => {
   const options = {
     chart: {
       type: 'area',
-      marginTop: 0,
+      height: 250,
+      spacingTop: 0, // Loại bỏ khoảng cách trên
+      spacingRight: 0, // Loại bỏ khoảng cách phải
+      spacingBottom: 0,
       marginLeft: 0,
       marginRight: 0,
-      height: 250,
     },
     title: {
       text: '',
-      align: 'center',
-      style: {
-        fontSize: '20px',
-        fontWeight: 'bold',
-        fontFamily: "'Roboto', sans-serif",
-        color: '#333',
-        textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)',
-        letterSpacing: '1.5px',
-      },
     },
     xAxis: {
-      categories: chartData?.categories || [],
+      categories: chartData?.categories || [], // Sử dụng trục X từ dữ liệu
       labels: { style: { fontSize: '10px', fontWeight: 600 } },
     },
     yAxis: {
       title: { text: '' },
-      stackLabels: {
-        enabled: true,
-        style: { color: 'black', fontSize: '10px', fontWeight: 600 },
-      },
-      labels: { enabled: true },
+      labels: { style: { fontSize: '10px', fontWeight: 600 } },
+      min: 0, // Đảm bảo giá trị bắt đầu từ 0
     },
     legend: {
-      enabled: false, // Disables the legend
-    },
-    plotOptions: {
-      series: {
-        marker: {
-          enabled: true,
-          radius: 1,
-          symbol: 'circle',
-        },
-        fillOpacity: 0.1,
-        dataLabels: {
-          enabled: true, // Enables data labels
-          style: {
-            fontSize: '10px',
-            fontWeight: 600,
-            color: '#333', // Label text color
-          },
-          formatter: function () {
-            return `${this.y}`; // Displays the value of the data point
-          },
-        },
-      },
+      enabled: false, // Tắt legend
     },
     series: [
       {
         name: 'Target',
-        data: Array(chartData?.categories?.length).fill(80),
+        data: chartData?.target || [], // Sử dụng dữ liệu "Target"
         color: '#ff2020',
-        dashStyle: 'Solid',
-        enableMouseTracking: false,
-        dataLabels: { enabled: false }, // No data labels for the target line
+        dataLabels: {
+          enabled: true, // Hiển thị nhãn dữ liệu
+          style: {
+            fontSize: '10px',
+            fontWeight: 'bold',
+            color: '#ff2020',
+          },
+        },
       },
       {
         name: 'Actual',
-        data: chartData?.actual || [],
+        data: chartData?.actual || [], // Sử dụng dữ liệu "Actual"
         color: '#3bf715',
-        fillColor: {
-          linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-          stops: [
-            [0, 'rgba(59, 247, 21, 0.5)'], // Top color
-            [1, 'rgba(59, 247, 21, 0.5)'], // Bottom color
-          ],
+        dataLabels: {
+          enabled: true, // Hiển thị nhãn dữ liệu
+          style: {
+            fontSize: '10px',
+            fontWeight: 'bold',
+            color: '#3bf715',
+          },
         },
       },
     ],
@@ -118,7 +115,7 @@ const TotalActualOutput = () => {
 
   return (
     <div
-      className="p-2 rounded-lg shadow-md"
+      className="px-2 py-2 rounded-lg shadow-md"
       style={{
         boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)', // Hiệu ứng bóng
         background: '#fff', // Nền trắng
@@ -126,17 +123,15 @@ const TotalActualOutput = () => {
     >
       <h1 className="font-bold text-gray-500">{t['TOTAL ACTUAL OUTPUT']}</h1>
       <div>
-        <span className="font-bold text-3xl">53,577</span>
+        {/* Hiển thị giá trị lấy từ API */}
+        <span className="font-bold text-3xl">{totalOutput || '---'}</span>
         <span className="text-xs font-bold">{t['PAIRS']}</span>
       </div>
-      <p className="font-bold text-right">{t['TARGET']}: 66,800</p>
+      <p className="font-bold text-right">
+        {t['TARGET']}: {target || '---'}
+      </p>
       <Card>
-        <CardContent
-          sx={{
-            paddingBottom: '0 !important', // Removes bottom padding
-            padding: '16px', // Optional: Adjust overall padding
-          }}
-        >
+        <CardContent>
           {loading ? (
             <Box
               sx={{

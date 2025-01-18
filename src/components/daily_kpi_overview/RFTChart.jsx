@@ -12,18 +12,25 @@ import { useTranslations } from '@/config/useTranslations';
 
 const RFTChart = () => {
   const [chartData, setChartData] = useState(null);
+  const [RFTFactory, setRFTFactory] = useState(null);
+  const [RFTValues, setRFTValues] = useState([]);
+  const [timeRanges, setTimeRanges] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const t = useTranslations();
 
   useEffect(() => {
-    const fetchMockData = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch('/data/mockChartData.json');
-        if (!response.ok) {
-          throw new Error('Failed to fetch mock data');
-        }
+        const response = await fetch(
+          'http://192.168.30.245:8989/kpi_overview/getRFT?date=2025-01-18'
+        );
         const data = await response.json();
+        const { getRFTtime, getRFTFactory } = data.data;
+
+        setRFTValues(getRFTtime.map((item) => item.RFT));
+        setRFTFactory(getRFTFactory[0]?.RFTFactory);
+        setTimeRanges(getRFTtime.map((item) => item.TimeRange));
         setChartData(data);
       } catch (err) {
         setError(err.message);
@@ -32,84 +39,91 @@ const RFTChart = () => {
       }
     };
 
-    fetchMockData();
+    fetchData();
   }, []);
+
+  const RFTValuesPercentage = RFTValues.map((value) => value * 100);
 
   const options = {
     chart: {
       type: 'area',
-      marginTop: 0,
+      height: 250,
+      spacingTop: 0, // Loại bỏ khoảng cách trên
+      spacingRight: 0, // Loại bỏ khoảng cách phải
+      spacingBottom: 0,
       marginLeft: 0,
       marginRight: 0,
-      height: 250,
     },
     title: {
       text: '',
       align: 'center',
-      style: {
-        fontSize: '20px',
-        fontWeight: 'bold',
-        fontFamily: "'Roboto', sans-serif",
-        color: '#333',
-        textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)',
-        letterSpacing: '1.5px',
-      },
     },
     xAxis: {
-      categories: chartData?.categories || [],
+      categories: timeRanges,
       labels: { style: { fontSize: '10px', fontWeight: 600 } },
     },
     yAxis: {
       title: { text: '' },
-      stackLabels: {
-        enabled: true,
-        style: { color: 'black', fontSize: '10px', fontWeight: 600 },
-      },
-      labels: { enabled: true },
+      labels: { style: { fontSize: '10px', fontWeight: 600 } },
+      min: 0,
     },
-    legend: {
-      enabled: false, // Disables the legend
-    },
+    legend: { enabled: false },
     plotOptions: {
       series: {
-        marker: {
-          enabled: true,
-          radius: 1,
-          symbol: 'circle',
-        },
+        marker: { enabled: true, radius: 1, symbol: 'circle' },
         fillOpacity: 0.1,
         dataLabels: {
-          enabled: true, // Enables data labels
-          style: {
-            fontSize: '10px',
-            fontWeight: 600,
-            color: '#333', // Label text color
-          },
+          enabled: true,
+          style: { fontSize: '10px', fontWeight: 600, color: '#333' },
           formatter: function () {
-            return `${this.y}`; // Displays the value of the data point
+            return `${this.y.toFixed(1)}%`;
           },
         },
       },
+    },
+    tooltip: {
+      shared: true,
+      useHTML: true,
+      pointFormat: `<span style="color:{point.color}">{series.name}: </span><b>{point.y:.1f}%</b><br/>`,
+      backgroundColor: 'rgba(255, 255, 255, 0.9)',
+      borderColor: '#ccc',
+      borderRadius: 5,
+      padding: 10,
+      style: { fontSize: '12px', fontWeight: 'bold', color: '#333' },
     },
     series: [
       {
-        name: 'Target',
-        data: Array(chartData?.categories?.length).fill(85),
+        name: 'Target (85%)',
+        data: Array(RFTValues.length).fill(85),
         color: '#25283D',
+        fillColor: {
+          linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+          stops: [
+            [0, 'rgba(251, 86, 9, 0.5)'],
+            [1, 'rgba(251, 86, 9, 0.5)'],
+          ],
+        },
         dashStyle: 'Solid',
-        enableMouseTracking: false,
-        dataLabels: { enabled: false }, // No data labels for the target line
+        enableMouseTracking: true,
+        dataLabels: { enabled: false },
       },
       {
-        name: 'Actual',
-        data: chartData?.actual || [],
+        name: 'Actual RFT',
+        data: RFTValuesPercentage,
         color: '#0b9dcc',
         fillColor: {
           linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
           stops: [
-            [0, 'rgba(57, 162, 174, 0.5)'], // Top color
-            [1, 'rgba(57, 162, 174, 0.5)'], // Bottom color
+            [0, 'rgba(57, 162, 174, 0.5)'],
+            [1, 'rgba(57, 162, 174, 0.5)'],
           ],
+        },
+        dataLabels: {
+          enabled: true,
+          style: { fontSize: '10px', fontWeight: 600, color: '#333' },
+          formatter: function () {
+            return `${this.y.toFixed(1)}%`;
+          },
         },
       },
     ],
@@ -118,7 +132,7 @@ const RFTChart = () => {
 
   return (
     <div
-      className="p-2 rounded-lg"
+      className="px-2 py-2 rounded-lg shadow-md"
       style={{
         boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)', // Hiệu ứng bóng
         background: '#fff', // Nền trắng
@@ -126,16 +140,13 @@ const RFTChart = () => {
     >
       <h1 className="font-bold text-gray-500">{t['RFT']}</h1>
       <div>
-        <span className="font-bold text-3xl">55,3%</span>
+        <span className="font-bold text-3xl">
+          {RFTFactory !== null ? (RFTFactory * 100).toFixed(1) : '--'}%{' '}
+        </span>
       </div>
       <p className="font-bold text-right">{t['TARGET']}: 85%</p>
       <Card>
-        <CardContent
-          sx={{
-            paddingBottom: '0 !important', // Removes bottom padding
-            padding: '16px', // Optional: Adjust overall padding
-          }}
-        >
+        <CardContent>
           {loading ? (
             <Box
               sx={{
