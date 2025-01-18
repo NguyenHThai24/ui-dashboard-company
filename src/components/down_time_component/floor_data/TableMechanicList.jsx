@@ -72,21 +72,23 @@ const MechanicTable = ({ floor, date, line, cuttingFitting }) => {
         sx={{
           paddingLeft: '4px',
           paddingRight: '4px',
-          maxHeight: '300px', // Bớt chiều cao để dành không gian cho tiêu đề
+          maxHeight: '300px',
           marginTop: '10px',
+          width: '100%',
+          overflow: 'auto',
           '&::-webkit-scrollbar': {
-            width: '6px',
-            height: '6px',
+            width: '4px', // Đặt chiều rộng thanh cuộn nhỏ hơn
+            height: '4px', // Đặt chiều cao thanh cuộn nhỏ hơn
           },
           '&::-webkit-scrollbar-thumb': {
-            backgroundColor: '#888',
-            borderRadius: '10px',
+            backgroundColor: '#a1a1a1', // Màu thanh cuộn
+            borderRadius: '8px', // Làm thanh cuộn tròn góc
           },
           '&::-webkit-scrollbar-thumb:hover': {
-            backgroundColor: '#555',
+            backgroundColor: '#888', // Màu khi di chuột vào thanh cuộn
           },
           '&::-webkit-scrollbar-track': {
-            backgroundColor: '#f1f1f1',
+            backgroundColor: '#f0f0f0', // Màu nền của track
           },
         }}
       >

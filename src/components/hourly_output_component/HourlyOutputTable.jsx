@@ -132,6 +132,8 @@ const HourlyOutputTable = ({ date }) => {
                         sx={{
                           fontWeight: 900,
                           fontSize: '11px',
+                          padding: '4px 8px', // Giảm padding
+                          whiteSpace: 'nowrap', // Đảm bảo nội dung không xuống hàng
                         }}
                       >
                         {t['Line']}
@@ -140,20 +142,37 @@ const HourlyOutputTable = ({ date }) => {
                         sx={{
                           fontWeight: 900,
                           fontSize: '11px',
+                          padding: '4px 8px',
                         }}
                       >
                         {t['Daily Target']}
                       </TableCell>
-                      <TableCell sx={{ fontWeight: 900, fontSize: '11px' }}>
+                      <TableCell
+                        sx={{
+                          fontWeight: 900,
+                          fontSize: '11px',
+                          padding: '4px 8px',
+                        }}
+                      >
                         {t['Daily Actual']}
                       </TableCell>
-                      <TableCell sx={{ fontWeight: 900, fontSize: '11px' }}>
+                      <TableCell
+                        sx={{
+                          fontWeight: 900,
+                          fontSize: '11px',
+                          padding: '4px 8px',
+                        }}
+                      >
                         {t['Hourly Target']}
                       </TableCell>
                       {[...Array(9).keys()].map((i) => (
                         <TableCell
                           key={i}
-                          sx={{ fontWeight: 900, fontSize: '11px' }}
+                          sx={{
+                            fontWeight: 900,
+                            fontSize: '11px',
+                            padding: '4px 8px',
+                          }}
                         >
                           {`${7 + i}:30-${8 + i}:30`}
                         </TableCell>
@@ -176,7 +195,12 @@ const HourlyOutputTable = ({ date }) => {
                               }}
                             >
                               <TableCell
-                                sx={{ fontWeight: 600, fontSize: '11px' }}
+                                sx={{
+                                  fontWeight: 600,
+                                  fontSize: '11px',
+                                  padding: '4px 8px',
+                                  whiteSpace: 'nowrap',
+                                }}
                               >
                                 {item.line}
                               </TableCell>
@@ -184,17 +208,26 @@ const HourlyOutputTable = ({ date }) => {
                                 sx={{
                                   fontWeight: 600,
                                   fontSize: '11px',
+                                  padding: '4px 8px',
                                 }}
                               >
                                 {item.TARGET * 8}
                               </TableCell>
                               <TableCell
-                                sx={{ fontWeight: 600, fontSize: '11px' }}
+                                sx={{
+                                  fontWeight: 600,
+                                  fontSize: '11px',
+                                  padding: '4px 8px',
+                                }}
                               >
                                 {item.QTY}
                               </TableCell>
                               <TableCell
-                                sx={{ fontWeight: 600, fontSize: '11px' }}
+                                sx={{
+                                  fontWeight: 600,
+                                  fontSize: '11px',
+                                  padding: '4px 8px',
+                                }}
                               >
                                 {item.TARGET}
                               </TableCell>
@@ -214,6 +247,7 @@ const HourlyOutputTable = ({ date }) => {
                                           : color === 'yellow'
                                             ? '#ffaa00'
                                             : '#FF0000',
+                                      padding: '4px 8px',
                                     }}
                                   >
                                     {value}
@@ -225,22 +259,38 @@ const HourlyOutputTable = ({ date }) => {
 
                           <TableRow>
                             <TableCell
-                              sx={{ fontWeight: 900, fontSize: '11px' }}
+                              sx={{
+                                fontWeight: 900,
+                                fontSize: '11px',
+                                padding: '4px 8px',
+                              }}
                             >
                               Total
                             </TableCell>
                             <TableCell
-                              sx={{ fontWeight: 900, fontSize: '11px' }}
+                              sx={{
+                                fontWeight: 900,
+                                fontSize: '11px',
+                                padding: '4px 8px',
+                              }}
                             >
                               {totalRow.TARGET * 8 || 0}
                             </TableCell>
                             <TableCell
-                              sx={{ fontWeight: 900, fontSize: '11px' }}
+                              sx={{
+                                fontWeight: 900,
+                                fontSize: '11px',
+                                padding: '4px 8px',
+                              }}
                             >
                               {totalRow.QTY || 0}
                             </TableCell>
                             <TableCell
-                              sx={{ fontWeight: 900, fontSize: '11px' }}
+                              sx={{
+                                fontWeight: 900,
+                                fontSize: '11px',
+                                padding: '4px 8px',
+                              }}
                             >
                               {totalRow.TARGET || 0}
                             </TableCell>
@@ -249,7 +299,11 @@ const HourlyOutputTable = ({ date }) => {
                               return (
                                 <TableCell
                                   key={i}
-                                  sx={{ fontWeight: 900, fontSize: '11px' }}
+                                  sx={{
+                                    fontWeight: 900,
+                                    fontSize: '11px',
+                                    padding: '4px 8px',
+                                  }}
                                 >
                                   {totalRow[timeSlot] || 0}
                                 </TableCell>
