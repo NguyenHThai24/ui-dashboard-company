@@ -23,33 +23,51 @@ const DownTimePage = () => {
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [selectedFloor, setSelectedFloor] = useState(null);
   const [selectedLine, setSelectedLine] = useState(null);
-  const [selectedMode, setSelectedMode] = useState(null);
+  const [cuttingFittingState, setCuttingFittingState] = useState('');
+
+  const [machineDownTotal, setMachineDownTotal] = useState(0); // TOTAL từ CardMachineDown
+  const [breakdownTotal, setBreakdownTotal] = useState(0); // TOTAL từ CardBreakdown
 
   const handleFloorChange = (floorAlias) => {
     setSelectedFloor(floorAlias);
-    setSelectedLine(null); // Reset line when a new floor is selected
+    setCuttingFittingState(''); // Reset cuttingFittingState khi chọn floor
+    setSelectedLine(null); // Reset line khi đổi floor
   };
 
   const handleFloorLineChange = (lineAlias) => {
-    setSelectedLine(lineAlias); // Update selected line
+    setSelectedLine(lineAlias); // Cập nhật line
   };
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
 
-  const handleModeChange = (mode) => {
-    setSelectedMode(mode); // Update mode
-    setSelectedFloor(null); // Reset floor
-    setSelectedLine(null); // Reset line
+  const handleCuttingFittingChange = (state) => {
+    setCuttingFittingState(state);
+    setSelectedFloor(null); // Reset selectedFloor khi chọn cutting/fitting
+    setSelectedLine(null); // Reset line khi chọn cutting/fitting
   };
+
+  // Hàm xử lý nhận total từ CardMachineDown
+  const handleMachineDownTotalChange = (total) => {
+    setMachineDownTotal(total);
+  };
+
+  // Hàm xử lý nhận total từ CardBreakdown
+  const handleBreakdownTotalChange = (total) => {
+    setBreakdownTotal(total);
+  };
+
+  // Tính giá trị AVERAGE
+  const average =
+    breakdownTotal !== 0 ? (machineDownTotal / breakdownTotal).toFixed(2) : 0;
 
   return (
     <div>
       <FloorLineList
         onFloorChange={handleFloorChange}
         onLineChange={handleFloorLineChange}
-        onModeChange={handleModeChange}
+        onCuttingFittingChange={handleCuttingFittingChange}
       />
 
       <div className="flex gap-4">
@@ -77,7 +95,8 @@ const DownTimePage = () => {
                   date={selectedDate}
                   floor={selectedFloor}
                   line={selectedLine}
-                  mode={selectedMode}
+                  cuttingFitting={cuttingFittingState}
+                  onTotalChange={handleBreakdownTotalChange} // Callback để nhận total
                 />
               </div>
               <div className="grid col-span-4">
@@ -85,7 +104,9 @@ const DownTimePage = () => {
                   date={selectedDate}
                   floor={selectedFloor}
                   line={selectedLine}
-                  mode={selectedMode}
+                  cuttingFitting={cuttingFittingState}
+                  breakdownTotal={breakdownTotal} // Truyền breakdownTotal xuống
+                  onTotalChange={handleMachineDownTotalChange} // Callback để nhận total
                 />
               </div>
               <div className="grid col-span-2">
@@ -93,7 +114,7 @@ const DownTimePage = () => {
                   date={selectedDate}
                   floor={selectedFloor}
                   line={selectedLine}
-                  mode={selectedMode}
+                  cuttingFitting={cuttingFittingState}
                 />
               </div>
             </div>
@@ -104,19 +125,19 @@ const DownTimePage = () => {
               date={selectedDate}
               floor={selectedFloor}
               line={selectedLine}
-              mode={selectedMode}
+              cuttingFitting={cuttingFittingState}
             />
             <MachineDowntimeByLineChart
               date={selectedDate}
               floor={selectedFloor}
               line={selectedLine}
-              mode={selectedMode}
+              cuttingFitting={cuttingFittingState}
             />
             <RepairingTimeChart
               date={selectedDate}
               floor={selectedFloor}
               line={selectedLine}
-              mode={selectedMode}
+              cuttingFitting={cuttingFittingState}
             />
           </div>
         </div>
@@ -131,7 +152,7 @@ const DownTimePage = () => {
             date={selectedDate}
             floor={selectedFloor}
             line={selectedLine}
-            mode={selectedMode}
+            cuttingFitting={cuttingFittingState}
           />
         </div>
       </section>
@@ -141,25 +162,25 @@ const DownTimePage = () => {
           date={selectedDate}
           floor={selectedFloor}
           line={selectedLine}
-          mode={selectedMode}
+          cuttingFitting={cuttingFittingState}
         />
         <MostDowntimeChart
           date={selectedDate}
           floor={selectedFloor}
           line={selectedLine}
-          mode={selectedMode}
+          cuttingFitting={cuttingFittingState}
         />
         <MostRepairingChart
           date={selectedDate}
           floor={selectedFloor}
           line={selectedLine}
-          mode={selectedMode}
+          cuttingFitting={cuttingFittingState}
         />
         <TotalMachineChart
           date={selectedDate}
           floor={selectedFloor}
           line={selectedLine}
-          mode={selectedMode}
+          cuttingFitting={cuttingFittingState}
         />
       </section>
 
@@ -169,19 +190,19 @@ const DownTimePage = () => {
             date={selectedDate}
             floor={selectedFloor}
             line={selectedLine}
-            mode={selectedMode}
+            cuttingFitting={cuttingFittingState}
           />
           <ReasonMinChart
             date={selectedDate}
             floor={selectedFloor}
             line={selectedLine}
-            mode={selectedMode}
+            cuttingFitting={cuttingFittingState}
           />
           <RepairingMethodChart
             date={selectedDate}
             floor={selectedFloor}
             line={selectedLine}
-            mode={selectedMode}
+            cuttingFitting={cuttingFittingState}
           />
         </div>
         <div
@@ -194,7 +215,7 @@ const DownTimePage = () => {
             date={selectedDate}
             floor={selectedFloor}
             line={selectedLine}
-            mode={selectedMode}
+            cuttingFitting={cuttingFittingState}
           />
         </div>
       </section>

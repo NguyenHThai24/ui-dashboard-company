@@ -33,7 +33,7 @@ ChartJS.register(
   Legend
 );
 
-const RepairingTimeChart = ({ floor, line, date, mode }) => {
+const RepairingTimeChart = ({ floor, line, date, cuttingFitting }) => {
   const { chartRepairingTime, loading, error } = useSelector(
     (state) => state.downtime
   );
@@ -41,25 +41,27 @@ const RepairingTimeChart = ({ floor, line, date, mode }) => {
   const t = useTranslations();
 
   useEffect(() => {
-    if (mode === 'Auto Cutting') {
-      floor = 'Auto Cutting';
-    } else if (mode === 'Stock Fitting') {
-      floor = 'Stock Fitting';
+    let adjustedFloor;
+
+    // Đảm bảo `floor` được gán đúng theo mode hoặc từ props
+    if (cuttingFitting === 'cutting') {
+      adjustedFloor = 'Auto Cutting';
+    } else if (cuttingFitting === 'fitting') {
+      adjustedFloor = 'Stock Fitting';
     } else {
-      // Reset to empty if neither mode is selected
-      floor = '';
+      adjustedFloor = floor; // Nhận giá trị từ props nếu không phải cutting hoặc fitting
     }
     dispatch(
       fetchChartRepairingTime(
         'LHG', // Factory (example value)
-        floor, // Floor from props
+        adjustedFloor, // Floor from props
         line, // Line from props
         '', // Section (optional)
         date, // Start date
         date // End date (if applicable)
       )
     );
-  }, [dispatch, floor, line, date, mode]);
+  }, [dispatch, floor, line, date, cuttingFitting]);
 
   const data = {
     labels: chartRepairingTime.name

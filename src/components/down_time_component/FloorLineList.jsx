@@ -11,13 +11,19 @@ import { fetchDistinctFloor } from '@/apis/factory_kpi_api/FactoryAPI';
 
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useTranslations } from '@/config/useTranslations';
+import ButtonCuttingFitting from './ButtonCuttingFitting';
 
-const FloorLineList = ({ onFloorChange, onLineChange, onModeChange }) => {
+const FloorLineList = ({
+  onFloorChange,
+  onLineChange,
+  onCuttingFittingChange,
+}) => {
   const [data, setData] = useState([]);
   const [selectedFloor, setSelectedFloor] = useState(null);
   const [selectedLine, setSelectedLine] = useState(null);
   const [lines, setLines] = useState([]);
-  const [selectedButton, setSelectedButton] = useState(null); // Track selected button
+  const [cuttingFittingState, setCuttingFittingState] = useState('');
+
   const t = useTranslations();
 
   useEffect(() => {
@@ -37,10 +43,18 @@ const FloorLineList = ({ onFloorChange, onLineChange, onModeChange }) => {
 
   const handleSelect = (floorAlias) => {
     setSelectedFloor(floorAlias);
-    setSelectedButton(); // Clear selected button
+    setCuttingFittingState(''); // Reset Cutting/Fitting state
     handleFloorClick(floorAlias);
     if (onFloorChange) {
-      onFloorChange({ floorAlias, selectedButton: {} });
+      onFloorChange(floorAlias);
+    }
+  };
+
+  const handleCuttingFittingChange = (selection) => {
+    setCuttingFittingState(selection); // Update local state
+    setSelectedFloor(null); // Reset selectedFloor state
+    if (onCuttingFittingChange) {
+      onCuttingFittingChange(selection); // Pass the state to the parent
     }
   };
 
@@ -51,18 +65,10 @@ const FloorLineList = ({ onFloorChange, onLineChange, onModeChange }) => {
     }
   };
 
-  const handleButtonSelect = (button) => {
-    setSelectedButton(button);
-    setSelectedFloor({}); // Clear selected floor
-    setLines([]); // Clear lines
-    if (onModeChange) {
-      onModeChange(button); // Notify parent component about mode change
-    }
-  };
-
   return (
     <>
       <Grid2 container spacing={1} sx={{ py: '5px' }}>
+        {/* Factory and floor buttons */}
         <Grid2
           item
           sx={{
@@ -108,7 +114,7 @@ const FloorLineList = ({ onFloorChange, onLineChange, onModeChange }) => {
       </Grid2>
 
       {/* Floor rendering */}
-      <Grid2 container spacing={1} alignItems="center">
+      <Grid2 container spacing={1} alignItems="center" sx={{ my: -2 }}>
         <Grid2
           item
           xs={6}
@@ -153,7 +159,6 @@ const FloorLineList = ({ onFloorChange, onLineChange, onModeChange }) => {
               >
                 <ListItemButton
                   onClick={() => handleSelect(floor.floorAlias)}
-                  disabled={!!selectedButton} // Disable if a button is selected
                   sx={{
                     bgcolor:
                       selectedFloor === floor.floorAlias ? '#239d85' : 'white',
@@ -176,44 +181,11 @@ const FloorLineList = ({ onFloorChange, onLineChange, onModeChange }) => {
                 </ListItemButton>
               </ListItem>
             ))}
+            <ButtonCuttingFitting
+              onSelectionChange={handleCuttingFittingChange}
+              selectedState={cuttingFittingState} // Truyền trạng thái hiện tại
+            />
           </List>
-          {/* Auto Cutting and Stock Fitting buttons */}
-          <Button
-            sx={{
-              bgcolor:
-                selectedButton === 'Auto Cutting' ? '#1b7a67' : '#239d85',
-              color: 'white',
-              width: '100px',
-              height: '42px',
-              borderRadius: '5px',
-              textTransform: 'none',
-              mx: 1,
-              '&:hover': {
-                bgcolor: '#1b7a67',
-              },
-            }}
-            onClick={() => handleButtonSelect('Auto Cutting')}
-          >
-            {t['Auto Cutting']}
-          </Button>
-          <Button
-            sx={{
-              bgcolor:
-                selectedButton === 'Stock Fitting' ? '#1b7a67' : '#239d85',
-              color: 'white',
-              width: '100px',
-              height: '42px',
-              borderRadius: '5px',
-              textTransform: 'none',
-              mx: 1,
-              '&:hover': {
-                bgcolor: '#1b7a67',
-              },
-            }}
-            onClick={() => handleButtonSelect('Stock Fitting')}
-          >
-            {t['Stock Fitting']}
-          </Button>
         </Grid2>
       </Grid2>
 

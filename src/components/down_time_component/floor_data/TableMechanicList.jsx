@@ -14,32 +14,34 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchTableMechanic } from '../../../apis/down_time_api/FloorAPI';
 import { useTranslations } from '@/config/useTranslations';
 
-const MechanicTable = ({ floor, date, line, mode }) => {
+const MechanicTable = ({ floor, date, line, cuttingFitting }) => {
   const { tableMechanic, loading, error } = useSelector(
     (state) => state.downtime
   );
   const dispatch = useDispatch();
   const t = useTranslations();
   useEffect(() => {
-    if (mode === 'Auto Cutting') {
-      floor = 'Auto Cutting';
-    } else if (mode === 'Stock Fitting') {
-      floor = 'Stock Fitting';
+    let adjustedFloor;
+
+    // Đảm bảo `floor` được gán đúng theo mode hoặc từ props
+    if (cuttingFitting === 'cutting') {
+      adjustedFloor = 'Auto Cutting';
+    } else if (cuttingFitting === 'fitting') {
+      adjustedFloor = 'Stock Fitting';
     } else {
-      // Reset to empty if neither mode is selected
-      floor = '';
+      adjustedFloor = floor; // Nhận giá trị từ props nếu không phải cutting hoặc fitting
     }
     dispatch(
       fetchTableMechanic(
         'LHG', // Factory
-        floor, // Floor
+        adjustedFloor, // Floor
         line, // Line
         '', // Section
         date, // Start date
         date // End date
       )
     );
-  }, [dispatch, floor, line, date, mode]);
+  }, [dispatch, floor, line, date, cuttingFitting]);
 
   return (
     <div

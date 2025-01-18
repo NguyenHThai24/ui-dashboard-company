@@ -130,12 +130,10 @@ const DowntimeTableExcel = () => {
             />
           </Grid>
           <Grid item sx={{}}>
-            <Button fullWidth onClick={exportToExcel}>
-              <img
-                src="../../../../public/images/excel.png"
-                style={{ height: '40px', width: '40px' }}
-              />
-            </Button>
+            <img
+              src="../../../../public/images/excel.png"
+              style={{ height: '40px', width: '40px' }}
+            />
           </Grid>
         </Grid>
 

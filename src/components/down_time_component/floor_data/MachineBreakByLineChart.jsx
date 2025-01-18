@@ -30,32 +30,34 @@ ChartJS.register(
   Legend
 );
 
-const MachineBreakByLineChart = ({ floor, line, date, mode }) => {
+const MachineBreakByLineChart = ({ floor, line, date, cuttingFitting }) => {
   // Use Redux state for chartData, loading, and error
   const { chartData, loading, error } = useSelector((state) => state.downtime);
   const dispatch = useDispatch();
   const t = useTranslations();
 
   useEffect(() => {
-    if (mode === 'Auto Cutting') {
-      floor = 'Auto Cutting';
-    } else if (mode === 'Stock Fitting') {
-      floor = 'Stock Fitting';
+    let adjustedFloor;
+
+    // Đảm bảo `floor` được gán đúng theo mode hoặc từ props
+    if (cuttingFitting === 'cutting') {
+      adjustedFloor = 'Auto Cutting';
+    } else if (cuttingFitting === 'fitting') {
+      adjustedFloor = 'Stock Fitting';
     } else {
-      // Reset to empty if neither mode is selected
-      floor = '';
+      adjustedFloor = floor; // Nhận giá trị từ props nếu không phải cutting hoặc fitting
     }
     dispatch(
       fetchChartDataBreakdown(
         'LHG', // Factory (example value)
-        floor, // Floor from props
+        adjustedFloor, // Floor from props
         line, // Line from props
         '', // Section (optional)
         date, // Start date
         date // End date (if applicable)
       )
     );
-  }, [dispatch, floor, line, date, mode]); // Run effect when floor, line, or date changes
+  }, [dispatch, floor, line, date, cuttingFitting]); // Run effect when floor, line, or date changes
 
   const data = {
     labels: chartData.name || [], // X-axis labels (ensure it's not undefined)

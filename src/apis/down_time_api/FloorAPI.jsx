@@ -211,7 +211,7 @@ export const fetchChartDataFixed =
       dispatch(setLoading(false)); // End loading
     } catch (error) {
       dispatch(setLoading(false)); // End loading if error occurs
-      dispatch(setError(error.toString())); // Dispatch the error message to Redux
+      dispatch(setError(error?.toString())); // Dispatch the error message to Redux
       console.error('Error in fetching chart data:', error);
     }
   };

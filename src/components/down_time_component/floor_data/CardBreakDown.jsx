@@ -9,7 +9,13 @@ import {
 } from '@mui/material';
 import { useTranslations } from '@/config/useTranslations';
 
-const CardBreakdown = ({ floor, date, line, mode }) => {
+const CardBreakdown = ({
+  floor,
+  date,
+  line,
+  cuttingFitting,
+  onTotalChange,
+}) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [total, setTotal] = useState(0);
@@ -19,25 +25,27 @@ const CardBreakdown = ({ floor, date, line, mode }) => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        // Ensure the floor is set based on the mode
-        if (mode === 'Auto Cutting') {
-          floor = 'Auto Cutting';
-        } else if (mode === 'Stock Fitting') {
-          floor = 'Stock Fitting';
+        let adjustedFloor;
+
+        // Đảm bảo `floor` được gán đúng theo mode hoặc từ props
+        if (cuttingFitting === 'cutting') {
+          adjustedFloor = 'Auto Cutting';
+        } else if (cuttingFitting === 'fitting') {
+          adjustedFloor = 'Stock Fitting';
         } else {
-          // Reset to empty if neither mode is selected
-          floor = '';
+          adjustedFloor = floor; // Nhận giá trị từ props nếu không phải cutting hoặc fitting
         }
 
         const totalBreakdown = await fetchTotalBreakdown(
           'LHG', // Factory
-          floor, // Floor from props or mode
+          adjustedFloor, // Floor from props or mode
           '', // Line
           '', // Section
           date, // Start date
           date // End date
         );
         setTotal(totalBreakdown);
+        onTotalChange(totalBreakdown); // Gửi giá trị lên cha
       } catch (err) {
         setError(err.message);
       } finally {
@@ -46,7 +54,7 @@ const CardBreakdown = ({ floor, date, line, mode }) => {
     };
 
     fetchData();
-  }, [floor, date, line, mode]); // Add mode to the dependency array
+  }, [floor, date, line, cuttingFitting]); // Add mode to the dependency array
 
   return (
     <Card
