@@ -24,7 +24,7 @@ const EfficiencyByFloor = () => {
         setLoading(false);
       })
       .catch((err) => {
-        setError('Failed to load data');
+        setError('Failed to load data', err);
         setLoading(false);
       });
   }, []);
@@ -137,6 +137,7 @@ const EfficiencyByFloor = () => {
     },
   };
 
+  const titleKey = floor ? 'EFFICIENCY BY LINE' : 'EFFICIENCY BY FLOOR';
   return (
     <div>
       <Card
@@ -159,7 +160,7 @@ const EfficiencyByFloor = () => {
               letterSpacing: '0px',
             }}
           >
-            {translation['EFFICIENCY BY FLOOR']}
+            {translation[titleKey]}
           </Typography>
           {loading ? (
             <Box

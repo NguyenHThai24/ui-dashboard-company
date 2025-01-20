@@ -112,6 +112,8 @@ const AttendanceByFloor = ({ date, floor }) => {
     },
   };
 
+  const titleKey = floor ? 'ATTENDANCE BY LINE' : 'ATTENDANCE BY FLOOR';
+
   return (
     <Card
       sx={{
@@ -133,7 +135,7 @@ const AttendanceByFloor = ({ date, floor }) => {
             letterSpacing: '0px',
           }}
         >
-          {translations['ATTENDANCE BY FLOOR']}
+          {translations[titleKey]}
         </Typography>
         {loading ? (
           <Box

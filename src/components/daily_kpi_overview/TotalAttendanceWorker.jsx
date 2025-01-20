@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslations } from '@/config/useTranslations';
 
-const TotalAttendanceWorker = () => {
+const TotalAttendanceWorker = ({ date }) => {
   const t = useTranslations();
   const [attendanceData, setAttendanceData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -10,8 +10,9 @@ const TotalAttendanceWorker = () => {
   useEffect(() => {
     const fetchAttendanceData = async () => {
       try {
+        const formattedDate = date.format('YYYY-MM-DD');
         const response = await fetch(
-          'http://192.168.30.245:8989/kpi_overview/get_total_attendance?date=2025-01-18'
+          `http://192.168.30.245:8989/kpi_overview/get_total_attendance?date=${formattedDate}`
         );
         if (!response.ok) {
           throw new Error('Failed to fetch data');
@@ -44,7 +45,7 @@ const TotalAttendanceWorker = () => {
     };
 
     fetchAttendanceData();
-  }, []);
+  }, [date]);
 
   return (
     <div

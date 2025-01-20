@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { useTranslations } from '@/config/useTranslations';
 
-const RFTChart = () => {
+const RFTChart = ({ date }) => {
   const [chartData, setChartData] = useState(null);
   const [RFTFactory, setRFTFactory] = useState(null);
   const [RFTValues, setRFTValues] = useState([]);
@@ -22,8 +22,9 @@ const RFTChart = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const formattedDate = date.format('YYYY-MM-DD');
         const response = await fetch(
-          'http://192.168.30.245:8989/kpi_overview/getRFT?date=2025-01-18'
+          `http://192.168.30.245:8989/kpi_overview/getRFT?date=${formattedDate}`
         );
         const data = await response.json();
         const { getRFTtime, getRFTFactory } = data.data;
@@ -40,7 +41,7 @@ const RFTChart = () => {
     };
 
     fetchData();
-  }, []);
+  }, [date]);
 
   const RFTValuesPercentage = RFTValues.map((value) => value * 100);
 

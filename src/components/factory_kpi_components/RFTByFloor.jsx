@@ -127,6 +127,8 @@ const RFTByFloor = ({ date, floor }) => {
     },
   };
 
+  const titleKey = floor ? 'RFT BY LINE' : 'RFT BY FLOOR';
+
   return (
     <div>
       <Card
@@ -150,7 +152,7 @@ const RFTByFloor = ({ date, floor }) => {
               letterSpacing: '0px',
             }}
           >
-            {translation['RFT BY FLOOR']}
+            {translation[titleKey]}
           </Typography>
 
           {loading ? (

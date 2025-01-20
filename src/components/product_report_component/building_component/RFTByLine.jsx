@@ -147,7 +147,7 @@ const RFTByLine = ({ selectedDate, selectedBuilding }) => {
             textAlign: 'center',
           }}
         >
-          {t['Building']} {selectedBuilding}: {t['RFT By Line']}
+          {t['Building']} {selectedBuilding}: {t['Rft By Line']}
         </Typography>
         {loading ? (
           <Box

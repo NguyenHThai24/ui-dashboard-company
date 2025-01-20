@@ -10,9 +10,9 @@ import {
 } from '@mui/material';
 import { useTranslations } from '@/config/useTranslations';
 
-const TotalActualOutput = () => {
+const TotalActualOutput = ({ date }) => {
   const [chartData, setChartData] = useState(null);
-  const [totalOutput, setTotalOutput] = useState(null); // Thêm state cho totalOutput
+  const [totalOutput, setTotalOutput] = useState(null);
   const [target, setTarget] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -20,9 +20,11 @@ const TotalActualOutput = () => {
 
   useEffect(() => {
     const fetchMockData = async () => {
+      setLoading(true);
       try {
+        const formattedDate = date.format('YYYY-MM-DD'); // Chuyển đổi `date` thành định dạng YYYY-MM-DD
         const response = await fetch(
-          'http://192.168.30.245:8989/kpi_overview/total_actual_output?date=2025-01-18'
+          `http://192.168.30.245:8989/kpi_overview/total_actual_output?date=${formattedDate}`
         );
         const result = await response.json();
 
@@ -34,15 +36,14 @@ const TotalActualOutput = () => {
           const actual = result.data.outputActual.map((item) => item.actual);
 
           setChartData({
-            categories, // Trục X
-            target, // Dữ liệu "Target"
-            actual, // Dữ liệu "Actual"
+            categories,
+            target,
+            actual,
           });
 
-          // Lấy giá trị từ totalOutput
           if (result.data.totalOutput && result.data.totalOutput[0]) {
             setTotalOutput(result.data.totalOutput[0].Actual_Quantity_LHG);
-            setTarget(result.data.totalOutput[0].SCBZCL_Quantity); // Lấy target từ totalOutput
+            setTarget(result.data.totalOutput[0].SCBZCL_Quantity);
           }
         } else {
           throw new Error('Invalid API response structure');
@@ -55,14 +56,14 @@ const TotalActualOutput = () => {
     };
 
     fetchMockData();
-  }, []);
+  }, [date]); // Thêm `date` vào dependency array để gọi lại API khi ngày thay đổi
 
   const options = {
     chart: {
       type: 'area',
       height: 250,
-      spacingTop: 0, // Loại bỏ khoảng cách trên
-      spacingRight: 0, // Loại bỏ khoảng cách phải
+      spacingTop: 0,
+      spacingRight: 0,
       spacingBottom: 0,
       marginLeft: 0,
       marginRight: 0,
@@ -71,24 +72,24 @@ const TotalActualOutput = () => {
       text: '',
     },
     xAxis: {
-      categories: chartData?.categories || [], // Sử dụng trục X từ dữ liệu
+      categories: chartData?.categories || [],
       labels: { style: { fontSize: '10px', fontWeight: 600 } },
     },
     yAxis: {
       title: { text: '' },
       labels: { style: { fontSize: '10px', fontWeight: 600 } },
-      min: 0, // Đảm bảo giá trị bắt đầu từ 0
+      min: 0,
     },
     legend: {
-      enabled: false, // Tắt legend
+      enabled: false,
     },
     series: [
       {
         name: 'Target',
-        data: chartData?.target || [], // Sử dụng dữ liệu "Target"
+        data: chartData?.target || [],
         color: '#ff2020',
         dataLabels: {
-          enabled: true, // Hiển thị nhãn dữ liệu
+          enabled: true,
           style: {
             fontSize: '10px',
             fontWeight: 'bold',
@@ -98,10 +99,10 @@ const TotalActualOutput = () => {
       },
       {
         name: 'Actual',
-        data: chartData?.actual || [], // Sử dụng dữ liệu "Actual"
+        data: chartData?.actual || [],
         color: '#3bf715',
         dataLabels: {
-          enabled: true, // Hiển thị nhãn dữ liệu
+          enabled: true,
           style: {
             fontSize: '10px',
             fontWeight: 'bold',
@@ -117,13 +118,12 @@ const TotalActualOutput = () => {
     <div
       className="px-2 py-2 rounded-lg shadow-md"
       style={{
-        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)', // Hiệu ứng bóng
-        background: '#fff', // Nền trắng
+        boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.5)',
+        background: '#fff',
       }}
     >
       <h1 className="font-bold text-gray-500">{t['TOTAL ACTUAL OUTPUT']}</h1>
       <div>
-        {/* Hiển thị giá trị lấy từ API */}
         <span className="font-bold text-3xl">{totalOutput || '---'}</span>
         <span className="text-xs font-bold">{t['PAIRS']}</span>
       </div>

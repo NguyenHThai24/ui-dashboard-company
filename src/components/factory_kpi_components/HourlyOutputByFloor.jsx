@@ -52,6 +52,8 @@ const HourlyOutputByFloor = ({ date, floor }) => {
     fetchData();
   }, [date, floor]);
 
+  const titleKey = floor ? 'HOURLY OUTPUT BY LINE' : 'HOURLY OUTPUT BY FLOOR';
+
   return (
     <div
       style={{
@@ -72,7 +74,7 @@ const HourlyOutputByFloor = ({ date, floor }) => {
           paddingTop: '10px',
         }}
       >
-        {translation['HOURLY OUTPUT BY FLOOR']}
+        {translation[titleKey]}
       </p>
 
       {loading ? (

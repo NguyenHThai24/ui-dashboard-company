@@ -45,7 +45,7 @@ const HeaderProductReport = ({ selectedDate, setSelectedDate }) => {
         <Grid item>
           <Button
             sx={{
-              bgcolor: selectedButton === 'factory' ? '#239d85' : '#',
+              bgcolor: selectedButton === 'factory' ? '#239d85' : '#979a9a',
               color: 'white',
               width: '100px',
               height: '40px',

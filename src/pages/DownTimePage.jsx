@@ -58,10 +58,6 @@ const DownTimePage = () => {
     setBreakdownTotal(total);
   };
 
-  // Tính giá trị AVERAGE
-  const average =
-    breakdownTotal !== 0 ? (machineDownTotal / breakdownTotal).toFixed(2) : 0;
-
   return (
     <div>
       <FloorLineList

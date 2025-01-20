@@ -30,6 +30,12 @@ const useStyles = makeStyles({
       width: '320px',
       marginTop: '10px',
       marginBottom: '10px',
+      border: '1px solid #fff', // Đường viền màu đen
+      borderRadius: '5px', // Góc bo tròn
+      backgroundColor: '#fff',
+    },
+    '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
+      borderColor: '#239d85', // Đường viền màu đen khi được chọn
     },
   },
   textField: {

@@ -11,8 +11,9 @@ import {
 
 import { useTranslations } from '@/config/useTranslations';
 
-const DigitalAndonCase = () => {
+const DigitalAndonCase = ({ date }) => {
   const [chartData, setChartData] = useState(null);
+  const [totalHourTime, setTotalHourTime] = useState(0); // State lưu tổng hourtime
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const t = useTranslations();
@@ -20,20 +21,26 @@ const DigitalAndonCase = () => {
   useEffect(() => {
     const fetchMockData = async () => {
       try {
+        const formattedDate = date.format('YYYY-MM-DD');
         const response = await fetch(
-          'http://192.168.30.245:8989/kpi_overview/get_digital_andon?date=2025-01-18'
+          `http://192.168.30.245:8989/kpi_overview/get_digital_andon?date=${formattedDate}`
         );
-        if (!response.ok) {
-          throw new Error('Failed to fetch mock data');
-        }
+
         const result = await response.json();
 
         if (result.status === 0 && result.data.getDigitalAndon) {
           const categories = result.data.getDigitalAndon.map(
             (item) => item.hourtime
           );
-          const data = result.data.getDigitalAndon.map((item) => item.Lean);
+          const data = result.data.getDigitalAndon?.map((item) => item.Lean);
 
+          // Tính tổng hourtime
+          const total = result.data.getDigitalAndon.reduce(
+            (sum, item) => sum + (item.Lean || 0), // Nếu `hourtime` không tồn tại, cộng 0
+            0
+          );
+
+          setTotalHourTime(total); // Lưu tổng vào state
           setChartData({
             categories,
             data,
@@ -49,7 +56,7 @@ const DigitalAndonCase = () => {
     };
 
     fetchMockData();
-  }, []);
+  }, [date]);
 
   const options = {
     chart: {
@@ -114,7 +121,9 @@ const DigitalAndonCase = () => {
     >
       <h1 className="font-bold text-gray-500">{t['DIGITAL ANDON CASES']}</h1>
       <div>
-        <span className="font-bold text-3xl">19 TIMES</span>
+        <span className="font-bold text-3xl">
+          {totalHourTime} {t['TIMES']}
+        </span>
       </div>
       <Card>
         <CardContent>

@@ -119,13 +119,13 @@
   "WEEKLY EFFICIENCY": "Weekly Efficiency",
   "MONTHLY EFFICIENCY": "Monthly Efficiency",
 
-  "DAILY RFT": "Daily Rft",
-  "WEEKLY RFT": "Weekly Rft",
-  "MONTHLY RFT": "Monthly Rft",
+  "DAILY RFT": "Daily RFT",
+  "WEEKLY RFT": "Weekly RFT",
+  "MONTHLY RFT": "Monthly RFT",
 
-  "DAILY STITCHING & ASSEMBLY MP": "Daily Stitching & Assembly Mp",
-  "WEEKLY STITCHING & ASSEMBLY MP": "Weekly Stitching & Assembly Mp",
-  "MONTHLY STITCHING & ASSEMBLY MP": "Monthly Stitching & Assembly Mp",
+  "DAILY STITCHING & ASSEMBLY MP": "Daily Stitching & Assembly MP",
+  "WEEKLY STITCHING & ASSEMBLY MP": "Weekly Stitching & Assembly MP",
+  "MONTHLY STITCHING & ASSEMBLY MP": "Monthly Stitching & Assembly MP",
 
   "DAILY TOTAL OUTPUT": "Daily Total Output",
   "WEEKLY TOTAL OUTPUT": "Weekly Total Output",
@@ -192,7 +192,6 @@
     "Mechanic List":"Mechanic List",
     "UPTIME":"Up Time",
     "AVAILABLE TIME":"Available Time",
-    "":"",
     "":"",
     "":"",
     "":""

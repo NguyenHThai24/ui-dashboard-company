@@ -120,6 +120,8 @@ const OutputByFloor = ({ date, floor }) => {
     },
   };
 
+  const titleKey = floor ? 'OUTPUT BY LINE' : 'OUTPUT BY FLOOR';
+
   return (
     <Card
       sx={{ borderRadius: 2 }}
@@ -139,7 +141,7 @@ const OutputByFloor = ({ date, floor }) => {
             letterSpacing: '0px',
           }}
         >
-          {translation['OUTPUT BY FLOOR']}
+          {translation[titleKey]}
         </Typography>
         {loading ? (
           <Box
