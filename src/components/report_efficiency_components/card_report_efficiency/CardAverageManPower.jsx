@@ -27,7 +27,7 @@ const CardAverageManPower = () => {
       </Typography>
       <Typography
         sx={{
-          fontSize: 50,
+          fontSize: 40,
           textAlign: 'right',
           alignSelf: 'flex-end',
           fontWeight: 900,

@@ -1,4 +1,5 @@
-import data from '@public/data/FloorEfficiencySummary.json';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import {
   Table,
   TableBody,
@@ -8,9 +9,70 @@ import {
   TableRow,
 } from '@mui/material';
 import { useTranslations } from '@/config/useTranslations';
+import { format, set } from 'date-fns';
 
-const FloorEfficiencySummary = () => {
+const FloorEfficiencySummary = ({ timeFrame }) => {
+  const [tableData, setTableData] = useState([]);
   const t = useTranslations();
+  const currentMonth = 0; // Tháng bắt đầu từ 0 (0 = tháng 1)
+  const currentYear = 2025; // Năm cố định cho dữ liệu
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const urlMap = {
+          DAILY:
+            'http://192.168.30.245:8989/eff/getDailyAVGBuilding?date=2025-01-23&modelName=BARREDA%20DECODE',
+          WEEKLY:
+            'http://192.168.30.245:8989/eff/getWeeklyAVGFac?date=2025-01-23&modelName=BARREDA%20DECODE',
+          MONTHLY:
+            'http://192.168.30.245:8989/eff/getMonthlyAVGFac?date=2025-01-23&modelName=BARREDA%20DECODE',
+        };
+
+        const url = urlMap[timeFrame] || urlMap['DAILY'];
+        const response = await axios.get(url);
+        const responseData = response.data;
+
+        if (responseData.status === 0) {
+          const baseline = responseData.data.BaselineEFF[0]?.BaselineEFF || 0;
+
+          const buildings = responseData.data.EFF.map((effBuilding) => {
+            const rftBuilding = responseData.data.RFT.find(
+              (rft) => rft.Building === effBuilding.Building
+            );
+
+            return {
+              floor: effBuilding.Building,
+              baseline: baseline,
+              days: Array.from({ length: 31 }, (_, index) => {
+                const day = (index + 1).toString();
+                return {
+                  eff: effBuilding[day] || null,
+                  rft: rftBuilding ? rftBuilding[day] : null,
+                  dateFormatted: format(
+                    set(new Date(currentYear, currentMonth, day), {
+                      hours: 0,
+                      minutes: 0,
+                      seconds: 0,
+                      milliseconds: 0,
+                    }),
+                    'dd/MM/yyyy'
+                  ),
+                };
+              }),
+            };
+          });
+
+          setTableData(buildings);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, [timeFrame]);
+
   return (
     <div
       className="p-2 mb-4"
@@ -25,41 +87,45 @@ const FloorEfficiencySummary = () => {
       </h1>
       <TableContainer
         sx={{
-          maxHeight: '400px', // Giới hạn chiều cao
-          overflow: 'auto', // Cho phép cuộn
+          maxHeight: '400px', // Set the height to allow scroll on the body only
+          overflowY: 'auto', // Enable vertical scrolling for body only
           '&::-webkit-scrollbar': {
-            width: '8px', // Chiều rộng của thanh cuộn dọc
-            height: '8px', // Chiều cao của thanh cuộn ngang
+            width: '6px', // Make the scrollbar thinner
+            height: '6px', // Thinner horizontal scrollbar
           },
           '&::-webkit-scrollbar-thumb': {
-            backgroundColor: '#888', // Màu của thanh cuộn
-            borderRadius: '4px', // Bo góc thanh cuộn
+            backgroundColor: '#888', // Scrollbar color
+            borderRadius: '4px', // Rounded scrollbar
           },
           '&::-webkit-scrollbar-thumb:hover': {
-            backgroundColor: '#555', // Màu khi hover
+            backgroundColor: '#555', // Hover effect on scrollbar
           },
           '&::-webkit-scrollbar-track': {
-            backgroundColor: '#f1f1f1', // Màu nền của thanh cuộn
+            backgroundColor: '#f1f1f1', // Track color
           },
         }}
       >
         <Table sx={{ width: '100%' }}>
-          {/* Table Head */}
           <TableHead sx={{ bgcolor: '#96f982' }}>
-            <TableRow sx={{ bgcolor: '#96f982' }}>
+            <TableRow>
               <TableCell
                 colSpan={2}
                 align="center"
                 sx={{
                   fontWeight: 'bold',
                   border: '1px solid #ccc',
-                  fontSize: '0.85rem', // Giảm kích thước font chữ
-                  padding: '6px', // Giảm padding
+                  fontSize: '0.85rem',
+                  padding: '6px',
+                  height: '4px',
+                  position: 'sticky',
+                  top: 0, // Keep header fixed at the top
+                  backgroundColor: '#96f982', // Keep header background color
+                  zIndex: 2, // Ensure header stays on top when scrolling
                 }}
               >
                 Date
               </TableCell>
-              {Array.from({ length: 26 }, (_, index) => (
+              {Array.from({ length: 31 }, (_, index) => (
                 <TableCell
                   key={index}
                   colSpan={2}
@@ -67,11 +133,23 @@ const FloorEfficiencySummary = () => {
                   sx={{
                     fontWeight: 'bold',
                     border: '1px solid #ccc',
-                    fontSize: '0.85rem', // Giảm kích thước font chữ
-                    padding: '6px', // Giảm padding
+                    fontSize: '0.85rem',
+                    padding: '6px',
+                    position: 'sticky',
+                    top: 0,
+                    backgroundColor: '#96f982', // Keep header background color
+                    zIndex: 2, // Ensure header stays on top when scrolling
                   }}
                 >
-                  {index + 1}
+                  {format(
+                    set(new Date(currentYear, currentMonth, index + 1), {
+                      hours: 0,
+                      minutes: 0,
+                      seconds: 0,
+                      milliseconds: 0,
+                    }),
+                    'dd/MM/yyyy'
+                  )}
                 </TableCell>
               ))}
             </TableRow>
@@ -82,8 +160,8 @@ const FloorEfficiencySummary = () => {
                 sx={{
                   fontWeight: 'bold',
                   border: '1px solid #ccc',
-                  fontSize: '0.85rem', // Giảm kích thước font chữ
-                  padding: '6px', // Giảm padding
+                  fontSize: '0.85rem',
+                  padding: '6px',
                 }}
               >
                 {t['Floor']}
@@ -94,21 +172,21 @@ const FloorEfficiencySummary = () => {
                 sx={{
                   fontWeight: 'bold',
                   border: '1px solid #ccc',
-                  fontSize: '0.85rem', // Giảm kích thước font chữ
-                  padding: '6px', // Giảm padding
+                  fontSize: '0.85rem',
+                  padding: '6px',
                 }}
               >
                 {t['Baseline']}
               </TableCell>
-              {Array.from({ length: 26 }, () => (
+              {Array.from({ length: 31 }, () => (
                 <>
                   <TableCell
                     align="center"
                     sx={{
                       fontWeight: 'bold',
                       border: '1px solid #ccc',
-                      fontSize: '0.85rem', // Giảm kích thước font chữ
-                      padding: '6px', // Giảm padding
+                      fontSize: '0.85rem',
+                      padding: '6px',
                     }}
                   >
                     {t['EFF']}
@@ -118,8 +196,8 @@ const FloorEfficiencySummary = () => {
                     sx={{
                       fontWeight: 'bold',
                       border: '1px solid #ccc',
-                      fontSize: '0.85rem', // Giảm kích thước font chữ
-                      padding: '6px', // Giảm padding
+                      fontSize: '0.85rem',
+                      padding: '6px',
                     }}
                   >
                     {t['RFT']}
@@ -128,10 +206,8 @@ const FloorEfficiencySummary = () => {
               ))}
             </TableRow>
           </TableHead>
-
-          {/* Table Body */}
           <TableBody>
-            {data.data.map((row, rowIndex) => (
+            {tableData.map((row, rowIndex) => (
               <TableRow key={rowIndex}>
                 <TableCell align="center" sx={{ border: '1px solid #ccc' }}>
                   {row.floor}

@@ -1,14 +1,26 @@
 import Calendar from '@/components/common/Calendar';
 import { Button, Grid } from '@mui/material';
 import { useTranslations } from '@/config/useTranslations';
+import { useState } from 'react';
+import dayjs from 'dayjs';
 
-const HeaderEfficiencyReport = ({ onSelectTimeFrame, selectedTimeFrame }) => {
+const HeaderEfficiencyReport = ({
+  onSelectTimeFrame,
+  selectedTimeFrame,
+  onDateChange,
+}) => {
   const t = useTranslations();
+
+  const [selectedDate, setSelectedDate] = useState(dayjs());
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    onDateChange(date);
+  };
   return (
     <>
       <Grid container spacing={1} alignItems="center">
         <Grid item>
-          <Calendar />
+          <Calendar onDateChange={handleDateChange} />
         </Grid>
 
         <Grid item>
